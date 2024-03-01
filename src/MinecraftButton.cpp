@@ -102,9 +102,13 @@ void MinecraftButton::setVisible(){
     this->edgeTexture->runAction(CCFadeIn::create(1.0f));
 
     setSpritesVisible(this);
-    this->isInvisible = false;
+	this->scheduleOnce(schedule_selector(MinecraftButton::setVisibleDelay), 1.0f);
+
 }
 
+void MinecraftButton::setVisibleDelay(float dt){
+    this->isInvisible = false;
+}
 
 void MinecraftButton::onHover(){
 

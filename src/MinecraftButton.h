@@ -16,6 +16,7 @@ public:
     void selected();
     void setInvisible();
     void setVisible();
+    void setVisibleDelay(float dt);
 private:
     bool isHovering = false;
     bool isInvisible = false;
