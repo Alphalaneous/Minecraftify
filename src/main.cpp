@@ -529,7 +529,7 @@ class $modify(MyCreatorLayer, CreatorLayer){
 		MinecraftButton* savedButton = MinecraftButton::create("Saved", 39.1f, this, menu_selector(CreatorLayer::onSavedLevels));
 
 		MinecraftButton* questsButton = MinecraftButton::create("Quests", 39.1f, this, menu_selector(CreatorLayer::onChallenge));
-		MinecraftButton* gauntletsButton = MinecraftButton::create("Guantlets", 39.1f, this, menu_selector(CreatorLayer::onGauntlets));
+		MinecraftButton* gauntletsButton = MinecraftButton::create("Gauntlets", 39.1f, this, menu_selector(CreatorLayer::onGauntlets));
 		MinecraftButton* pathsButton = MinecraftButton::create("Paths", 39.1f, this, menu_selector(CreatorLayer::onPaths));
 		MinecraftButton* listsButton = MinecraftButton::create("Lists", 39.1f, this, menu_selector(CreatorLayer::onTopLists));
 		MinecraftButton* mapPacksButton = MinecraftButton::create("Map Packs", 39.1f, this, menu_selector(CreatorLayer::onMapPacks));
