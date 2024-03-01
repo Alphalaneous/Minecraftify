@@ -80,6 +80,7 @@ class $modify(MyMenuLayer, MenuLayer) {
 
 		auto winSize = CCDirector::sharedDirector()->getWinSize();
 
+		
         float scale = CCDirector::sharedDirector()->getContentScaleFactor()/4;
 
 		Panorama* panorama = Panorama::create();
@@ -212,13 +213,34 @@ class $modify(MyMenuLayer, MenuLayer) {
 		setPositions(winSize);
 
 		if(GlobalVars::getSharedInstance()->isInitialLaunch){
+
+			CCLayerColor* layerColor = CCLayerColor::create(ccColor4B{239,50,61,255});
+			layerColor->setID("loading-bg"_spr);
+			layerColor->setContentSize(winSize);
+
+			this->addChild(layerColor);
+
+			CCSprite* titleSprite = Utils::createSprite("/geode/unzipped/zalphalaneous.minecraft/resources/zalphalaneous.minecraft/mojangstudios.png");
+
+			titleSprite->setPosition({winSize.width/2, winSize.height/2});
+			titleSprite->setScale(titleSprite->getScale()*0.3f);
+			titleSprite->setID("title-sprite"_spr);
+
+			this->addChild(titleSprite);
+
+			layerColor->runAction(CCFadeOut::create(1.0f));
+			titleSprite->runAction(CCFadeOut::create(1.0f));
+			
 			setAllInvisible();
 			this->scheduleOnce(schedule_selector(MyMenuLayer::setAllVisible), 1.0f);
 		}
+
+
 		CCScheduler::get()->scheduleSelector(schedule_selector(MyMenuLayer::myUpdate), this, 0.0, false);
 
 		return true;
 	}
+
 
 
 	void setVisible(CCMenu* menu){
@@ -377,21 +399,22 @@ class $modify(MyLoadingLayer, LoadingLayer){
 	void doFadeOut(float dt){
 		CCLayerColor* loadingBar = dynamic_cast<CCLayerColor*>(this->getChildByID("loading-bar"_spr));
 		CCLayerColor* loadingBarBG2 = dynamic_cast<CCLayerColor*>(this->getChildByID("loading-bar-bg2"_spr));
+		CCLabelBMFont* loadingText = dynamic_cast<CCLabelBMFont*>(this->getChildByID("loading-text"_spr));
 
 		CCFadeOut* fadeOut = CCFadeOut::create(1.0f);
 		loadingBar->runAction(fadeOut);
 		CCFadeOut* fadeOut2 = CCFadeOut::create(1.0f);
 		loadingBarBG2->runAction(fadeOut2);
+		CCFadeOut* fadeOut3 = CCFadeOut::create(1.0f);
+		loadingText->runAction(fadeOut3);
 
 		this->scheduleOnce(schedule_selector(MyLoadingLayer::doChangeScene), 1.0f);
-		
 	}
 
 	void doChangeScene(float dt){
 
 		CCScene* scene = MenuLayer::scene(false);
-		auto transition = CCTransitionCrossFade::create(1.0f, scene);
-		CCDirector::sharedDirector()->pushScene(transition);
+		CCDirector::sharedDirector()->pushScene(scene);
 		GlobalVars::getSharedInstance()->isInitialLaunch = false;
 	}
 
