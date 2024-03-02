@@ -45,6 +45,22 @@ public:
         return spr;
     }
 
+    static void fixSubpixelPosition(CCNode* node){
+        /*if(node){
+            CCPoint coords = node->getPosition();
+            CCPoint location = CCDirector::sharedDirector()->convertToGL(coords);
+
+            float glX = std::floor(location.x);
+            float glY = std::floor(location.y);
+
+            CCPoint newLocation = CCDirector::sharedDirector()->convertToUI({glX, glY});
+
+            node->setPosition(newLocation);
+        }*/
+        
+        //todo find a way to fix subpixel issues
+    }
+
     static CCNode* generateDirtBG(){
 
 		auto winSize = CCDirector::sharedDirector()->getWinSize();

@@ -17,6 +17,7 @@ public:
     void setInvisible();
     void setVisibleFade();
     void setVisibleDelay(float dt);
+    void setPosition(CCPoint p);
 private:
     bool isHovering = false;
     bool isInvisible = false;

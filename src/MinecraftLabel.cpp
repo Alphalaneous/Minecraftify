@@ -1,5 +1,5 @@
 #include "MinecraftLabel.h"
-
+#include "Utils.h"
 
 struct ColorPos {
     unsigned int pos;
@@ -117,8 +117,6 @@ bool MinecraftLabel::init(std::wstring text, std::string font){
         }
     }
 
-    log::info("{}", what_the_fuck(finalString));
-
     CCLabelBMFont::initWithString(what_the_fuck(finalString).c_str(), font.c_str());
 
     for(ColorPos p : colorPositions){
@@ -130,6 +128,22 @@ bool MinecraftLabel::init(std::wstring text, std::string font){
             spr->setColor(color);
         }
     }
+
+    //fix subpixeling
+
+    for(int i = 0; i < getChildrenCount(); i++){
+        CCSprite* spr = dynamic_cast<CCSprite*>(getChildren()->objectAtIndex(i)); 
+
+        Utils::fixSubpixelPosition(spr);
+    }
+
+    Utils::fixSubpixelPosition(this);
+
     return true;
 }
 
+void MinecraftLabel::setPosition(CCPoint p){
+    CCNode::setPosition(p);
+
+    Utils::fixSubpixelPosition(this);
+}

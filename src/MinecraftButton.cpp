@@ -1,5 +1,6 @@
 #include "MinecraftButton.h"
 #include "MinecraftLabel.h"
+#include "Utils.h"
 
 CCSprite* generateEdgeSprite(gd::string textureName){
 
@@ -64,6 +65,11 @@ MinecraftButton* MinecraftButton::create(gd::string text, float width, CCObject*
     }
     CC_SAFE_DELETE(ret);
     return nullptr;
+}
+
+void MinecraftButton::setPosition(CCPoint p){
+    CCNode::setPosition(p);
+    Utils::fixSubpixelPosition(this);
 }
 
 void setSpritesInvisible(CCNode* node){

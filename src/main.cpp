@@ -10,6 +10,7 @@
 #include "Utils.h"
 #include "Panorama.h"
 #include "MinecraftLabel.h"
+#include "MCOptionsLayer.h"
 
 using namespace geode::prelude;
 
@@ -181,7 +182,7 @@ class $modify(MyMenuLayer, MenuLayer) {
 
 		std::wstring text = getSplashText();
 
-		MinecraftLabel* splashText = MinecraftLabel::create(text, "minecraft-opaque.fnt"_spr);
+		MinecraftLabel* splashText = MinecraftLabel::create(text, "minecraft.fnt"_spr);
 		splashText->setColor({255,255,0});
 		splashText->setPosition({title->getContentSize().width,(title->getContentSize().height) /2});
 		splashText->setZOrder(3);
@@ -310,6 +311,12 @@ class $modify(MyMenuLayer, MenuLayer) {
 		geode::openModsList();
 	}
 
+	void onMCOptions(CCObject* sender) {
+		CCScene* scene = MCOptionsLayer::scene();
+		auto transition = CCTransitionFade::create(0.0f, scene);
+		CCDirector::sharedDirector()->pushScene(transition);
+	}
+
 	void onMyProfile(CCObject* sender) {
 
 		ProfilePage* page = ProfilePage::create(GJAccountManager::sharedState()->m_accountID, true);
@@ -340,18 +347,18 @@ class $modify(MyMenuLayer, MenuLayer) {
 
 		CCNode* menu = this->getChildByID("minecraft-menu"_spr);;
 
-		CCNode* playButton = menu->getChildByID("play-button"_spr);
-		CCNode* editButton = menu->getChildByID("edit-button"_spr);
-		CCNode* modsButton = menu->getChildByID("mods-button"_spr);
-		CCNode* skinButton = menu->getChildByID("skin-button"_spr);
-		CCNode* optionsButton = menu->getChildByID("options-button"_spr);
-		CCNode* quitButton = menu->getChildByID("quit-button"_spr);
-		CCNode* profileButton = menu->getChildByID("profile-button"_spr);
-		CCNode* extrasButton = menu->getChildByID("extras-button"_spr);
+		MinecraftButton* playButton = dynamic_cast<MinecraftButton*>(menu->getChildByID("play-button"_spr));
+		MinecraftButton* editButton = dynamic_cast<MinecraftButton*>(menu->getChildByID("edit-button"_spr));
+		MinecraftButton* modsButton = dynamic_cast<MinecraftButton*>(menu->getChildByID("mods-button"_spr));
+		MinecraftButton* skinButton = dynamic_cast<MinecraftButton*>(menu->getChildByID("skin-button"_spr));
+		MinecraftButton* optionsButton = dynamic_cast<MinecraftButton*>(menu->getChildByID("options-button"_spr));
+		MinecraftButton* quitButton = dynamic_cast<MinecraftButton*>(menu->getChildByID("quit-button"_spr));
+		MinecraftButton* profileButton = dynamic_cast<MinecraftButton*>(menu->getChildByID("profile-button"_spr));
+		MinecraftButton* extrasButton = dynamic_cast<MinecraftButton*>(menu->getChildByID("extras-button"_spr));
 
-		CCNode* title = this->getChildByID("minecraft-title"_spr);
-		CCNode* version = this->getChildByID("version-text"_spr);
-		CCNode* creator = this->getChildByID("copyright-text"_spr);
+		CCSprite* title = dynamic_cast<CCSprite*>(this->getChildByID("minecraft-title"_spr));
+		MinecraftLabel* version = dynamic_cast<MinecraftLabel*>(this->getChildByID("version-text"_spr));
+		MinecraftLabel* creator = dynamic_cast<MinecraftLabel*>(this->getChildByID("copyright-text"_spr));
 
 		playButton->setPosition({winSize.width/2, winSize.height/2+45});
 		editButton->setPosition({winSize.width/2, winSize.height/2+23});
