@@ -71,7 +71,7 @@ class $modify(MyMenuLayer, MenuLayer) {
 	CCSize lastSize;
 
 	static void onModify(auto& self) {
-        self.setHookPriority("MenuLayer::init", -10000);
+        (void) self.setHookPriority("MenuLayer::init", -10000);
     }
 
 	bool init() {

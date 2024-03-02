@@ -146,7 +146,7 @@ public:
     GLint m_uniformMouse = 0;
     unsigned int textureID;
 
-    virtual bool init()
+    virtual bool init() override
     {
 
         ghc::filesystem::path vertexPath = (std::string)CCFileUtils::sharedFileUtils()->fullPathForFilename("vertex.glsl"_spr, false);
