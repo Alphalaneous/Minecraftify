@@ -1,8 +1,8 @@
 #include "ExtrasLayer.h"
-#include "MinecraftButton.h"
-#include "Utils.h"
-#include "NewgroundsAlertProtocol.h"
-#include "MinecraftLabel.h"
+#include "../../utils/Utils.h"
+#include "../../protocols/NewgroundsAlertProtocol.h"
+#include "../nodes/MinecraftLabel.h"
+#include "../nodes/MinecraftButton.h"
 
 ExtrasLayer* ExtrasLayer::create() {
     auto ret = new ExtrasLayer();
@@ -118,6 +118,7 @@ bool ExtrasLayer::init() {
     MinecraftButton* doneButton = MinecraftButton::create("Done", 49.1f, this, menu_selector(ExtrasLayer::onBack));
     doneMenu->addChild(doneButton);
     doneMenu->setPosition({winSize.width/2, 50});
+    doneMenu->ignoreAnchorPointForPosition(false);
     doneMenu->setID("done-menu"_spr);
 
     this->addChild(doneMenu);
@@ -142,7 +143,7 @@ void ExtrasLayer::onNewgrounds(CCObject* object){
 }
 
 void ExtrasLayer::keyBackClicked() {
-    CCDirector::sharedDirector()->popSceneWithTransition(0.5f, PopTransition::kPopTransitionFade);
+    CCDirector::sharedDirector()->popScene();
 }
 
 void ExtrasLayer::onBack(CCObject* object) {

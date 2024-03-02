@@ -1,5 +1,5 @@
 #include "MinecraftLabel.h"
-#include "Utils.h"
+#include "../../utils/Utils.h"
 
 struct ColorPos {
     unsigned int pos;

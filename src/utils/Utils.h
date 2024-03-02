@@ -86,4 +86,51 @@ public:
         return dirt;
     }
 
+    static std::vector<std::wstring> splitString(const std::wstring& str, const std::wstring& delimiter) {
+        std::vector<std::wstring> strings;
+
+        std::wstring::size_type pos = 0;
+        std::wstring::size_type prev = 0;
+        while ((pos = str.find(delimiter, prev)) != std::wstring::npos)
+        {
+            strings.push_back(str.substr(prev, pos - prev));
+            prev = pos + delimiter.size();
+        }
+
+        strings.push_back(str.substr(prev));
+
+        return strings;
+    }
+
+    static int random(int min, int max) {
+        static bool first = true;
+        if (first) {  
+            srand( time(NULL) );
+            first = false;
+        }
+        return min + rand() % (( max + 1 ) - min);
+    }
+
+    inline static std::vector<std::wstring> splashSplit;
+    inline static bool hasBeenGenerated = false;
+
+    static std::wstring getSplashText(){
+        if(!hasBeenGenerated){
+            ghc::filesystem::path path = Mod::get()->getResourcesDir().append("splashes.txt");
+
+            std::wifstream input(path.string());
+            std::wstringstream buffer;
+            buffer << input.rdbuf();
+            input.close();
+
+            std::wstring splashText = buffer.str();
+
+            splashSplit = Utils::splitString(splashText, L"\n");
+            hasBeenGenerated = true;
+        }
+
+        std::wstring newSplash = splashSplit.at(random(0, splashSplit.size()-1));
+
+        return newSplash;
+    }
 };

@@ -1,6 +1,6 @@
-#include "MinecraftButton.h"
+#include "MinecraftButtonChild.h"
 #include "MinecraftLabel.h"
-#include "Utils.h"
+#include "../../utils/Utils.h"
 
 CCSprite* generateEdgeSprite(gd::string textureName){
 
@@ -17,7 +17,7 @@ CCSprite* generateEdgeSprite(gd::string textureName){
     return sprite;
 }
 
-CCSprite* generateSprite(gd::string textureName, float width){
+CCSprite* generateSprite(MinecraftButtonChild* parent, gd::string textureName, float width){
 
     float scale = CCDirector::sharedDirector()->getContentScaleFactor()/4;
 
@@ -27,26 +27,28 @@ CCSprite* generateSprite(gd::string textureName, float width){
     sprite->getTexture()->setTexParameters(params);
     sprite->setScale(scale);
 
+    parent->removeChildByID("edge"_spr);
 
     CCSprite* edgeSprite = generateEdgeSprite(textureName);
-    edgeSprite->setPositionX(width/scale-1/scale);
+    edgeSprite->setPositionX(width-1);
     edgeSprite->setZOrder(sprite->getZOrder()+1);
     edgeSprite->setID("edge"_spr);
+    edgeSprite->setScale(scale);
 
     sprite->setContentSize({sprite->getContentSize().width * scale + edgeSprite->getContentSize().width , sprite->getContentSize().height * scale});
-
-    sprite->addChild(edgeSprite);
+    
+    parent->edgeTexture = edgeSprite;
+    parent->addChild(edgeSprite);
 
     return sprite;
 }
 
-MinecraftButton* MinecraftButton::create(gd::string text, float width, CCObject* target, SEL_MenuHandler selector){
+MinecraftButtonChild* MinecraftButtonChild::create(gd::string text, float width, CCObject* target, SEL_MenuHandler selector){
 
-    MinecraftButton *ret = new (std::nothrow) MinecraftButton();
+    MinecraftButtonChild *ret = new (std::nothrow) MinecraftButtonChild();
     ret->width = width;
 
-    CCSprite* buttonSprite = generateSprite("button.png"_spr, width);
-    ret->edgeTexture = dynamic_cast<CCSprite*>(buttonSprite->getChildByID("edge"_spr));
+    CCSprite* buttonSprite = generateSprite(ret, "button.png"_spr, width);
    
     MinecraftLabel* label = MinecraftLabel::create(text, "minecraft.fnt"_spr);
     label->setScale(0.12f);
@@ -58,6 +60,7 @@ MinecraftButton* MinecraftButton::create(gd::string text, float width, CCObject*
         ret->scheduleUpdate();
         ret->setScale(3.5);
         ret->addChild(label);
+        ret->setAnchorPoint({0,0});
         ret->label = label;
         label->setPosition({ret->getContentSize().width/2, ret->getContentSize().height/2});
 
@@ -67,7 +70,7 @@ MinecraftButton* MinecraftButton::create(gd::string text, float width, CCObject*
     return nullptr;
 }
 
-void MinecraftButton::setPosition(CCPoint p){
+void MinecraftButtonChild::setPosition(CCPoint p){
     CCNode::setPosition(p);
     Utils::fixSubpixelPosition(this);
 }
@@ -84,7 +87,6 @@ void setSpritesInvisible(CCNode* node){
 
 void setSpritesVisible(CCNode* node){
 
-
     for(int i = 0; i < node->getChildrenCount(); i++){
         CCSprite* spr = dynamic_cast<CCSprite*>(node->getChildren()->objectAtIndex(i));
         if(spr){
@@ -94,51 +96,56 @@ void setSpritesVisible(CCNode* node){
     }
 }
 
-void MinecraftButton::setInvisible(){
+void MinecraftButtonChild::setInvisible(){
     this->isInvisible = true;
-    this->setOpacity(0);
     this->label->setOpacity(0);
-    this->edgeTexture->setOpacity(0);
     setSpritesInvisible(this);
 
 }
 
-void MinecraftButton::setVisibleFade(){
+void MinecraftButtonChild::setVisibleFade(){
 
-    this->runAction(CCFadeIn::create(1.0f));
-    this->label->runAction(CCFadeIn::create(1.0f));
-    this->edgeTexture->runAction(CCFadeIn::create(1.0f));
-
-    setSpritesVisible(this);
-	this->scheduleOnce(schedule_selector(MinecraftButton::setVisibleDelay), 1.0f);
+    if(!this->fadeStarted){
+        this->fadeStarted = true;
+        this->label->runAction(CCFadeIn::create(1.0f));
+        setSpritesVisible(this);
+        this->scheduleOnce(schedule_selector(MinecraftButtonChild::setVisibleDelay), 1.0f);
+    }
 
 }
 
-void MinecraftButton::setVisibleDelay(float dt){
+void MinecraftButtonChild::setVisibleDelay(float dt){
     this->isInvisible = false;
+    this->fadeStarted = false;
 }
 
-void MinecraftButton::onHover(){
-
+void MinecraftButtonChild::onHover(){
     if(!isInvisible){
-        CCSprite* buttonSprite = generateSprite("button_highlighted.png"_spr, width);
+        CCSprite* buttonSprite = generateSprite(this, "button_highlighted.png"_spr, width);
         this->setNormalImage(buttonSprite);
     }
 }
 
-void MinecraftButton::onHoverExit(){
+void MinecraftButtonChild::onHoverExit(){
 
     if(!isInvisible){
-        CCSprite* buttonSprite = generateSprite("button.png"_spr, width);
+        CCSprite* buttonSprite = generateSprite(this, "button.png"_spr, width);
         this->setNormalImage(buttonSprite);
     }
 }
 
-void MinecraftButton::selected(){
-    FMODAudioEngine::sharedEngine()->playEffect("click.ogg"_spr);
+void MinecraftButtonChild::selected(){
+    if(this->isHovering){
+        FMODAudioEngine::sharedEngine()->playEffect("click.ogg"_spr);
+        CCMenuItem::activate();
+    }
 }
 
-void MinecraftButton::update(float dt) {
+void MinecraftButtonChild::activate(){
+    //do nothing
+}
+
+void MinecraftButtonChild::update(float dt) {
 
     auto mousePos = getMousePos();
 

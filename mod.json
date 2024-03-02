@@ -1,9 +1,9 @@
 {
 	"geode": "2.0.0-beta.20",
 	"gd": "2.204",
-	"version": "v0.5.6",
+	"version": "v0.5.7",
 	"id": "zalphalaneous.minecraft",
-	"name": "Minecraft!",
+	"name": "Minecraftify!",
 	"developer": "Alphalaneous",
 	"description": "Makes GD turn into Minecraft",
 	"early-load" : true,
