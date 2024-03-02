@@ -9,16 +9,17 @@
 #include "ExtrasLayer.h"
 #include "Utils.h"
 #include "Panorama.h"
+#include "MinecraftLabel.h"
 
 using namespace geode::prelude;
 
-std::vector<std::string> splitString(const std::string& str, const std::string& delimiter)
+std::vector<std::wstring> splitString(const std::wstring& str, const std::wstring& delimiter)
 {
-    std::vector<std::string> strings;
+    std::vector<std::wstring> strings;
 
-    std::string::size_type pos = 0;
-    std::string::size_type prev = 0;
-    while ((pos = str.find(delimiter, prev)) != std::string::npos)
+    std::wstring::size_type pos = 0;
+    std::wstring::size_type prev = 0;
+    while ((pos = str.find(delimiter, prev)) != std::wstring::npos)
     {
         strings.push_back(str.substr(prev, pos - prev));
         prev = pos + delimiter.size();
@@ -40,25 +41,25 @@ int random(int min, int max)
 	return min + rand() % (( max + 1 ) - min);
 }
 
-std::vector<std::string> splashSplit;
+std::vector<std::wstring> splashSplit;
 bool hasBeenGenerated = false;
 
-std::string getSplashText(){
+std::wstring getSplashText(){
 	if(!hasBeenGenerated){
 		ghc::filesystem::path path = Mod::get()->getResourcesDir().append("splashes.txt");
 
-		std::ifstream input(path.string());
-		std::stringstream buffer;
+		std::wifstream input(path.string());
+		std::wstringstream buffer;
 		buffer << input.rdbuf();
 		input.close();
 
-		std::string splashText = buffer.str();
+		std::wstring splashText = buffer.str();
 
-		splashSplit = splitString(splashText, "\n");
+		splashSplit = splitString(splashText, L"\n");
 		hasBeenGenerated = true;
 	}
 
-	std::string newSplash = splashSplit.at(random(0, splashSplit.size()-1));
+	std::wstring newSplash = splashSplit.at(random(0, splashSplit.size()-1));
 
 	return newSplash;
 }
@@ -80,7 +81,6 @@ class $modify(MyMenuLayer, MenuLayer) {
 
 		auto winSize = CCDirector::sharedDirector()->getWinSize();
 
-		
         float scale = CCDirector::sharedDirector()->getContentScaleFactor()/4;
 
 		Panorama* panorama = Panorama::create();
@@ -148,7 +148,6 @@ class $modify(MyMenuLayer, MenuLayer) {
 		extrasButton->setID("extras-button"_spr);
 
 		menu->ignoreAnchorPointForPosition(false);
-		menu->runAction(CCFadeIn::create(1.0f));
 
 		this->addChild(menu);
 		menu->setID("minecraft-menu"_spr);
@@ -168,21 +167,22 @@ class $modify(MyMenuLayer, MenuLayer) {
 		title->addChild(subTitle);
 		subTitle->setID("minecraft-subtitle"_spr);
 
-		CCLabelBMFont* versionText = CCLabelBMFont::create("Minecraft 2.2 (Geode)", "minecraft.fnt"_spr);
+		MinecraftLabel* versionText = MinecraftLabel::create("Minecraft 2.2 (Geode)", "minecraft.fnt"_spr);
 		versionText->setAnchorPoint({0, 0});
 		versionText->setScale(0.42f);
 		this->addChild(versionText);
 		versionText->setID("version-text"_spr);
 
-		CCLabelBMFont* creatorName = CCLabelBMFont::create("Copyright RobTop Games AB. Do not distribute!", "minecraft.fnt"_spr);
+		MinecraftLabel* creatorName = MinecraftLabel::create("Copyright RobTop Games AB. Do not distribute!", "minecraft.fnt"_spr);
 		creatorName->setAnchorPoint({1, 0});
 		creatorName->setScale(0.42f);
 		this->addChild(creatorName);
 		creatorName->setID("copyright-text"_spr);
 
-		gd::string text = getSplashText();
+		std::wstring text = getSplashText();
 
-		CCLabelBMFont* splashText = CCLabelBMFont::create(text.c_str(), "minecraft-gold.fnt"_spr);
+		MinecraftLabel* splashText = MinecraftLabel::create(text, "minecraft-opaque.fnt"_spr);
+		splashText->setColor({255,255,0});
 		splashText->setPosition({title->getContentSize().width,(title->getContentSize().height) /2});
 		splashText->setZOrder(3);
 		splashText->setRotation(-20);
@@ -247,7 +247,7 @@ class $modify(MyMenuLayer, MenuLayer) {
 
 		for(int i = 0; i < menu->getChildrenCount(); i++){
 			MinecraftButton* button = dynamic_cast<MinecraftButton*>(menu->getChildren()->objectAtIndex(i));
-			if(button) button->setVisible();
+			if(button) button->setVisibleFade();
 		}
 		
 	}
@@ -267,9 +267,9 @@ class $modify(MyMenuLayer, MenuLayer) {
 
 		CCSprite* title = dynamic_cast<CCSprite*>(this->getChildByIDRecursive("minecraft-title"_spr));
 		CCSprite* subtitle = dynamic_cast<CCSprite*>(this->getChildByIDRecursive("minecraft-subtitle"_spr));
-		CCLabelBMFont* splash = dynamic_cast<CCLabelBMFont*>(this->getChildByIDRecursive("splash-text"_spr));
-		CCLabelBMFont* version = dynamic_cast<CCLabelBMFont*>(this->getChildByID("version-text"_spr));
-		CCLabelBMFont* creator = dynamic_cast<CCLabelBMFont*>(this->getChildByID("copyright-text"_spr));
+		MinecraftLabel* splash = dynamic_cast<MinecraftLabel*>(this->getChildByIDRecursive("splash-text"_spr));
+		MinecraftLabel* version = dynamic_cast<MinecraftLabel*>(this->getChildByID("version-text"_spr));
+		MinecraftLabel* creator = dynamic_cast<MinecraftLabel*>(this->getChildByID("copyright-text"_spr));
 
 		setInvisible(menu);
 
@@ -281,6 +281,8 @@ class $modify(MyMenuLayer, MenuLayer) {
 	}
 
 	void setAllVisible(float dt){
+
+
 
 		CCMenu* menu = dynamic_cast<CCMenu*>(this->getChildByID("minecraft-menu"_spr));
 
@@ -399,7 +401,7 @@ class $modify(MyLoadingLayer, LoadingLayer){
 	void doFadeOut(float dt){
 		CCLayerColor* loadingBar = dynamic_cast<CCLayerColor*>(this->getChildByID("loading-bar"_spr));
 		CCLayerColor* loadingBarBG2 = dynamic_cast<CCLayerColor*>(this->getChildByID("loading-bar-bg2"_spr));
-		CCLabelBMFont* loadingText = dynamic_cast<CCLabelBMFont*>(this->getChildByID("loading-text"_spr));
+		MinecraftLabel* loadingText = dynamic_cast<MinecraftLabel*>(this->getChildByID("loading-text"_spr));
 
 		CCFadeOut* fadeOut = CCFadeOut::create(1.0f);
 		loadingBar->runAction(fadeOut);
@@ -482,7 +484,7 @@ class $modify(MyLoadingLayer, LoadingLayer){
 
 
 
-		CCLabelBMFont* loadingText = CCLabelBMFont::create("", "/geode/unzipped/zalphalaneous.minecraft/resources/zalphalaneous.minecraft/minecraft.fnt");
+		MinecraftLabel* loadingText = MinecraftLabel::create("", "/geode/unzipped/zalphalaneous.minecraft/resources/zalphalaneous.minecraft/minecraft.fnt");
 		loadingText->setScale(0.4f);
 		loadingText->setPosition({winSize.width/2, 30});
 
@@ -514,7 +516,7 @@ class $modify(MyLoadingLayer, LoadingLayer){
 		}
 
 
-		CCLabelBMFont* loadingText = dynamic_cast<CCLabelBMFont*>(this->getChildByID("loading-text"_spr));
+		MinecraftLabel* loadingText = dynamic_cast<MinecraftLabel*>(this->getChildByID("loading-text"_spr));
 		loadingText->setString(loadingTextOrig->getString());
 	}
 
@@ -617,7 +619,7 @@ class $modify(MyCreatorLayer, CreatorLayer){
 
    	 	this->addChild(doneMenu);
 
-		CCLabelBMFont* titleText = CCLabelBMFont::create("Online Levels", "minecraft.fnt"_spr);
+		MinecraftLabel* titleText = MinecraftLabel::create("Online Levels", "minecraft.fnt"_spr);
 		titleText->setScale(0.4f);
 		titleText->setPosition({winSize.width/2, winSize.height-30});
 

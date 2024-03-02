@@ -1,4 +1,5 @@
 #include "MinecraftButton.h"
+#include "MinecraftLabel.h"
 
 CCSprite* generateEdgeSprite(gd::string textureName){
 
@@ -46,7 +47,7 @@ MinecraftButton* MinecraftButton::create(gd::string text, float width, CCObject*
     CCSprite* buttonSprite = generateSprite("button.png"_spr, width);
     ret->edgeTexture = dynamic_cast<CCSprite*>(buttonSprite->getChildByID("edge"_spr));
    
-    CCLabelBMFont* label = CCLabelBMFont::create(text.c_str(), "minecraft.fnt"_spr);
+    MinecraftLabel* label = MinecraftLabel::create(text, "minecraft.fnt"_spr);
     label->setScale(0.12f);
     label->setZOrder(1);
 
@@ -55,7 +56,6 @@ MinecraftButton* MinecraftButton::create(gd::string text, float width, CCObject*
         ret->autorelease();
         ret->scheduleUpdate();
         ret->setScale(3.5);
-        ret->init();
         ret->addChild(label);
         ret->label = label;
         label->setPosition({ret->getContentSize().width/2, ret->getContentSize().height/2});
@@ -76,13 +76,14 @@ void setSpritesInvisible(CCNode* node){
     }
 }
 
-
 void setSpritesVisible(CCNode* node){
+
+
     for(int i = 0; i < node->getChildrenCount(); i++){
         CCSprite* spr = dynamic_cast<CCSprite*>(node->getChildren()->objectAtIndex(i));
         if(spr){
             spr->runAction(CCFadeIn::create(1.0f));
-            setSpritesInvisible(spr);
+            setSpritesVisible(spr);
         }
     }
 }
@@ -96,7 +97,8 @@ void MinecraftButton::setInvisible(){
 
 }
 
-void MinecraftButton::setVisible(){
+void MinecraftButton::setVisibleFade(){
+
     this->runAction(CCFadeIn::create(1.0f));
     this->label->runAction(CCFadeIn::create(1.0f));
     this->edgeTexture->runAction(CCFadeIn::create(1.0f));

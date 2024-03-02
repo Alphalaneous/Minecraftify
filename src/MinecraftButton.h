@@ -15,7 +15,7 @@ public:
     void onHoverExit();
     void selected();
     void setInvisible();
-    void setVisible();
+    void setVisibleFade();
     void setVisibleDelay(float dt);
 private:
     bool isHovering = false;

@@ -2,6 +2,7 @@
 #include "MinecraftButton.h"
 #include "Utils.h"
 #include "NewgroundsAlertProtocol.h"
+#include "MinecraftLabel.h"
 
 ExtrasLayer* ExtrasLayer::create() {
     auto ret = new ExtrasLayer();
@@ -121,7 +122,7 @@ bool ExtrasLayer::init() {
 
     this->addChild(doneMenu);
 
-    CCLabelBMFont* titleText = CCLabelBMFont::create("Extras", "minecraft.fnt"_spr);
+    MinecraftLabel* titleText = MinecraftLabel::create("Extras", "minecraft.fnt"_spr);
     titleText->setScale(0.4f);
     titleText->setPosition({winSize.width/2, winSize.height-30});
 
