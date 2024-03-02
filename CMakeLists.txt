@@ -21,11 +21,3 @@ endif()
 add_subdirectory($ENV{GEODE_SDK} ${CMAKE_CURRENT_BINARY_DIR}/geode)
 
 setup_geode_mod(${PROJECT_NAME})
-
-if(WIN32)
-    target_link_libraries(${PROJECT_NAME} opengl32)
-elseif(APPLE)
-    target_link_libraries(${PROJECT_NAME} "-framework OpenGL -framework Cocoa")
-elseif(ANDROID)
-    target_link_libraries(${PROJECT_NAME} GLESv2)
-endif()

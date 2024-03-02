@@ -39,8 +39,8 @@ public:
 
         spr->setScale(scale);
 
-        ccTexParams* params = new ccTexParams{GL_NEAREST, GL_NEAREST, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE};
-        spr->getTexture()->setTexParameters(params);
+        ccTexParams params = {GL_NEAREST, GL_NEAREST, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE};
+        spr->getTexture()->setTexParameters(&params);
 
         return spr;
     }
@@ -51,28 +51,23 @@ public:
 
         float scale = CCDirector::sharedDirector()->getContentScaleFactor()/4;
 
-        CCNode* dirtNode = CCNode::create();
-        dirtNode->setZOrder(-999);
-        float x = 0;
-        float y = 0;
+        CCSprite* dirt = CCSprite::create("light_dirt_background.png"_spr);
 
-        while(true){
-            CCSprite* dirt = Utils::createPixelSprite("light_dirt_background.png"_spr);
-            dirt->setAnchorPoint({0,0});
-            dirt->setScale(7.5 * scale);
-            dirt->setOpacity(200);
-            dirt->setPosition({x*dirt->getScaledContentSize().width, y*dirt->getScaledContentSize().height});
-            dirtNode->addChild(dirt);
-            x++;
-            if(dirt->getPositionX() + dirt->getScaledContentSize().width > winSize.width){
-                x=0;
-                y++;
-            }
-            if(dirt->getPositionY() + dirt->getScaledContentSize().height > winSize.height + dirt->getScaledContentSize().height){
-                break;
-            }
-        }
-        return dirtNode;
+        // set GL_REPEAT to.. repeat the texture
+        ccTexParams params = {GL_NEAREST, GL_NEAREST, GL_REPEAT, GL_REPEAT};
+        dirt->getTexture()->setTexParameters(&params);
+        
+        dirt->setZOrder(-999);
+        dirt->setAnchorPoint({0, 0});
+        dirt->setScale(7.5 * scale);
+        dirt->setOpacity(200);
+        dirt->setPosition({0, 0});
+
+        auto rect = dirt->getTextureRect();
+        rect.size = rect.size * (CCPoint(winSize) / CCPoint(dirt->getScaledContentSize()));
+        dirt->setTextureRect(rect);
+
+        return dirt;
     }
 
 };
