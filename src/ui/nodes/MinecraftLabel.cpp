@@ -75,8 +75,6 @@ ccColor3B colorForCode(wchar_t code){
         default:
             return {255,255,255};
     }
-
-
 }
 
 void MinecraftLabel::setColor(ccColor3B color){

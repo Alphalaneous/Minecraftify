@@ -62,6 +62,20 @@ bool Panorama::init(){
         "panorama_2.png"_spr
     };
 
+    if (Mod::get()->getSettingValue<bool>("use-gd-pano"))
+    {
+        // much easier to do this
+        faces = {
+            "gd-background.png"_spr,
+            "gd-background.png"_spr,
+            "gd-background.png"_spr,
+            "gd-background.png"_spr,
+            "gd-background.png"_spr,
+            "gd-background.png"_spr
+        };
+    }
+
+
     glGenTextures(1, &textureID);
     glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
 

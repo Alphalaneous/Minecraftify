@@ -9,6 +9,9 @@
 #include "../layers/MCOptionsLayer.h"
 #include "../layers/ExtrasLayer.h"
 
+// for minceraft easter egg brought by yours truly undefined
+#include <random>
+
 using namespace geode::prelude;
 
 class $modify(MyMenuLayer, MenuLayer) {
@@ -98,7 +101,14 @@ class $modify(MyMenuLayer, MenuLayer) {
 		this->addChild(menu);
 		menu->setID("minecraft-menu"_spr);
 
-		CCSprite* title = Utils::createPixelSprite("minecraft-title.png"_spr);
+		// 1 / 1000 chance of minceraft, unless disabled
+		auto titleSprite = "minecraft-title.png"_spr;
+		// ok so I dont actually know how to get this to only run once but it's fine nobody will notice
+		if (MyMenuLayer::getRandomMinceraftChance(nullptr) == 1 && !Mod::get()->getSettingValue<bool>("disable-minceraft")) {
+			titleSprite = "minceraft-title.png"_spr;
+		}
+
+		CCSprite* title = Utils::createPixelSprite(titleSprite);
 		title->setScale(title->getScale()*0.9);
 		
 
@@ -187,7 +197,18 @@ class $modify(MyMenuLayer, MenuLayer) {
 		return true;
 	}
 
-
+	// generate random number between 1 and 1000
+	// this should probably not be defined here but if you want
+	// it somewhere else just say or smth
+	int getRandomMinceraftChance(CCObject* sender)
+	{
+		std::random_device dev;
+		std::mt19937 rng(dev());
+		std::uniform_int_distribution<uint32_t> chance(1, 1000);
+		int randMinceraftChance = chance(rng);
+		std::cout << std::to_string(randMinceraftChance) << std::endl;
+		return randMinceraftChance;
+	}
 
 	void setVisible(CCMenu* menu){
 
