@@ -29,6 +29,7 @@ void MinecraftButton::setVisibleFade(){
 }
 
 void MinecraftButton::addSprite(CCSprite* sprite){
+    sprite->setZOrder(5);
     this->child->addChild(sprite);
 }
 

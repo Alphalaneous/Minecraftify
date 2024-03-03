@@ -1,7 +1,7 @@
 {
 	"geode": "2.0.0-beta.20",
 	"gd": "2.204",
-	"version": "v0.5.7",
+	"version": "v0.5.8",
 	"id": "zalphalaneous.minecraft",
 	"name": "Minecraftify!",
 	"developer": "Alphalaneous",
@@ -14,7 +14,8 @@
 			"assets/textures/*",
 			"assets/texts/*",
 			"assets/panorama/*",
-			"assets/shaders/*"
+			"assets/shaders/*",
+			"assets/logo.ico"
         ]
     },
 	"dependencies": [
@@ -31,19 +32,24 @@
             "version": "*"
         },
 		{
-			"id": "devcmb.cleanermenu",
+            "id": "devcmb.cleanermenu",
             "importance": "breaking",
             "version": "*"
-		},
+        },
 		{
-			"id": "artoree.enhanced_menu",
+            "id": "artoree.enhanced_menu",
             "importance": "breaking",
             "version": "*"
-		},
+        },
 		{
-			"id": "undefined0.minecraft_menu",
+            "id": "undefined0.minecraft_menu",
             "importance": "breaking",
             "version": "*"
-		}
+        },
+        {
+            "id": "skyward.no_robtop_logo",
+            "importance": "breaking",
+            "version": "*"
+        }
     ]
 }

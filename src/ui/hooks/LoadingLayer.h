@@ -45,6 +45,20 @@ class $modify(MyLoadingLayer, LoadingLayer){
 			return false;
 		}
 
+#ifdef GEODE_WINDOWS
+		auto hwnd = FindWindowW(NULL, L"Geometry Dash");
+    	SetWindowTextA(hwnd, "Minecraft* 2.2");
+
+		std::string path = Mod::get()->getResourcesDir().append("logo.ico").string();
+
+
+		log::info("{}", path);
+
+		HICON hIcon = (HICON)LoadImage(NULL, path.c_str(), IMAGE_ICON, 32, 32, LR_LOADFROMFILE);
+		SendMessage(hwnd, WM_SETICON, ICON_SMALL, (LPARAM)hIcon);
+
+#endif
+
 		CCLabelBMFont* loadingTextOrig = dynamic_cast<CCLabelBMFont*>(this->getChildByID("geode-small-label"));
 		loadingTextOrig->setVisible(false);
 
