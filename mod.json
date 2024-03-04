@@ -6,50 +6,62 @@
 	"name": "Minecraftify!",
 	"developer": "Alphalaneous",
 	"description": "Makes GD turn into Minecraft",
-	"early-load" : true,
-	"resources": {
-		"files": [
-			"assets/sounds/*",
-			"assets/fonts/*",
-			"assets/textures/*",
-			"assets/texts/*",
-			"assets/panorama/*",
-			"assets/shaders/*",
-			"assets/logo.ico"
-        ]
-    },
-	"dependencies": [
-        {
-            "id": "geode.node-ids",
-            "version": "v1.7.1",
-            "importance": "required"
-        }
-    ],
-	"incompatibilities": [
-        {
-            "id": "muhammadgames.bettermenu",
-            "importance": "breaking",
-            "version": "*"
-        },
-		{
-            "id": "devcmb.cleanermenu",
-            "importance": "breaking",
-            "version": "*"
-        },
-		{
-            "id": "artoree.enhanced_menu",
-            "importance": "breaking",
-            "version": "*"
-        },
-		{
-            "id": "undefined0.minecraft_menu",
-            "importance": "breaking",
-            "version": "*"
-        },
-        {
-            "id": "skyward.no_robtop_logo",
-            "importance": "breaking",
-            "version": "*"
-        }
+  "early-load": true,
+
+  "resources": {
+    "files": [
+      "assets/sounds/*",
+      "assets/fonts/*",
+      "assets/textures/*",
+      "assets/texts/*",
+      "assets/panorama/*",
+      "assets/shaders/*",
+      "assets/logo.ico"
     ]
+  },
+
+  "settings": {
+    "disable-minceraft": {
+      "name": "Disable Minceraft easter egg",
+      "type": "bool",
+      "default": false,
+      "description": "In Minecraft there's a 1/1000 chance of the title text turning into \"Minceraft\" on startup, this option disables that."
+    }
+  },
+
+  "dependencies": [
+    {
+      "id": "geode.node-ids",
+      "version": "v1.7.1",
+      "importance": "required"
+    }
+  ],
+
+  "incompatibilities": [
+    {
+      "id": "muhammadgames.bettermenu",
+      "importance": "breaking",
+      "version": "*"
+    },
+    {
+      "id": "devcmb.cleanermenu",
+      "importance": "breaking",
+      "version": "*"
+    },
+    {
+      "id": "artoree.enhanced_menu",
+      "importance": "breaking",
+      "version": "*"
+    },
+    {
+      "id": "undefined0.minecraft_menu",
+      "importance": "breaking",
+      "version": "*"
+    },
+    {
+      "id": "skyward.no_robtop_logo",
+      "importance": "breaking",
+      "version": "*"
+    }
+  ]
 }
