@@ -26,12 +26,6 @@
       "type": "bool",
       "default": false,
       "description": "In Minecraft there's a 1/1000 chance of the title text turning into \"Minceraft\" on startup, this option disables that."
-    },
-    "use-gd-pano": {
-      "name": "Use GD's background for the panorama",
-      "type": "bool",
-      "default": false,
-      "description": "Use GD's default background for the title screen panorama instead of Minecraft's one."
     }
   },
 
