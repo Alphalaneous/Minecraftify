@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Geode/Geode.hpp>
+#include <random>
 
 using namespace geode::prelude;
 
@@ -103,12 +104,22 @@ public:
     }
 
     static int random(int min, int max) {
-        static bool first = true;
-        if (first) {  
-            srand( time(NULL) );
-            first = false;
+        std::random_device dev;
+        std::mt19937 rng(dev());
+        std::uniform_int_distribution<uint32_t> chance(min, max);
+        
+        return chance(rng);
+    }
+
+    static bool isMinceraft(){
+
+        static bool isGenerated = false;
+        static bool result = false; 
+        if(!isGenerated){
+            result = random(1, 1000) == 1;
+            isGenerated = true;
         }
-        return min + rand() % (( max + 1 ) - min);
+        return result;
     }
 
     inline static std::vector<std::wstring> splashSplit;
