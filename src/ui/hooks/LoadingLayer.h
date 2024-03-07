@@ -45,7 +45,7 @@ class $modify(MyLoadingLayer, LoadingLayer){
 			return false;
 		}
 
-#ifdef GEODE_WINDOWS
+#ifdef GEODE_IS_WINDOWS
 		auto hwnd = FindWindowW(NULL, L"Geometry Dash");
     	SetWindowTextA(hwnd, "Minecraft* 2.2");
 
