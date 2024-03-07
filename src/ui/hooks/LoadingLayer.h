@@ -3,6 +3,7 @@
 #include "../nodes/MinecraftButton.h"
 #include "../nodes/MinecraftLabel.h"
 
+#ifdef GEODE_IS_WINDOWS
 class $modify(MyLoadingLayer, LoadingLayer){
 
 	float lastWidth = 1;
@@ -155,3 +156,4 @@ class $modify(MyLoadingLayer, LoadingLayer){
 	}
 
 };
+#endif
