@@ -87,6 +87,8 @@ public:
         return dirt;
     }
 
+    #ifdef GEODE_IS_WINDOWS
+
     static std::vector<std::wstring> splitString(const std::wstring& str, const std::wstring& delimiter) {
         std::vector<std::wstring> strings;
 
@@ -102,6 +104,28 @@ public:
 
         return strings;
     }
+
+    #endif
+
+    #ifdef GEODE_IS_ANDROID
+
+    static std::vector<std::string> splitString(const std::string& str, const std::string& delimiter) {
+        std::vector<std::string> strings;
+
+        std::string::size_type pos = 0;
+        std::string::size_type prev = 0;
+        while ((pos = str.find(delimiter, prev)) != std::string::npos)
+        { 
+            strings.push_back(str.substr(prev, pos - prev));
+            prev = pos + delimiter.size();
+        }
+
+        strings.push_back(str.substr(prev));
+
+        return strings;
+    }
+
+    #endif
 
     static int random(int min, int max) {
         std::random_device dev;
@@ -121,6 +145,8 @@ public:
         }
         return result;
     }
+
+    #ifdef GEODE_IS_WINDOWS
 
     inline static std::vector<std::wstring> splashSplit;
     inline static bool hasBeenGenerated = false;
@@ -144,4 +170,33 @@ public:
 
         return newSplash;
     }
+
+    #endif
+
+    #ifdef GEODE_IS_ANDROID
+
+    inline static std::vector<std::string> splashSplit;
+    inline static bool hasBeenGenerated = false;
+
+    static std::string getSplashText(){
+        if(!hasBeenGenerated){
+            ghc::filesystem::path path = Mod::get()->getResourcesDir().append("splashes.txt");
+
+            std::ifstream input(path.string());
+            std::stringstream buffer;
+            buffer << input.rdbuf();
+            input.close();
+
+            std::string splashText = buffer.str();
+
+            splashSplit = Utils::splitString(splashText, L"\n");
+            hasBeenGenerated = true;
+        }
+
+        std::string newSplash = splashSplit.at(random(0, splashSplit.size()-1));
+
+        return newSplash;
+    }
+
+    #endif
 };

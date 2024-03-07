@@ -129,9 +129,22 @@ class $modify(MyMenuLayer, MenuLayer) {
 		this->addChild(creatorName);
 		creatorName->setID("copyright-text"_spr);
 
+		#ifdef GEODE_IS_WINDOWS
+
 		std::wstring text = Utils::getSplashText();
 
 		MinecraftLabel* splashText = MinecraftLabel::create(text, "minecraft.fnt"_spr);
+
+		#endif
+
+		#ifdef GEODE_IS_ANDROID
+		
+		std::string text = Utils::getSplashText();
+
+		MinecraftLabel* splashText = MinecraftLabel::create(text, "minecraft.fnt"_spr);
+
+		#endif
+
 		splashText->setColor({255,255,0});
 		splashText->setPosition({title->getContentSize().width,(title->getContentSize().height) /2});
 		splashText->setZOrder(3);
