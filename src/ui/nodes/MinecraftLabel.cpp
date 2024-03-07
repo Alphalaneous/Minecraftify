@@ -1,5 +1,6 @@
 #include "MinecraftLabel.h"
 #include "../../utils/Utils.h"
+#include <cstdlib>
 
 struct ColorPos {
     unsigned int pos;
@@ -9,9 +10,10 @@ struct ColorPos {
 std::string what_the_fuck(std::wstring wstr) {
     
     int slength = (int)wstr.length() + 1;
-    int len = WideCharToMultiByte(CP_ACP, 0, wstr.c_str(), slength, 0, 0, 0, 0);
+    int len = wcstombs(nullptr, data(wstr), size(wstr));
     std::string r(len, '\0');
-    WideCharToMultiByte(CP_ACP, 0, wstr.c_str(), slength, &r[0], len, 0, 0); 
+    wcstombs(data(r), data(wstr), size(wstr));
+
     return r;
 }
 
