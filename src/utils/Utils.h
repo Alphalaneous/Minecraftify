@@ -189,7 +189,7 @@ public:
 
             std::string splashText = buffer.str();
 
-            splashSplit = Utils::splitString(splashText, L"\n");
+            splashSplit = Utils::splitString(splashText, "\n");
             hasBeenGenerated = true;
         }
 
