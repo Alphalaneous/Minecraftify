@@ -1,8 +1,7 @@
 {
 	"geode": "2.0.0-beta.20",
 	"gd": {
-		"win": "2.204",
-		"android": "2.205"
+		"win": "2.204"
 	},
 	"version": "v0.5.10",
 	"id": "zalphalaneous.minecraft",

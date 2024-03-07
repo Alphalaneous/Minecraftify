@@ -37,7 +37,6 @@ MinecraftLabel* MinecraftLabel::create(std::wstring text, std::string font){
 }
 
 
-
 ccColor3B colorForCode(wchar_t code){
 
     switch(code){
@@ -93,6 +92,8 @@ bool isValidChar(wchar_t c){
     return (s.find(c) != std::wstring::npos);
 }
 
+#ifdef GEODE_IS_WINDOWS
+
 bool MinecraftLabel::init(std::wstring text, std::string font){
 
     std::vector<ColorPos> colorPositions;
@@ -141,6 +142,29 @@ bool MinecraftLabel::init(std::wstring text, std::string font){
 
     return true;
 }
+
+#endif
+
+#ifdef GEODE_IS_ANDROID
+
+bool MinecraftLabel::init(std::string text, std::string font){
+ 
+    CCLabelBMFont::initWithString(text.c_str(), font.c_str());
+
+    //fix subpixeling
+
+    for(int i = 0; i < getChildrenCount(); i++){
+        CCSprite* spr = dynamic_cast<CCSprite*>(getChildren()->objectAtIndex(i)); 
+
+        Utils::fixSubpixelPosition(spr);
+    }
+
+    Utils::fixSubpixelPosition(this);
+
+    return true;
+}
+
+#endif
 
 void MinecraftLabel::setPosition(CCPoint p){
     CCNode::setPosition(p);
