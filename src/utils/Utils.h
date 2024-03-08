@@ -5,7 +5,7 @@
 
 using namespace geode::prelude;
 
-struct ImageCache{
+struct ImageData {
     std::string filePath;
     CCImage* img;
     CCTexture2D* texture;
@@ -15,17 +15,17 @@ class Utils {
 
 public:
 
-    inline static std::vector<ImageCache> imageCache;
+    inline static std::vector<ImageData> imageCache;
 
     static void generateTexture(std::string filePath, GLenum target){
 
-        ImageCache imgCache;
+        ImageData imgData;
 
         bool found = false;
 
-        for(ImageCache i : imageCache){
+        for(ImageData i : imageCache){
             if(i.filePath == filePath){
-                imgCache = i;
+                imgData = i;
                 found = true;
                 break;
             }
@@ -40,19 +40,19 @@ public:
             texture->initWithImage(img);
             texture->retain();
 
-            imgCache.filePath = filePath;
-            imgCache.img = img;
-            imgCache.texture = texture;
+            imgData.filePath = filePath;
+            imgData.img = img;
+            imgData.texture = texture;
 
-            imageCache.push_back(imgCache);
+            imageCache.push_back(imgData);
         }
 
-        int pixelsWide = imgCache.texture->getPixelsWide();
-        int pixelsHigh = imgCache.texture->getPixelsHigh();
+        int pixelsWide = imgData.texture->getPixelsWide();
+        int pixelsHigh = imgData.texture->getPixelsHigh();
         
-        CCTexture2DPixelFormat pixelFormat = imgCache.texture->getPixelFormat();
+        CCTexture2DPixelFormat pixelFormat = imgData.texture->getPixelFormat();
 
-        auto data = imgCache.img->getData();
+        auto data = imgData.img->getData();
 
         switch(pixelFormat)
         {
