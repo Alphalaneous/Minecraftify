@@ -5,9 +5,55 @@
 
 using namespace geode::prelude;
 
+
 class Utils {
 
 public:
+
+    static void generateTexture(std::string filePath, GLenum target){
+
+        CCImage img;
+        img.initWithImageFile(filePath.c_str());
+
+        CCTexture2D texture;
+        texture.initWithImage(&img);
+
+        int pixelsWide = texture.getPixelsWide();
+        int pixelsHigh = texture.getPixelsHigh();
+        
+        CCTexture2DPixelFormat pixelFormat = texture.getPixelFormat();
+
+        auto data = img.getData();
+
+        switch(pixelFormat)
+        {
+        case kCCTexture2DPixelFormat_RGBA8888:
+            glTexImage2D(target, 0, GL_RGBA, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+            break;
+        case kCCTexture2DPixelFormat_RGB888:
+            glTexImage2D(target, 0, GL_RGB, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+            break;
+        case kCCTexture2DPixelFormat_RGBA4444:
+            glTexImage2D(target, 0, GL_RGBA, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4, data);
+            break;
+        case kCCTexture2DPixelFormat_RGB5A1:
+            glTexImage2D(target, 0, GL_RGBA, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1, data);
+            break;
+        case kCCTexture2DPixelFormat_RGB565:
+            glTexImage2D(target, 0, GL_RGB, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, data);
+            break;
+        case kCCTexture2DPixelFormat_AI88:
+            glTexImage2D(target, 0, GL_LUMINANCE_ALPHA, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, data);
+            break;
+        case kCCTexture2DPixelFormat_A8:
+            glTexImage2D(target, 0, GL_ALPHA, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_ALPHA, GL_UNSIGNED_BYTE, data);
+            break;
+        case kCCTexture2DPixelFormat_I8:
+            glTexImage2D(target, 0, GL_LUMINANCE, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, data);
+            break;
+        }
+    }
+
 
     static CCSprite* createSprite(gd::string path){
 

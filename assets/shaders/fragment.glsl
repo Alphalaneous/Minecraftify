@@ -10,7 +10,7 @@ void main(){
     float rotX = (time / resolution.x) * -20.0 * 3.14;
     float rotY = (resolution.y/2 / resolution.y) * 3.14;
     
-    vec2 uv = 2.5 * (gl_FragCoord.xy - 0.5 * resolution.xy) / resolution.xx;
+    vec2 uv = 4 * (gl_FragCoord.xy - 0.5 * resolution.xy) / resolution.xx;
     
     vec3 camO = vec3(cos(rotX), cos(rotY), sin(rotX));
     

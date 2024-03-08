@@ -1,5 +1,6 @@
 #include "Panorama.h"
 #include "../../utils/GlobalVars.h"
+#include "../../utils/Utils.h"
 
 Panorama* Panorama::create(){
     auto node = new Panorama;
@@ -66,16 +67,9 @@ bool Panorama::init(){
     glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
 
     for (unsigned int i = 0; i < faces.size(); i++) {
-
-        CCImage img;
-        img.initWithImageFile(faces[i].c_str());
-
-        glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,  0, 
-            GL_RGB, 
-            img.getWidth(),  
-            img.getHeight(), 0, GL_RGB, GL_UNSIGNED_BYTE, img.getData());
-
+        Utils::generateTexture(faces[i].c_str(), GL_TEXTURE_CUBE_MAP_POSITIVE_X + i);
     }
+
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
