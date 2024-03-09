@@ -32,22 +32,21 @@ class $modify(MyMenuLayer, MenuLayer) {
 		panorama->setID("minecraft-panorama"_spr);
 		this->addChild(panorama);
 
-		this->getChildByID("main-menu")->setVisible(false);
-		this->getChildByID("profile-menu")->setVisible(false);
-		this->getChildByID("player-username")->setVisible(false);
-		this->getChildByID("social-media-menu")->setVisible(false);
-		this->getChildByID("close-menu")->setVisible(false);
-		this->getChildByID("bottom-menu")->setVisible(false);
-		this->getChildByID("more-games-menu")->setVisible(false);
-		this->getChildByID("main-menu-bg")->setVisible(false);
-		this->getChildByID("main-menu-bg")->setScale(0);
-		this->getChildByID("right-side-menu")->setVisible(false);
-		CCMenu* deathLinkMenu = dynamic_cast<CCMenu*>(this->getChildByID("alphalaneous.deathlink/deathlink-menu"));
+		this->getChildByIDRecursive("main-menu")->setVisible(false);
+		this->getChildByIDRecursive("profile-menu")->setVisible(false);
+		this->getChildByIDRecursive("player-username")->setVisible(false);
+		this->getChildByIDRecursive("social-media-menu")->setVisible(false);
+		this->getChildByIDRecursive("close-menu")->setVisible(false);
+		this->getChildByIDRecursive("bottom-menu")->setVisible(false);
+		this->getChildByIDRecursive("more-games-menu")->setVisible(false);
+		this->getChildByIDRecursive("main-menu-bg")->setVisible(false);
+		this->getChildByIDRecursive("main-menu-bg")->setScale(0);
+		this->getChildByIDRecursive("right-side-menu")->setVisible(false);
+		CCMenu* deathLinkMenu = dynamic_cast<CCMenu*>(this->getChildByIDRecursive("alphalaneous.deathlink/deathlink-menu"));
 		if(deathLinkMenu) deathLinkMenu->setVisible(false);
 
-
-		CCSprite* mainTitle = dynamic_cast<CCSprite*>(this->getChildByID("main-title"));
-		mainTitle->setVisible(false);
+		CCSprite* mainTitle = dynamic_cast<CCSprite*>(this->getChildByIDRecursive("main-title"));
+		if(mainTitle) mainTitle->setVisible(false);
 
 		CCMenu* menu = CCMenu::create();
 
