@@ -1,12 +1,22 @@
 #include "MCOptionsLayer.h"
+#include "MCScrollLayer.h"
 #include "../../utils/Utils.h"
-#include "../../protocols/NewgroundsAlertProtocol.h"
-#include "../nodes/MinecraftLabel.h"
-#include "../nodes/MinecraftButton.h"
+#include "../nodes/MCLabel.h"
+#include "../nodes/MCButton.h"
+#include "../layers/settings/VideoSettings.h"
+#include "../layers/settings/GameplaySettings.h"
+#include "../layers/settings/PerformanceSettings.h"
+#include "../layers/settings/PracticeSettings.h"
+#include "../layers/settings/ControlsSettings.h"
+#include "../layers/settings/MiscSettings.h"
+#include "../layers/settings/HelpSettings.h"
+#include "../layers/settings/TutorialSettings.h"
+#include "../layers/settings/OnlineSettings.h"
+#include "../layers/settings/MusicAndSoundSettings.h"
 
-MCOptionsLayer* MCOptionsLayer::create() {
+MCOptionsLayer* MCOptionsLayer::create(bool fromRefresh) {
     auto ret = new MCOptionsLayer();
-    if (ret && ret->init()) {
+    if (ret && ret->init(fromRefresh)) {
         ret->autorelease();
     } else {
         delete ret;
@@ -15,7 +25,9 @@ MCOptionsLayer* MCOptionsLayer::create() {
     return ret;
 }
 
-bool MCOptionsLayer::init() {
+bool MCOptionsLayer::init(bool fromRefresh) {
+
+    this->fromRefresh = fromRefresh;
 
 	auto winSize = CCDirector::sharedDirector()->getWinSize();
 
@@ -35,28 +47,30 @@ bool MCOptionsLayer::init() {
 
     this->addChild(optionsLayer);
 
-    MinecraftLabel* titleText = MinecraftLabel::create("Options", "minecraft.fnt"_spr);
+    MCLabel* titleText = MCLabel::create("Options", "minecraft.fnt"_spr);
     titleText->setScale(0.4f);
     titleText->setPosition({winSize.width/2, winSize.height-30});
 
     this->addChild(titleText);
     titleText->setID("title-text"_spr);
 
-    MinecraftButton* accountButton = MinecraftButton::create("Online...", 39.1f, this, nullptr);
-    MinecraftButton* audioButton = MinecraftButton::create("Music & Sounds...", 39.1f, this, nullptr);
+    MCButton* accountButton = MCButton::create("Online...", 39.1f, this, menu_selector(MCOptionsLayer::onOnlineSettings));
+    MCButton* audioButton = MCButton::create("Music & Sounds...", 39.1f, this, menu_selector(MCOptionsLayer::onMusicAndSoundSettings));
 
-    MinecraftButton* graphicsButton = MinecraftButton::create("Video Settings...", 39.1f, this, nullptr);
-    MinecraftButton* gameplayButton = MinecraftButton::create("Gameplay Settings...", 39.1f, this, nullptr);
-    MinecraftButton* practiceButton = MinecraftButton::create("Practice Settings...", 39.1f, this, nullptr);
-    MinecraftButton* controlsButton = MinecraftButton::create("Controls...", 39.1f, this, nullptr);
-    MinecraftButton* miscellaneousButton = MinecraftButton::create("Miscellaneous...", 39.1f, this, nullptr);
+    MCButton* graphicsButton = MCButton::create("Video Settings...", 39.1f, this, menu_selector(MCOptionsLayer::onVideoSettings));
+    MCButton* performanceButton = MCButton::create("Performance Settings...", 39.1f, this, menu_selector(MCOptionsLayer::onPerformanceSettings));
+    MCButton* gameplayButton = MCButton::create("Gameplay Settings...", 39.1f, this, menu_selector(MCOptionsLayer::onGameplaySettings));
+    MCButton* practiceButton = MCButton::create("Practice Settings...", 39.1f, this, menu_selector(MCOptionsLayer::onPracticeSettings));
+
+    MCButton* controlsButton = MCButton::create("Controls...", 39.1f, this, menu_selector(MCOptionsLayer::onControlsSettings));
+    MCButton* miscellaneousButton = MCButton::create("Miscellaneous...", 39.1f, this, menu_selector(MCOptionsLayer::onMiscSettings));
     
-    MinecraftButton* rateButton = MinecraftButton::create("Rate...", 39.1f, this, nullptr);
-    MinecraftButton* helpButton = MinecraftButton::create("Help...", 39.1f, this, nullptr);
-    MinecraftButton* tutorialButton = MinecraftButton::create("Tutorial...", 49.1f, this, nullptr);
+    //MCButton* rateButton = MCButton::create("Rate...", 39.1f, this, menu_selector(MCOptionsLayer::onVideoSettings));
+    MCButton* helpButton = MCButton::create("Help...", 39.1f, this, menu_selector(MCOptionsLayer::onHelpSettings));
+    MCButton* tutorialButton = MCButton::create("Tutorial...", 39.1f, this, menu_selector(MCOptionsLayer::onTutorialSettings));
 
     CCMenu* doneMenu = CCMenu::create();
-    MinecraftButton* doneButton = MinecraftButton::create("Done", 49.1f, this, menu_selector(MCOptionsLayer::onBack));
+    MCButton* doneButton = MCButton::create("Done", 49.1f, this, menu_selector(MCOptionsLayer::onBack));
     doneMenu->addChild(doneButton);
     doneMenu->setPosition({winSize.width/2, 50});
     doneMenu->ignoreAnchorPointForPosition(false);
@@ -97,6 +111,7 @@ bool MCOptionsLayer::init() {
 
     
     minecraftButtonMenu->addChild(graphicsButton);
+    minecraftButtonMenu->addChild(performanceButton);
     minecraftButtonMenu->addChild(gameplayButton);
     minecraftButtonMenu->addChild(practiceButton);
     minecraftButtonMenu->addChild(controlsButton);
@@ -114,17 +129,62 @@ bool MCOptionsLayer::init() {
     return true;
 }
 
+void MCOptionsLayer::onVideoSettings(CCObject* obj){
+    CCDirector::sharedDirector()->pushScene(VideoSettings::scene());
+}
+
+void MCOptionsLayer::onPerformanceSettings(CCObject* obj){
+    CCDirector::sharedDirector()->pushScene(PerformanceSettings::scene());
+}
+
+void MCOptionsLayer::onGameplaySettings(CCObject* obj){
+    CCDirector::sharedDirector()->pushScene(GameplaySettings::scene());
+}
+
+void MCOptionsLayer::onPracticeSettings(CCObject* obj){
+    CCDirector::sharedDirector()->pushScene(PracticeSettings::scene());
+}
+
+void MCOptionsLayer::onControlsSettings(CCObject* obj){
+    CCDirector::sharedDirector()->pushScene(ControlsSettings::scene());
+}
+
+void MCOptionsLayer::onMiscSettings(CCObject* obj){
+    CCDirector::sharedDirector()->pushScene(MiscSettings::scene());
+}
+
+void MCOptionsLayer::onHelpSettings(CCObject* obj){
+    CCDirector::sharedDirector()->pushScene(HelpSettings::scene());
+}
+
+void MCOptionsLayer::onTutorialSettings(CCObject* obj){
+    CCDirector::sharedDirector()->pushScene(TutorialSettings::scene());
+}
+
+void MCOptionsLayer::onOnlineSettings(CCObject* obj){
+    CCDirector::sharedDirector()->pushScene(OnlineSettings::scene());
+}
+
+void MCOptionsLayer::onMusicAndSoundSettings(CCObject* obj){
+    CCDirector::sharedDirector()->pushScene(MusicAndSoundSettings::scene());
+}
 
 void MCOptionsLayer::keyBackClicked() {
-    CCDirector::sharedDirector()->popScene();
+
+    if(fromRefresh){
+        CCDirector::sharedDirector()->pushScene(MenuLayer::scene(false));
+    }
+    else{
+        CCDirector::sharedDirector()->popScene();
+    }
 }
 
 void MCOptionsLayer::onBack(CCObject* object) {
     keyBackClicked();
 }
 
-CCScene* MCOptionsLayer::scene() {
-    auto layer = MCOptionsLayer::create();
+CCScene* MCOptionsLayer::scene(bool fromRefresh) {
+    auto layer = MCOptionsLayer::create(fromRefresh);
     auto scene = CCScene::create();
     scene->addChild(layer);
     return scene;

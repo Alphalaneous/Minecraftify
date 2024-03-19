@@ -9,7 +9,6 @@ public:
     GLuint fragment = 0;
     GLuint program = 0;
 
-    Result<std::string> compile(std::string vertexSource, std::string fragmentSource);
-    Result<std::string> link();
+    void setup(std::string vertexSource, std::string fragmentSource);
     void cleanup();
 };

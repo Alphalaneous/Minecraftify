@@ -121,45 +121,33 @@ public:
         return spr;
     }
 
-    static void fixSubpixelPosition(CCNode* node){
-        /*if(node){
-            CCPoint coords = node->getPosition();
-            CCPoint location = CCDirector::sharedDirector()->convertToGL(coords);
+    static CCSprite* generateDirtBG(CCSize size){
 
-            float glX = std::floor(location.x);
-            float glY = std::floor(location.y);
-
-            CCPoint newLocation = CCDirector::sharedDirector()->convertToUI({glX, glY});
-
-            node->setPosition(newLocation);
-        }*/
-        
-        //todo find a way to fix subpixel issues
-    }
-
-    static CCNode* generateDirtBG(){
-
-		auto winSize = CCDirector::sharedDirector()->getWinSize();
+	    auto winSize = CCDirector::sharedDirector()->getWinSize();
 
         float scale = CCDirector::sharedDirector()->getContentScaleFactor()/4;
 
         CCSprite* dirt = CCSprite::create("light_dirt_background.png"_spr);
 
-        // set GL_REPEAT to.. repeat the texture
         ccTexParams params = {GL_NEAREST, GL_NEAREST, GL_REPEAT, GL_REPEAT};
         dirt->getTexture()->setTexParameters(&params);
         
         dirt->setZOrder(-999);
         dirt->setAnchorPoint({0, 0});
         dirt->setScale(7.5 * scale);
-        dirt->setOpacity(200);
+        dirt->setColor({200,200,200});
         dirt->setPosition({0, 0});
 
         auto rect = dirt->getTextureRect();
-        rect.size = rect.size * (CCPoint(winSize) / CCPoint(dirt->getScaledContentSize()));
+        rect.size = rect.size * (CCPoint(size) / CCPoint(dirt->getScaledContentSize()));
+        rect.origin = CCPoint{0, winSize.height};
         dirt->setTextureRect(rect);
 
         return dirt;
+    }
+
+    static CCSprite* generateDirtBG(){
+        return generateDirtBG(CCDirector::sharedDirector()->getWinSize());
     }
 
     static std::vector<std::wstring> splitString(const std::wstring& str, const std::wstring& delimiter) {
@@ -218,5 +206,56 @@ public:
         std::wstring newSplash = splashSplit.at(random(0, splashSplit.size()-1));
 
         return newSplash;
+    }
+
+    static std::string wstrToStr(std::wstring wstr) {
+    
+        int slength = (int)wstr.length() + 1;
+        int len = wcstombs(nullptr, data(wstr), size(wstr));
+        std::string r(len, '\0');
+        wcstombs(data(r), data(wstr), size(wstr));
+
+        return r;
+    }
+
+    static ccColor3B colorForCode(wchar_t code){
+
+        switch(code){
+
+            case '0':
+                return {0,0,0};
+            case '1':
+                return {0,0,170};
+            case '2':
+                return {0,170,0};
+            case '3':
+                return {0,170,170};
+            case '4':
+                return {170,0,0};
+            case '5':
+                return {170,0,170};
+            case '6':
+                return {255,170,0};
+            case '7':
+                return {170,170,170};
+            case '8':
+                return {85,85,85};
+            case '9':
+                return {85,85,255};
+            case 'a':
+                return {85,255,85};
+            case 'b':
+                return {85,255,255};
+            case 'c':
+                return {255,85,85};
+            case 'd':
+                return {255,85,255};
+            case 'e':
+                return {255,255,85};
+            case 'f':
+                return {255,255,255};
+            default:
+                return {255,255,255};
+        }
     }
 };

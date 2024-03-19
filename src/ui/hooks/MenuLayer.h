@@ -4,10 +4,11 @@
 #include "../../utils/GlobalVars.h"
 #include "../../utils/Utils.h"
 #include "../nodes/Panorama.h"
-#include "../nodes/MinecraftLabel.h"
-#include "../nodes/MinecraftButton.h"
+#include "../nodes/MCLabel.h"
+#include "../nodes/MCButton.h"
 #include "../layers/MCOptionsLayer.h"
 #include "../layers/ExtrasLayer.h"
+#include "../layers/settings/VideoSettings.h"
 
 using namespace geode::prelude;
 
@@ -18,6 +19,15 @@ class $modify(MyMenuLayer, MenuLayer) {
 	static void onModify(auto& self) {
         (void) self.setHookPriority("MenuLayer::init", -10000);
     }
+
+	/*static cocos2d::CCScene* scene(bool p0){
+		if(p0){
+			return VideoSettings::scene(true);
+		}
+		else {
+			return MenuLayer::scene(false);
+		}
+	}*/
 
 	bool init() {
 		if (!MenuLayer::init()) {
@@ -50,16 +60,16 @@ class $modify(MyMenuLayer, MenuLayer) {
 
 		CCMenu* menu = CCMenu::create();
 
-		MinecraftButton* playButton = MinecraftButton::create("Singleplayer", 49.1f, this, menu_selector(MenuLayer::onPlay));
-		MinecraftButton* editButton = MinecraftButton::create("Online Levels", 49.1f, this, menu_selector(MenuLayer::onCreator));
-		MinecraftButton* modsButton = MinecraftButton::create("Mods", 24.0f, this, menu_selector(MyMenuLayer::onMods));
-		MinecraftButton* skinButton = MinecraftButton::create("Skins", 24.0f, this, menu_selector(MenuLayer::onGarage));
+		MCButton* playButton = MCButton::create("Singleplayer", 49.1f, this, menu_selector(MenuLayer::onPlay));
+		MCButton* editButton = MCButton::create("Online Levels", 49.1f, this, menu_selector(MenuLayer::onCreator));
+		MCButton* modsButton = MCButton::create("Mods", 24.0f, this, menu_selector(MyMenuLayer::onMods));
+		MCButton* skinButton = MCButton::create("Skins", 24.0f, this, menu_selector(MenuLayer::onGarage));
 
-		MinecraftButton* optionsButton = MinecraftButton::create("Options...", 24.0f, this, menu_selector(MenuLayer::onOptions));
-		MinecraftButton* quitButton = MinecraftButton::create("Quit Game", 24.0f, this, menu_selector(MenuLayer::onQuit));
+		MCButton* optionsButton = MCButton::create("Options...", 24.0f, this, menu_selector(MenuLayer::onOptions));
+		MCButton* quitButton = MCButton::create("Quit Game", 24.0f, this, menu_selector(MenuLayer::onQuit));
 
-		MinecraftButton* profileButton = MinecraftButton::create("", 5.0f, this, menu_selector(MyMenuLayer::onMyProfile));
-		MinecraftButton* extrasButton = MinecraftButton::create("", 5.0f, this, menu_selector(MyMenuLayer::onExtras));
+		MCButton* profileButton = MCButton::create("", 5.0f, this, menu_selector(MyMenuLayer::onMyProfile));
+		MCButton* extrasButton = MCButton::create("", 5.0f, this, menu_selector(MyMenuLayer::onExtras));
 
 		CCSprite* profileSprite = Utils::createPixelSprite("language.png"_spr);
 		profileSprite->setZOrder(1);
@@ -116,13 +126,13 @@ class $modify(MyMenuLayer, MenuLayer) {
 		title->addChild(subTitle);
 		subTitle->setID("minecraft-subtitle"_spr);
 
-		MinecraftLabel* versionText = MinecraftLabel::create("Minecraft 2.2 (Geode)", "minecraft.fnt"_spr);
+		MCLabel* versionText = MCLabel::create("Minecraft 2.2 (Geode)", "minecraft.fnt"_spr);
 		versionText->setAnchorPoint({0, 0});
 		versionText->setScale(0.42f);
 		this->addChild(versionText);
 		versionText->setID("version-text"_spr);
 
-		MinecraftLabel* creatorName = MinecraftLabel::create("Copyright RobTop Games AB. Do not distribute!", "minecraft.fnt"_spr);
+		MCLabel* creatorName = MCLabel::create("Copyright RobTop Games AB. Do not distribute!", "minecraft.fnt"_spr);
 		creatorName->setAnchorPoint({1, 0});
 		creatorName->setScale(0.42f);
 		this->addChild(creatorName);
@@ -130,7 +140,7 @@ class $modify(MyMenuLayer, MenuLayer) {
 
 		std::wstring text = Utils::getSplashText();
 
-		MinecraftLabel* splashText = MinecraftLabel::create(text, "minecraft.fnt"_spr);
+		MCLabel* splashText = MCLabel::create(text, "minecraft.fnt"_spr);
 
 		splashText->setColor({255,255,0});
 		splashText->setPosition({title->getContentSize().width,(title->getContentSize().height) /2});
@@ -194,7 +204,7 @@ class $modify(MyMenuLayer, MenuLayer) {
 	void setVisible(CCMenu* menu){
 
 		for(int i = 0; i < menu->getChildrenCount(); i++){
-			MinecraftButton* button = dynamic_cast<MinecraftButton*>(menu->getChildren()->objectAtIndex(i));
+			MCButton* button = dynamic_cast<MCButton*>(menu->getChildren()->objectAtIndex(i));
 			if(button) button->setVisibleFade();
 		}
 		
@@ -203,7 +213,7 @@ class $modify(MyMenuLayer, MenuLayer) {
 	void setInvisible(CCMenu* menu){
 		
 		for(int i = 0; i < menu->getChildrenCount(); i++){
-			MinecraftButton* button = dynamic_cast<MinecraftButton*>(menu->getChildren()->objectAtIndex(i));
+			MCButton* button = dynamic_cast<MCButton*>(menu->getChildren()->objectAtIndex(i));
 			if(button)button->setInvisible();
 		}
 		
@@ -215,9 +225,9 @@ class $modify(MyMenuLayer, MenuLayer) {
 
 		CCSprite* title = dynamic_cast<CCSprite*>(this->getChildByIDRecursive("minecraft-title"_spr));
 		CCSprite* subtitle = dynamic_cast<CCSprite*>(this->getChildByIDRecursive("minecraft-subtitle"_spr));
-		MinecraftLabel* splash = dynamic_cast<MinecraftLabel*>(this->getChildByIDRecursive("splash-text"_spr));
-		MinecraftLabel* version = dynamic_cast<MinecraftLabel*>(this->getChildByID("version-text"_spr));
-		MinecraftLabel* creator = dynamic_cast<MinecraftLabel*>(this->getChildByID("copyright-text"_spr));
+		MCLabel* splash = dynamic_cast<MCLabel*>(this->getChildByIDRecursive("splash-text"_spr));
+		MCLabel* version = dynamic_cast<MCLabel*>(this->getChildByID("version-text"_spr));
+		MCLabel* creator = dynamic_cast<MCLabel*>(this->getChildByID("copyright-text"_spr));
 
 		setInvisible(menu);
 
@@ -294,18 +304,18 @@ class $modify(MyMenuLayer, MenuLayer) {
 
 		CCNode* menu = this->getChildByID("minecraft-menu"_spr);;
 
-		MinecraftButton* playButton = dynamic_cast<MinecraftButton*>(menu->getChildByID("play-button"_spr));
-		MinecraftButton* editButton = dynamic_cast<MinecraftButton*>(menu->getChildByID("edit-button"_spr));
-		MinecraftButton* modsButton = dynamic_cast<MinecraftButton*>(menu->getChildByID("mods-button"_spr));
-		MinecraftButton* skinButton = dynamic_cast<MinecraftButton*>(menu->getChildByID("skin-button"_spr));
-		MinecraftButton* optionsButton = dynamic_cast<MinecraftButton*>(menu->getChildByID("options-button"_spr));
-		MinecraftButton* quitButton = dynamic_cast<MinecraftButton*>(menu->getChildByID("quit-button"_spr));
-		MinecraftButton* profileButton = dynamic_cast<MinecraftButton*>(menu->getChildByID("profile-button"_spr));
-		MinecraftButton* extrasButton = dynamic_cast<MinecraftButton*>(menu->getChildByID("extras-button"_spr));
+		MCButton* playButton = dynamic_cast<MCButton*>(menu->getChildByID("play-button"_spr));
+		MCButton* editButton = dynamic_cast<MCButton*>(menu->getChildByID("edit-button"_spr));
+		MCButton* modsButton = dynamic_cast<MCButton*>(menu->getChildByID("mods-button"_spr));
+		MCButton* skinButton = dynamic_cast<MCButton*>(menu->getChildByID("skin-button"_spr));
+		MCButton* optionsButton = dynamic_cast<MCButton*>(menu->getChildByID("options-button"_spr));
+		MCButton* quitButton = dynamic_cast<MCButton*>(menu->getChildByID("quit-button"_spr));
+		MCButton* profileButton = dynamic_cast<MCButton*>(menu->getChildByID("profile-button"_spr));
+		MCButton* extrasButton = dynamic_cast<MCButton*>(menu->getChildByID("extras-button"_spr));
 
 		CCSprite* title = dynamic_cast<CCSprite*>(this->getChildByID("minecraft-title"_spr));
-		MinecraftLabel* version = dynamic_cast<MinecraftLabel*>(this->getChildByID("version-text"_spr));
-		MinecraftLabel* creator = dynamic_cast<MinecraftLabel*>(this->getChildByID("copyright-text"_spr));
+		MCLabel* version = dynamic_cast<MCLabel*>(this->getChildByID("version-text"_spr));
+		MCLabel* creator = dynamic_cast<MCLabel*>(this->getChildByID("copyright-text"_spr));
 
 		playButton->setPosition({winSize.width/2, winSize.height/2+45});
 		editButton->setPosition({winSize.width/2, winSize.height/2+23});

@@ -1,7 +1,7 @@
 #include <Geode/Geode.hpp>
 #include <Geode/modify/CreatorLayer.hpp>
-#include "../nodes/MinecraftButton.h"
-#include "../nodes/MinecraftLabel.h"
+#include "../nodes/MCButton.h"
+#include "../nodes/MCLabel.h"
 
 class $modify(MyCreatorLayer, CreatorLayer){
 
@@ -25,22 +25,22 @@ class $modify(MyCreatorLayer, CreatorLayer){
 
     	this->addChild(Utils::generateDirtBG());
 
-		MinecraftButton* createButton = MinecraftButton::create("Create", 39.1f, this, menu_selector(CreatorLayer::onMyLevels));
-		MinecraftButton* searchButton = MinecraftButton::create("Search", 39.1f, this, menu_selector(CreatorLayer::onOnlineLevels));
+		MCButton* createButton = MCButton::create("Create", 39.1f, this, menu_selector(CreatorLayer::onMyLevels));
+		MCButton* searchButton = MCButton::create("Search", 39.1f, this, menu_selector(CreatorLayer::onOnlineLevels));
 
-		MinecraftButton* featuredButton = MinecraftButton::create("Featured", 39.1f, this, menu_selector(CreatorLayer::onFeaturedLevels));
-		MinecraftButton* dailyButton = MinecraftButton::create("Daily", 39.1f, this, menu_selector(CreatorLayer::onDailyLevel));
-		MinecraftButton* weeklyButton = MinecraftButton::create("Weekly", 39.1f, this, menu_selector(CreatorLayer::onWeeklyLevel));
-		MinecraftButton* scoresButton = MinecraftButton::create("Leaderboard", 39.1f, this, menu_selector(CreatorLayer::onLeaderboards));
-		MinecraftButton* savedButton = MinecraftButton::create("Saved", 39.1f, this, menu_selector(CreatorLayer::onSavedLevels));
+		MCButton* featuredButton = MCButton::create("Featured", 39.1f, this, menu_selector(CreatorLayer::onFeaturedLevels));
+		MCButton* dailyButton = MCButton::create("Daily", 39.1f, this, menu_selector(CreatorLayer::onDailyLevel));
+		MCButton* weeklyButton = MCButton::create("Weekly", 39.1f, this, menu_selector(CreatorLayer::onWeeklyLevel));
+		MCButton* scoresButton = MCButton::create("Leaderboard", 39.1f, this, menu_selector(CreatorLayer::onLeaderboards));
+		MCButton* savedButton = MCButton::create("Saved", 39.1f, this, menu_selector(CreatorLayer::onSavedLevels));
 
-		MinecraftButton* questsButton = MinecraftButton::create("Quests", 39.1f, this, menu_selector(CreatorLayer::onChallenge));
-		MinecraftButton* gauntletsButton = MinecraftButton::create("Gauntlets", 39.1f, this, menu_selector(CreatorLayer::onGauntlets));
-		MinecraftButton* pathsButton = MinecraftButton::create("Paths", 39.1f, this, menu_selector(CreatorLayer::onPaths));
-		MinecraftButton* listsButton = MinecraftButton::create("Lists", 39.1f, this, menu_selector(CreatorLayer::onTopLists));
-		MinecraftButton* mapPacksButton = MinecraftButton::create("Map Packs", 39.1f, this, menu_selector(CreatorLayer::onMapPacks));
-		MinecraftButton* vaultButton = MinecraftButton::create("Vault", 39.1f, this, menu_selector(CreatorLayer::onSecretVault));
-		MinecraftButton* treasureButton = MinecraftButton::create("Treasure", 39.1f, this, menu_selector(CreatorLayer::onTreasureRoom));
+		MCButton* questsButton = MCButton::create("Quests", 39.1f, this, menu_selector(CreatorLayer::onChallenge));
+		MCButton* gauntletsButton = MCButton::create("Gauntlets", 39.1f, this, menu_selector(CreatorLayer::onGauntlets));
+		MCButton* pathsButton = MCButton::create("Paths", 39.1f, this, menu_selector(CreatorLayer::onPaths));
+		MCButton* listsButton = MCButton::create("Lists", 39.1f, this, menu_selector(CreatorLayer::onTopLists));
+		MCButton* mapPacksButton = MCButton::create("Map Packs", 39.1f, this, menu_selector(CreatorLayer::onMapPacks));
+		MCButton* vaultButton = MCButton::create("Vault", 39.1f, this, menu_selector(CreatorLayer::onSecretVault));
+		MCButton* treasureButton = MCButton::create("Treasure", 39.1f, this, menu_selector(CreatorLayer::onTreasureRoom));
 
 		CCMenu* importantButtonMenu = CCMenu::create();
 		importantButtonMenu->setContentSize({400, 60});
@@ -93,7 +93,7 @@ class $modify(MyCreatorLayer, CreatorLayer){
 		this->addChild(importantButtonMenu);
 
 		CCMenu* doneMenu = CCMenu::create();
-		MinecraftButton* doneButton = MinecraftButton::create("Done", 49.1f, this, menu_selector(CreatorLayer::onBack));
+		MCButton* doneButton = MCButton::create("Done", 49.1f, this, menu_selector(CreatorLayer::onBack));
 		doneMenu->addChild(doneButton);
 		doneMenu->setPosition({winSize.width/2, 50});
 		doneMenu->setID("done-menu"_spr);
@@ -101,7 +101,7 @@ class $modify(MyCreatorLayer, CreatorLayer){
 
    	 	this->addChild(doneMenu);
 
-		MinecraftLabel* titleText = MinecraftLabel::create("Online Levels", "minecraft.fnt"_spr);
+		MCLabel* titleText = MCLabel::create("Online Levels", "minecraft.fnt"_spr);
 		titleText->setScale(0.4f);
 		titleText->setPosition({winSize.width/2, winSize.height-30});
 

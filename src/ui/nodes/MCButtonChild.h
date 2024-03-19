@@ -5,11 +5,11 @@
 
 using namespace geode::prelude;
 
-class MinecraftButtonChild : public CCMenuItemSprite
+class MCButtonChild : public CCMenuItemSprite
 {
 public:
     CCSprite* edgeTexture;
-    static MinecraftButtonChild* create(gd::string text, float width, CCObject* target, SEL_MenuHandler selector);
+    static MCButtonChild* create(gd::string text, float width, CCObject* target, SEL_MenuHandler selector);
     void update(float dt);
     void onHover();
     void onHoverExit();
@@ -19,7 +19,6 @@ public:
     void setInvisible();
     void setVisibleFade();
     void setVisibleDelay(float dt);
-    void setPosition(CCPoint p);
 private:
     bool isHovering = false;
     bool isInvisible = false;

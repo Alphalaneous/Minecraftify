@@ -1,9 +1,9 @@
 #include <Geode/Geode.hpp>
 #include <Geode/modify/LoadingLayer.hpp>
-#include "../nodes/MinecraftButton.h"
-#include "../nodes/MinecraftLabel.h"
+#include "../nodes/MCButton.h"
+#include "../nodes/MCLabel.h"
+#include "../layers/settings/VideoSettings.h"
 
-#ifdef GEODE_IS_WINDOWS
 class $modify(MyLoadingLayer, LoadingLayer){
 
 	float lastWidth = 1;
@@ -22,7 +22,7 @@ class $modify(MyLoadingLayer, LoadingLayer){
 	void doFadeOut(float dt){
 		CCLayerColor* loadingBar = dynamic_cast<CCLayerColor*>(this->getChildByID("loading-bar"_spr));
 		CCLayerColor* loadingBarBG2 = dynamic_cast<CCLayerColor*>(this->getChildByID("loading-bar-bg2"_spr));
-		MinecraftLabel* loadingText = dynamic_cast<MinecraftLabel*>(this->getChildByID("loading-text"_spr));
+		MCLabel* loadingText = dynamic_cast<MCLabel*>(this->getChildByID("loading-text"_spr));
 
 		CCFadeOut* fadeOut = CCFadeOut::create(1.0f);
 		loadingBar->runAction(fadeOut);
@@ -119,7 +119,7 @@ class $modify(MyLoadingLayer, LoadingLayer){
 
 
 
-		MinecraftLabel* loadingText = MinecraftLabel::create("", "/geode/unzipped/zalphalaneous.minecraft/resources/zalphalaneous.minecraft/minecraft.fnt");
+		MCLabel* loadingText = MCLabel::create("", "/geode/unzipped/zalphalaneous.minecraft/resources/zalphalaneous.minecraft/minecraft.fnt");
 		loadingText->setScale(0.4f);
 		loadingText->setPosition({winSize.width/2, 30});
 
@@ -151,9 +151,8 @@ class $modify(MyLoadingLayer, LoadingLayer){
 		}
 
 
-		MinecraftLabel* loadingText = dynamic_cast<MinecraftLabel*>(this->getChildByID("loading-text"_spr));
+		MCLabel* loadingText = dynamic_cast<MCLabel*>(this->getChildByID("loading-text"_spr));
 		loadingText->setString(loadingTextOrig->getString());
 	}
 
 };
-#endif

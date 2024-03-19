@@ -1,11 +1,11 @@
-#include "MinecraftButton.h"
-#include "MinecraftButtonChild.h"
+#include "MCButton.h"
+#include "MCButtonChild.h"
 
-MinecraftButton* MinecraftButton::create(gd::string text, float width, CCObject* target, SEL_MenuHandler selector){
+MCButton* MCButton::create(gd::string text, float width, CCObject* target, SEL_MenuHandler selector){
 
-    MinecraftButton *ret = new (std::nothrow) MinecraftButton();
+    MCButton *ret = new (std::nothrow) MCButton();
 
-    MinecraftButtonChild* child = MinecraftButtonChild::create(text, width, target, selector);
+    MCButtonChild* child = MCButtonChild::create(text, width, target, selector);
     ret->child = child;
     if (ret && ret->init())
     {
@@ -20,19 +20,19 @@ MinecraftButton* MinecraftButton::create(gd::string text, float width, CCObject*
     return nullptr;
 }
 
-void MinecraftButton::setInvisible(){
+void MCButton::setInvisible(){
     this->child->setInvisible();
 }
 
-void MinecraftButton::setVisibleFade(){
+void MCButton::setVisibleFade(){
     this->child->setVisibleFade();
 }
 
-void MinecraftButton::addSprite(CCSprite* sprite){
+void MCButton::addSprite(CCSprite* sprite){
     sprite->setZOrder(5);
     this->child->addChild(sprite);
 }
 
-CCSize MinecraftButton::getContentSize(){
+CCSize MCButton::getContentSize(){
     return this->child->getContentSize();
 }

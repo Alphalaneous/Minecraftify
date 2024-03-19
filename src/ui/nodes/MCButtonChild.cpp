@@ -1,5 +1,5 @@
-#include "MinecraftButtonChild.h"
-#include "MinecraftLabel.h"
+#include "MCButtonChild.h"
+#include "MCLabel.h"
 #include "../../utils/Utils.h"
 
 CCSprite* generateEdgeSprite(gd::string textureName){
@@ -17,7 +17,7 @@ CCSprite* generateEdgeSprite(gd::string textureName){
     return sprite;
 }
 
-CCSprite* generateSprite(MinecraftButtonChild* parent, gd::string textureName, float width){
+CCSprite* generateSprite(MCButtonChild* parent, gd::string textureName, float width){
 
     float scale = CCDirector::sharedDirector()->getContentScaleFactor()/4;
 
@@ -43,14 +43,14 @@ CCSprite* generateSprite(MinecraftButtonChild* parent, gd::string textureName, f
     return sprite;
 }
 
-MinecraftButtonChild* MinecraftButtonChild::create(gd::string text, float width, CCObject* target, SEL_MenuHandler selector){
+MCButtonChild* MCButtonChild::create(gd::string text, float width, CCObject* target, SEL_MenuHandler selector){
 
-    MinecraftButtonChild *ret = new (std::nothrow) MinecraftButtonChild();
+    MCButtonChild *ret = new (std::nothrow) MCButtonChild();
     ret->width = width;
 
     CCSprite* buttonSprite = generateSprite(ret, "button.png"_spr, width);
    
-    MinecraftLabel* label = MinecraftLabel::create(text, "minecraft.fnt"_spr);
+    MCLabel* label = MCLabel::create(text, "minecraft.fnt"_spr);
     label->setScale(0.12f);
     label->setZOrder(1);
 
@@ -70,10 +70,6 @@ MinecraftButtonChild* MinecraftButtonChild::create(gd::string text, float width,
     return nullptr;
 }
 
-void MinecraftButtonChild::setPosition(CCPoint p){
-    CCNode::setPosition(p);
-    Utils::fixSubpixelPosition(this);
-}
 
 void setSpritesInvisible(CCNode* node){
     for(int i = 0; i < node->getChildrenCount(); i++){
@@ -96,37 +92,37 @@ void setSpritesVisible(CCNode* node){
     }
 }
 
-void MinecraftButtonChild::setInvisible(){
+void MCButtonChild::setInvisible(){
     this->isInvisible = true;
     this->label->setOpacity(0);
     setSpritesInvisible(this);
 
 }
 
-void MinecraftButtonChild::setVisibleFade(){
+void MCButtonChild::setVisibleFade(){
 
     if(!this->fadeStarted){
         this->fadeStarted = true;
         this->label->runAction(CCFadeIn::create(1.0f));
         setSpritesVisible(this);
-        this->scheduleOnce(schedule_selector(MinecraftButtonChild::setVisibleDelay), 1.0f);
+        this->scheduleOnce(schedule_selector(MCButtonChild::setVisibleDelay), 1.0f);
     }
 
 }
 
-void MinecraftButtonChild::setVisibleDelay(float dt){
+void MCButtonChild::setVisibleDelay(float dt){
     this->isInvisible = false;
     this->fadeStarted = false;
 }
 
-void MinecraftButtonChild::onHover(){
+void MCButtonChild::onHover(){
     if(!isInvisible){
         CCSprite* buttonSprite = generateSprite(this, "button_highlighted.png"_spr, width);
         this->setNormalImage(buttonSprite);
     }
 }
 
-void MinecraftButtonChild::onHoverExit(){
+void MCButtonChild::onHoverExit(){
 
     if(!isInvisible){
         CCSprite* buttonSprite = generateSprite(this, "button.png"_spr, width);
@@ -134,18 +130,18 @@ void MinecraftButtonChild::onHoverExit(){
     }
 }
 
-void MinecraftButtonChild::selected(){
+void MCButtonChild::selected(){
     if(this->isHovering){
         FMODAudioEngine::sharedEngine()->playEffect("click.ogg"_spr);
         CCMenuItem::activate();
     }
 }
 
-void MinecraftButtonChild::activate(){
+void MCButtonChild::activate(){
     //do nothing
 }
 
-void MinecraftButtonChild::update(float dt) {
+void MCButtonChild::update(float dt) {
 
     auto mousePos = getMousePos();
 

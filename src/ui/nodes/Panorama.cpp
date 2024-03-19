@@ -19,14 +19,9 @@ bool Panorama::init(){
     auto vertexSource = file::readString(vertexPath);
     auto fragmentSource = file::readString(fragmentPath);
 
-    auto res = m_shader.compile(vertexSource.unwrap(), fragmentSource.unwrap());
-    if (!res) {
-        log::error("{}", res.unwrapErr());
-        return false;
-    }
-
+    m_shader.setup(vertexSource.unwrap(), fragmentSource.unwrap());
+    
     glBindAttribLocation(m_shader.program, 0, "aPosition");
-    res = m_shader.link();
 
     ccGLUseProgram(m_shader.program);
 
@@ -115,8 +110,4 @@ void Panorama::draw() {
     glDrawArrays(GL_TRIANGLES, 0, 6);
 
     glBindVertexArray(0);
-
-#ifndef GEODE_IS_MACOS
-    CC_INCREMENT_GL_DRAWS(1);
-#endif
 }

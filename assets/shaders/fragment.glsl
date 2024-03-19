@@ -1,3 +1,5 @@
+#version 130
+
 uniform vec2 center; 
 uniform vec2 resolution;
 uniform float time;

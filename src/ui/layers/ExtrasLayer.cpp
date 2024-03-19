@@ -1,8 +1,11 @@
 #include "ExtrasLayer.h"
 #include "../../utils/Utils.h"
-#include "../../protocols/NewgroundsAlertProtocol.h"
-#include "../nodes/MinecraftLabel.h"
-#include "../nodes/MinecraftButton.h"
+#include "../nodes/MCLabel.h"
+#include "../nodes/MCButton.h"
+#include <Geode/Geode.hpp>
+#include <Geode/utils/web.hpp>
+
+using namespace geode::prelude;
 
 ExtrasLayer* ExtrasLayer::create() {
     auto ret = new ExtrasLayer();
@@ -92,10 +95,10 @@ bool ExtrasLayer::init() {
 
     gdButtons->setPosition({winSize.width/2, winSize.height-100});
 
-    MinecraftButton* dailyChestButton = MinecraftButton::create("Daily Chests", 49.1f, this, menu_selector(MenuLayer::onDaily));
-    MinecraftButton* achievementsButton = MinecraftButton::create("Achievements", 49.1f, this, menu_selector(MenuLayer::onAchievements));
-	MinecraftButton* statsButton = MinecraftButton::create("Stats", 49.1f, this, menu_selector(MenuLayer::onStats));
-	MinecraftButton* newgroundsButton = MinecraftButton::create("Newgrounds", 49.1f, this, menu_selector(ExtrasLayer::onNewgrounds));
+    MCButton* dailyChestButton = MCButton::create("Daily Chests", 49.1f, this, menu_selector(MenuLayer::onDaily));
+    MCButton* achievementsButton = MCButton::create("Achievements", 49.1f, this, menu_selector(MenuLayer::onAchievements));
+	MCButton* statsButton = MCButton::create("Stats", 49.1f, this, menu_selector(MenuLayer::onStats));
+	MCButton* newgroundsButton = MCButton::create("Newgrounds", 49.1f, this, menu_selector(ExtrasLayer::onNewgrounds));
 
     gdButtons->addChild(dailyChestButton);
     dailyChestButton->setID("daily-chests-button"_spr);
@@ -115,7 +118,7 @@ bool ExtrasLayer::init() {
     this->addChild(gdButtons);
 
     CCMenu* doneMenu = CCMenu::create();
-    MinecraftButton* doneButton = MinecraftButton::create("Done", 49.1f, this, menu_selector(ExtrasLayer::onBack));
+    MCButton* doneButton = MCButton::create("Done", 49.1f, this, menu_selector(ExtrasLayer::onBack));
     doneMenu->addChild(doneButton);
     doneMenu->setPosition({winSize.width/2, 50});
     doneMenu->ignoreAnchorPointForPosition(false);
@@ -123,7 +126,7 @@ bool ExtrasLayer::init() {
 
     this->addChild(doneMenu);
 
-    MinecraftLabel* titleText = MinecraftLabel::create("Extras", "minecraft.fnt"_spr);
+    MCLabel* titleText = MCLabel::create("Extras", "minecraft.fnt"_spr);
     titleText->setScale(0.4f);
     titleText->setPosition({winSize.width/2, winSize.height-30});
 
@@ -138,8 +141,12 @@ bool ExtrasLayer::init() {
 }
 
 void ExtrasLayer::onNewgrounds(CCObject* object){
-    auto alertLayer = FLAlertLayer::create(new NewgroundsAlertProtocol, "Newgrounds", "Visit Newgrounds to find awesome music?", "Cancel", "Open", 300);
-    alertLayer->show();
+
+    createQuickPopup("Newgrounds", "Visit Newgrounds to find awesome music?", "Cancel", "Open", [](FLAlertLayer*, bool button2){
+        if(button2){
+            web::openLinkInBrowser("https://newgrounds.com/");
+        }
+    });
 }
 
 void ExtrasLayer::keyBackClicked() {

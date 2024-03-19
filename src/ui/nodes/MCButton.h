@@ -2,19 +2,19 @@
 #define _MINECRAFT_BUTTON_H_
 
 #include <Geode/Geode.hpp>
-#include "MinecraftButtonChild.h"
+#include "MCButtonChild.h"
 
 using namespace geode::prelude;
 
-class MinecraftButton : public CCMenu
+class MCButton : public CCMenu
 {
 public:
 
     bool isBeingTouched = false;
 
-    static MinecraftButton* create(gd::string text, float width, CCObject* target, SEL_MenuHandler selector);
+    static MCButton* create(gd::string text, float width, CCObject* target, SEL_MenuHandler selector);
     
-    MinecraftButtonChild* child;
+    MCButtonChild* child;
     void setInvisible();
     void setVisibleFade();
     void addSprite(CCSprite* sprite);
