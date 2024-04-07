@@ -10,13 +10,20 @@ class $modify(MyLoadingLayer, LoadingLayer){
 	float loadingScaleX = 1.5;
 	float loadingScaleY = 1.4;
 	bool isInitialOpen = true;
+	bool didHook = false;
 
 	TodoReturn loadingFinished(){
-		LoadingLayer::loadingFinished();
-
-		if(GlobalVars::getSharedInstance()->isInitialLaunch){
-			this->scheduleOnce(schedule_selector(MyLoadingLayer::doFadeOut), 0.05f);
+		
+		if(this->m_fields->didHook){
+			if(GlobalVars::getSharedInstance()->isInitialLaunch){
+				this->scheduleOnce(schedule_selector(MyLoadingLayer::doFadeOut), 0.05f);
+			}
 		}
+		else{
+			GlobalVars::getSharedInstance()->isInitialLaunch = false;
+		}
+
+		LoadingLayer::loadingFinished();
 	}
 
 	void doFadeOut(float dt){
@@ -45,6 +52,8 @@ class $modify(MyLoadingLayer, LoadingLayer){
 		if(!LoadingLayer::init(p0)){
 			return false;
 		}
+
+		this->m_fields->didHook = true;
 
 #ifdef GEODE_IS_WINDOWS
 		auto hwnd = FindWindowW(NULL, L"Geometry Dash");
