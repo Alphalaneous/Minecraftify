@@ -29,17 +29,9 @@ bool ExtrasLayer::init() {
 
     m_menuLayer = dynamic_cast<CCLayer*>(scene->getChildren()->objectAtIndex(0));
 
-	CCMenuItemSpriteExtra* deathLinkButton = dynamic_cast<CCMenuItemSpriteExtra*>(m_menuLayer->getChildByIDRecursive("alphalaneous.deathlink/deathlink-button"));
-
 	CCMenu* rightMenu = dynamic_cast<CCMenu*>(m_menuLayer->getChildByID("right-side-menu"));
 
     dynamic_cast<ColumnLayout*>(rightMenu->getLayout())->setAxis(Axis::Row);
-
-    if(deathLinkButton){
-        deathLinkButton->removeFromParent();
-        rightMenu->addChild(deathLinkButton);
-    }
-
 
     rightMenu->removeChildByID("daily-chest-button");
 

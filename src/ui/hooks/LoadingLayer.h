@@ -12,7 +12,7 @@ class $modify(MyLoadingLayer, LoadingLayer){
 	bool isInitialOpen = true;
 	bool didHook = false;
 
-	TodoReturn loadingFinished(){
+	void loadingFinished(){
 		
 		if(this->m_fields->didHook){
 			if(GlobalVars::getSharedInstance()->isInitialLaunch){
