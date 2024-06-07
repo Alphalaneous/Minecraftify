@@ -1,4 +1,4 @@
-#include "VideoSettings.h"
+/*#include "VideoSettings.h"
 #include "../../../utils/Utils.h"
 #include "../../nodes/MCLabel.h"
 #include "../../nodes/MCButton.h"
@@ -55,3 +55,4 @@ CCScene* VideoSettings::scene(bool fromRefresh) {
     scene->addChild(layer);
     return scene;
 }
+*/

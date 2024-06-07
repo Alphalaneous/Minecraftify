@@ -190,7 +190,7 @@ public:
 
     static std::wstring getSplashText(){
         if(!hasBeenGenerated){
-            ghc::filesystem::path path = Mod::get()->getResourcesDir().append("splashes.txt");
+            std::filesystem::path path = Mod::get()->getResourcesDir().append("splashes.txt");
 
             std::wifstream input(path.string());
             std::wstringstream buffer;

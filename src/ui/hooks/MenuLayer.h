@@ -13,21 +13,14 @@
 using namespace geode::prelude;
 
 class $modify(MyMenuLayer, MenuLayer) {
-	
-	CCSize lastSize;
+
+	struct Fields {
+		CCSize lastSize;
+	};
 
 	static void onModify(auto& self) {
         (void) self.setHookPriority("MenuLayer::init", -10000);
     }
-
-	/*static cocos2d::CCScene* scene(bool p0){
-		if(p0){
-			return VideoSettings::scene(true);
-		}
-		else {
-			return MenuLayer::scene(false);
-		}
-	}*/
 
 	bool init() {
 		if (!MenuLayer::init()) {
@@ -52,8 +45,6 @@ class $modify(MyMenuLayer, MenuLayer) {
 		this->getChildByIDRecursive("main-menu-bg")->setVisible(false);
 		this->getChildByIDRecursive("main-menu-bg")->setScale(0);
 		this->getChildByIDRecursive("right-side-menu")->setVisible(false);
-		CCMenu* deathLinkMenu = dynamic_cast<CCMenu*>(this->getChildByIDRecursive("alphalaneous.deathlink/deathlink-menu"));
-		if(deathLinkMenu) deathLinkMenu->setVisible(false);
 
 		CCSprite* mainTitle = dynamic_cast<CCSprite*>(this->getChildByIDRecursive("main-title"));
 		if(mainTitle) mainTitle->setVisible(false);
@@ -126,7 +117,7 @@ class $modify(MyMenuLayer, MenuLayer) {
 		title->addChild(subTitle);
 		subTitle->setID("minecraft-subtitle"_spr);
 
-		MCLabel* versionText = MCLabel::create("Minecraft 2.2 (Geode)", "minecraft.fnt"_spr);
+		MCLabel* versionText = MCLabel::create("Minecraft 2.206 (Geode)", "minecraft.fnt"_spr);
 		versionText->setAnchorPoint({0, 0});
 		versionText->setScale(0.42f);
 		this->addChild(versionText);
@@ -259,10 +250,7 @@ class $modify(MyMenuLayer, MenuLayer) {
 		title->runAction(CCFadeIn::create(1.0f));
 		version->runAction(CCFadeIn::create(1.0f));
 		creator->runAction(CCFadeIn::create(1.0f));
-
-
 	}
-
 
 	void onMods(CCObject* sender) {
 		geode::openModsList();
@@ -329,7 +317,5 @@ class $modify(MyMenuLayer, MenuLayer) {
 		title->setPosition({winSize.width/2.0f, winSize.height-55});
 		creator->setPosition({winSize.width-2,0});
 		version->setPosition({2,0});
-
 	}
-
 };

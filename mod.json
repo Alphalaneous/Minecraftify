@@ -1,9 +1,9 @@
 {
-	"geode": "2.0.0-beta.25",
+	"geode": "3.0.0-alpha.1",
 	"gd": {
-		"win": "2.204"
+		"win": "2.206"
 	},
-	"version": "v0.5.17",
+	"version": "v0.6.0",
 	"id": "zalphalaneous.minecraft",
 	"name": "Minecraftify!",
 	"developer": "Alphalaneous",
@@ -25,16 +25,8 @@
   "dependencies": [
     {
       "id": "geode.node-ids",
-      "version": "v1.7.1",
+      "version": ">=v1.12.0-beta.2",
       "importance": "required"
-    }
-  ],
-
-  "incompatibilities": [
-    {
-      "id": "muhammadgames.bettermenu",
-      "importance": "breaking",
-      "version": "*"
     }
   ]
 }

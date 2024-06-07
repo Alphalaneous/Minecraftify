@@ -13,8 +13,8 @@ Panorama* Panorama::create(){
 }
 
 bool Panorama::init(){
-    ghc::filesystem::path vertexPath = (std::string)CCFileUtils::sharedFileUtils()->fullPathForFilename("vertex.glsl"_spr, false);
-    ghc::filesystem::path fragmentPath = (std::string)CCFileUtils::sharedFileUtils()->fullPathForFilename("fragment.glsl"_spr, false);
+    std::filesystem::path vertexPath = (std::string)CCFileUtils::sharedFileUtils()->fullPathForFilename("vertex.glsl"_spr, false);
+    std::filesystem::path fragmentPath = (std::string)CCFileUtils::sharedFileUtils()->fullPathForFilename("fragment.glsl"_spr, false);
     
     auto vertexSource = file::readString(vertexPath);
     auto fragmentSource = file::readString(fragmentPath);

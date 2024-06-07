@@ -1,4 +1,4 @@
-#include "MCOptionsLayer.h"
+/*#include "MCOptionsLayer.h"
 #include "MCScrollLayer.h"
 #include "../../utils/Utils.h"
 #include "../nodes/MCLabel.h"
@@ -189,3 +189,4 @@ CCScene* MCOptionsLayer::scene(bool fromRefresh) {
     scene->addChild(layer);
     return scene;
 }
+*/
