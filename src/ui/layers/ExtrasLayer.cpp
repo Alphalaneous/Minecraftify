@@ -78,19 +78,21 @@ bool ExtrasLayer::init() {
 
     CCMenu* gdButtons = CCMenu::create();
 
-    ColumnLayout* layout = ColumnLayout::create();
-    layout->setAxis(Axis::Column);
+    RowLayout* layout = RowLayout::create();
+    layout->setAxis(Axis::Row);
     layout->setGap(5);
     layout->setAxisReverse(true);
     layout->setAutoScale(false);
+    layout->setGrowCrossAxis(true);
     gdButtons->setLayout(layout);
-
+    gdButtons->setContentSize({350, 100});
     gdButtons->setPosition({winSize.width/2, winSize.height-100});
 
-    MCButton* dailyChestButton = MCButton::create("Daily Chests", 49.1f, this, menu_selector(MenuLayer::onDaily));
-    MCButton* achievementsButton = MCButton::create("Achievements", 49.1f, this, menu_selector(MenuLayer::onAchievements));
-	MCButton* statsButton = MCButton::create("Stats", 49.1f, this, menu_selector(MenuLayer::onStats));
-	MCButton* newgroundsButton = MCButton::create("Newgrounds", 49.1f, this, menu_selector(ExtrasLayer::onNewgrounds));
+    MCButton* dailyChestButton = MCButton::create("Daily Chests", 39.1f, this, menu_selector(MenuLayer::onDaily));
+    MCButton* achievementsButton = MCButton::create("Achievements", 39.1f, this, menu_selector(MenuLayer::onAchievements));
+	MCButton* statsButton = MCButton::create("Stats", 39.1f, this, menu_selector(MenuLayer::onStats));
+	MCButton* newgroundsButton = MCButton::create("Newgrounds", 39.1f, this, menu_selector(ExtrasLayer::onNewgrounds));
+	MCButton* moreGamesButton = MCButton::create("More Games", 39.1f, this, menu_selector(MenuLayer::onMoreGames));
 
     gdButtons->addChild(dailyChestButton);
     dailyChestButton->setID("daily-chests-button"_spr);
@@ -103,6 +105,9 @@ bool ExtrasLayer::init() {
 
     gdButtons->addChild(newgroundsButton);
     newgroundsButton->setID("newgrounds-button"_spr);
+
+    gdButtons->addChild(moreGamesButton);
+    moreGamesButton->setID("more-games-button"_spr);
 
     gdButtons->updateLayout();
     gdButtons->setID("gd-menu"_spr);

@@ -45,6 +45,7 @@ class $modify(MyCreatorLayer, CreatorLayer){
 		CCMenu* importantButtonMenu = CCMenu::create();
 		importantButtonMenu->setContentSize({400, 60});
 		importantButtonMenu->setPosition({winSize.width/2, winSize.height - 70});
+		importantButtonMenu->setID("important-menu"_spr);
 
 		ColumnLayout* columnLayout = ColumnLayout::create();
 		columnLayout->setAxis(Axis::Row);
@@ -63,6 +64,7 @@ class $modify(MyCreatorLayer, CreatorLayer){
 
 		minecraftButtonMenu->setContentSize({400, 300});
 		minecraftButtonMenu->setPosition({winSize.width/2, winSize.height - 170});
+		minecraftButtonMenu->setID("creator-buttons-menu"_spr);
 
 		ColumnLayout* columnLayout2 = ColumnLayout::create();
 		columnLayout2->setAxis(Axis::Row);
