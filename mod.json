@@ -1,9 +1,9 @@
 {
-	"geode": "3.0.0-alpha.1",
+	"geode": "3.0.0-alpha.2",
 	"gd": {
 		"win": "2.206"
 	},
-	"version": "v0.6.1",
+	"version": "v0.6.2",
 	"id": "zalphalaneous.minecraft",
 	"name": "Minecraftify!",
 	"developer": "Alphalaneous",
