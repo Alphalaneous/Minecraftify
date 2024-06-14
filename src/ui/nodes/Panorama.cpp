@@ -3,7 +3,7 @@
 #include "../../utils/Utils.h"
 
 Panorama* Panorama::create(){
-    auto node = new Panorama;
+    auto node = new Panorama();
     if (!node->init()) {
         CC_SAFE_DELETE(node);
         return nullptr;
@@ -13,14 +13,13 @@ Panorama* Panorama::create(){
 }
 
 bool Panorama::init(){
-    std::filesystem::path vertexPath = (std::string)CCFileUtils::sharedFileUtils()->fullPathForFilename("vertex.glsl"_spr, false);
-    std::filesystem::path fragmentPath = (std::string)CCFileUtils::sharedFileUtils()->fullPathForFilename("fragment.glsl"_spr, false);
+    std::filesystem::path vertexPath = CCFileUtils::sharedFileUtils()->fullPathForFilename("cubemap_vert.glsl"_spr, false);
+    std::filesystem::path fragmentPath = CCFileUtils::sharedFileUtils()->fullPathForFilename("cubemap_frag.glsl"_spr, false);
     
     auto vertexSource = file::readString(vertexPath);
     auto fragmentSource = file::readString(fragmentPath);
 
     m_shader.setup(vertexSource.unwrap(), fragmentSource.unwrap());
-    
     glBindAttribLocation(m_shader.program, 0, "aPosition");
 
     ccGLUseProgram(m_shader.program);

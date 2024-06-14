@@ -33,6 +33,7 @@ class $modify(MyMenuLayer, MenuLayer) {
 
 		Panorama* panorama = Panorama::create();
 		panorama->setID("minecraft-panorama"_spr);
+
 		this->addChild(panorama);
 
 		this->getChildByIDRecursive("main-menu")->setVisible(false);

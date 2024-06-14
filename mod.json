@@ -1,9 +1,9 @@
 {
-	"geode": "3.0.0-alpha.2",
+	"geode": "3.0.0-beta.1",
 	"gd": {
 		"win": "2.206"
 	},
-	"version": "v0.6.3",
+	"version": "v0.6.4",
 	"id": "zalphalaneous.minecraft",
 	"name": "Minecraftify!",
 	"developer": "Alphalaneous",
@@ -17,7 +17,8 @@
       "assets/textures/*",
       "assets/texts/*",
       "assets/panorama/*",
-      "assets/shaders/*",
+      "assets/shaders/cubemap/*",
+      "assets/shaders/blur/*",
       "assets/logo.ico"
     ]
   },
