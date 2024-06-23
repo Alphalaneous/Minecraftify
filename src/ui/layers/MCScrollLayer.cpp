@@ -70,7 +70,7 @@ bool MCScrollLayer::init(std::string title, float topHeight, float bottomHeight)
 
 void MCScrollLayer::addContent(CCLayer* content){
 
-    ScrollLayer* scrollLayer = dynamic_cast<ScrollLayer*>(this->getChildByID("scroll-layer"_spr));
+    ScrollLayer* scrollLayer = typeinfo_cast<ScrollLayer*>(this->getChildByID("scroll-layer"_spr));
 
 	auto winSize = CCDirector::sharedDirector()->getWinSize();
 

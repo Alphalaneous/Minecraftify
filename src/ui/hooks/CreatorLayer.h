@@ -5,6 +5,10 @@
 
 class $modify(MyCreatorLayer, CreatorLayer){
 
+	static void onModify(auto& self) {
+        (void) self.setHookPriority("CreatorLayer::init", INT_MIN/2-1);
+    }
+
 	bool init(){
 
 		if(!CreatorLayer::init()){

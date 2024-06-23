@@ -29,7 +29,7 @@ MCLabel* MCLabel::create(std::wstring text, std::string font){
 
 void MCLabel::setColor(ccColor3B color){
     for(int i = 0; i < getChildrenCount(); i++){
-        CCSprite* spr = dynamic_cast<CCSprite*>(getChildren()->objectAtIndex(i)); 
+        CCSprite* spr = typeinfo_cast<CCSprite*>(getChildren()->objectAtIndex(i)); 
         spr->setColor(color);
     }
 }
@@ -70,7 +70,7 @@ bool MCLabel::init(std::wstring text, std::string font){
     for(ColorPos p : colorPositions){
 
         for(int i = p.pos; i < getChildrenCount(); i++){
-            CCSprite* spr = dynamic_cast<CCSprite*>(getChildren()->objectAtIndex(i)); 
+            CCSprite* spr = typeinfo_cast<CCSprite*>(getChildren()->objectAtIndex(i)); 
 
             ccColor3B color = Utils::colorForCode(p.colorCode);
             spr->setColor(color);

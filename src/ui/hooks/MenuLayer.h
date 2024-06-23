@@ -12,6 +12,30 @@
 
 using namespace geode::prelude;
 
+class $modify(MenuLayer){
+	bool init() {
+		if (!MenuLayer::init()) {
+			return false;
+		}
+		if(CCNode* bottomMenu = this->getChildByIDRecursive("bottom-menu")){
+			bottomMenu->getChildByIDRecursive("achievements-button")->setVisible(false);
+			bottomMenu->getChildByIDRecursive("settings-button")->setVisible(false);
+			bottomMenu->getChildByIDRecursive("stats-button")->setVisible(false);
+			bottomMenu->getChildByIDRecursive("newgrounds-button")->setVisible(false);
+			bottomMenu->getChildByIDRecursive("geode.loader/geode-button")->setVisible(false);
+		}
+		if(Loader::get()->isModLoaded("alphalaneous.pages_api")){
+			if(CCNode* rightSideMenu = this->getChildByIDRecursive("right-side-menu")){
+				if(AxisLayout* layout = typeinfo_cast<AxisLayout*>(rightSideMenu->getLayout())){
+					layout->setAxis(Axis::Row);
+				}
+				rightSideMenu->setContentSize({170, 70});
+				rightSideMenu->setUserObject("orientation", CCInteger::create(1));
+			}
+		}
+	}
+};
+
 class $modify(MyMenuLayer, MenuLayer) {
 
 	struct Fields {
@@ -19,7 +43,7 @@ class $modify(MyMenuLayer, MenuLayer) {
 	};
 
 	static void onModify(auto& self) {
-        (void) self.setHookPriority("MenuLayer::init", -10000);
+        (void) self.setHookPriority("MenuLayer::init", INT_MIN/2-1);
     }
 
 	bool init() {
@@ -47,7 +71,7 @@ class $modify(MyMenuLayer, MenuLayer) {
 		this->getChildByIDRecursive("main-menu-bg")->setScale(0);
 		this->getChildByIDRecursive("right-side-menu")->setVisible(false);
 
-		CCSprite* mainTitle = dynamic_cast<CCSprite*>(this->getChildByIDRecursive("main-title"));
+		CCSprite* mainTitle = typeinfo_cast<CCSprite*>(this->getChildByIDRecursive("main-title"));
 		if(mainTitle) mainTitle->setVisible(false);
 
 		CCMenu* menu = CCMenu::create();
@@ -196,7 +220,7 @@ class $modify(MyMenuLayer, MenuLayer) {
 	void setVisible(CCMenu* menu){
 
 		for(int i = 0; i < menu->getChildrenCount(); i++){
-			MCButton* button = dynamic_cast<MCButton*>(menu->getChildren()->objectAtIndex(i));
+			MCButton* button = typeinfo_cast<MCButton*>(menu->getChildren()->objectAtIndex(i));
 			if(button) button->setVisibleFade();
 		}
 		
@@ -205,7 +229,7 @@ class $modify(MyMenuLayer, MenuLayer) {
 	void setInvisible(CCMenu* menu){
 		
 		for(int i = 0; i < menu->getChildrenCount(); i++){
-			MCButton* button = dynamic_cast<MCButton*>(menu->getChildren()->objectAtIndex(i));
+			MCButton* button = typeinfo_cast<MCButton*>(menu->getChildren()->objectAtIndex(i));
 			if(button)button->setInvisible();
 		}
 		
@@ -213,13 +237,13 @@ class $modify(MyMenuLayer, MenuLayer) {
 
 	void setAllInvisible(){
 
-		CCMenu* menu = dynamic_cast<CCMenu*>(this->getChildByID("minecraft-menu"_spr));
+		CCMenu* menu = typeinfo_cast<CCMenu*>(this->getChildByID("minecraft-menu"_spr));
 
-		CCSprite* title = dynamic_cast<CCSprite*>(this->getChildByIDRecursive("minecraft-title"_spr));
-		CCSprite* subtitle = dynamic_cast<CCSprite*>(this->getChildByIDRecursive("minecraft-subtitle"_spr));
-		MCLabel* splash = dynamic_cast<MCLabel*>(this->getChildByIDRecursive("splash-text"_spr));
-		MCLabel* version = dynamic_cast<MCLabel*>(this->getChildByID("version-text"_spr));
-		MCLabel* creator = dynamic_cast<MCLabel*>(this->getChildByID("copyright-text"_spr));
+		CCSprite* title = typeinfo_cast<CCSprite*>(this->getChildByIDRecursive("minecraft-title"_spr));
+		CCSprite* subtitle = typeinfo_cast<CCSprite*>(this->getChildByIDRecursive("minecraft-subtitle"_spr));
+		MCLabel* splash = typeinfo_cast<MCLabel*>(this->getChildByIDRecursive("splash-text"_spr));
+		MCLabel* version = typeinfo_cast<MCLabel*>(this->getChildByID("version-text"_spr));
+		MCLabel* creator = typeinfo_cast<MCLabel*>(this->getChildByID("copyright-text"_spr));
 
 		setInvisible(menu);
 
@@ -234,15 +258,15 @@ class $modify(MyMenuLayer, MenuLayer) {
 
 
 
-		CCMenu* menu = dynamic_cast<CCMenu*>(this->getChildByID("minecraft-menu"_spr));
+		CCMenu* menu = typeinfo_cast<CCMenu*>(this->getChildByID("minecraft-menu"_spr));
 
-		Panorama* panorama = dynamic_cast<Panorama*>(this->getChildByIDRecursive("minecraft-panorama"_spr));
+		Panorama* panorama = typeinfo_cast<Panorama*>(this->getChildByIDRecursive("minecraft-panorama"_spr));
 
-		CCSprite* title = dynamic_cast<CCSprite*>(this->getChildByIDRecursive("minecraft-title"_spr));
-		CCSprite* subtitle = dynamic_cast<CCSprite*>(this->getChildByIDRecursive("minecraft-subtitle"_spr));
-		CCLabelBMFont* splash = dynamic_cast<CCLabelBMFont*>(this->getChildByIDRecursive("splash-text"_spr));
-		CCLabelBMFont* version = dynamic_cast<CCLabelBMFont*>(this->getChildByID("version-text"_spr));
-		CCLabelBMFont* creator = dynamic_cast<CCLabelBMFont*>(this->getChildByID("copyright-text"_spr));
+		CCSprite* title = typeinfo_cast<CCSprite*>(this->getChildByIDRecursive("minecraft-title"_spr));
+		CCSprite* subtitle = typeinfo_cast<CCSprite*>(this->getChildByIDRecursive("minecraft-subtitle"_spr));
+		CCLabelBMFont* splash = typeinfo_cast<CCLabelBMFont*>(this->getChildByIDRecursive("splash-text"_spr));
+		CCLabelBMFont* version = typeinfo_cast<CCLabelBMFont*>(this->getChildByID("version-text"_spr));
+		CCLabelBMFont* creator = typeinfo_cast<CCLabelBMFont*>(this->getChildByID("copyright-text"_spr));
 
 		setVisible(menu);
 
@@ -293,18 +317,18 @@ class $modify(MyMenuLayer, MenuLayer) {
 
 		CCNode* menu = this->getChildByID("minecraft-menu"_spr);;
 
-		MCButton* playButton = dynamic_cast<MCButton*>(menu->getChildByID("play-button"_spr));
-		MCButton* editButton = dynamic_cast<MCButton*>(menu->getChildByID("edit-button"_spr));
-		MCButton* modsButton = dynamic_cast<MCButton*>(menu->getChildByID("mods-button"_spr));
-		MCButton* skinButton = dynamic_cast<MCButton*>(menu->getChildByID("skin-button"_spr));
-		MCButton* optionsButton = dynamic_cast<MCButton*>(menu->getChildByID("options-button"_spr));
-		MCButton* quitButton = dynamic_cast<MCButton*>(menu->getChildByID("quit-button"_spr));
-		MCButton* profileButton = dynamic_cast<MCButton*>(menu->getChildByID("profile-button"_spr));
-		MCButton* extrasButton = dynamic_cast<MCButton*>(menu->getChildByID("extras-button"_spr));
+		MCButton* playButton = typeinfo_cast<MCButton*>(menu->getChildByID("play-button"_spr));
+		MCButton* editButton = typeinfo_cast<MCButton*>(menu->getChildByID("edit-button"_spr));
+		MCButton* modsButton = typeinfo_cast<MCButton*>(menu->getChildByID("mods-button"_spr));
+		MCButton* skinButton = typeinfo_cast<MCButton*>(menu->getChildByID("skin-button"_spr));
+		MCButton* optionsButton = typeinfo_cast<MCButton*>(menu->getChildByID("options-button"_spr));
+		MCButton* quitButton = typeinfo_cast<MCButton*>(menu->getChildByID("quit-button"_spr));
+		MCButton* profileButton = typeinfo_cast<MCButton*>(menu->getChildByID("profile-button"_spr));
+		MCButton* extrasButton = typeinfo_cast<MCButton*>(menu->getChildByID("extras-button"_spr));
 
-		CCSprite* title = dynamic_cast<CCSprite*>(this->getChildByID("minecraft-title"_spr));
-		MCLabel* version = dynamic_cast<MCLabel*>(this->getChildByID("version-text"_spr));
-		MCLabel* creator = dynamic_cast<MCLabel*>(this->getChildByID("copyright-text"_spr));
+		CCSprite* title = typeinfo_cast<CCSprite*>(this->getChildByID("minecraft-title"_spr));
+		MCLabel* version = typeinfo_cast<MCLabel*>(this->getChildByID("version-text"_spr));
+		MCLabel* creator = typeinfo_cast<MCLabel*>(this->getChildByID("copyright-text"_spr));
 
 		playButton->setPosition({winSize.width/2, winSize.height/2+45});
 		editButton->setPosition({winSize.width/2, winSize.height/2+23});

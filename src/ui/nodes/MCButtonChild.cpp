@@ -73,7 +73,7 @@ MCButtonChild* MCButtonChild::create(gd::string text, float width, CCObject* tar
 
 void setSpritesInvisible(CCNode* node){
     for(int i = 0; i < node->getChildrenCount(); i++){
-        CCSprite* spr = dynamic_cast<CCSprite*>(node->getChildren()->objectAtIndex(i));
+        CCSprite* spr = typeinfo_cast<CCSprite*>(node->getChildren()->objectAtIndex(i));
         if(spr){
             spr->setOpacity(0);
             setSpritesInvisible(spr);
@@ -84,7 +84,7 @@ void setSpritesInvisible(CCNode* node){
 void setSpritesVisible(CCNode* node){
 
     for(int i = 0; i < node->getChildrenCount(); i++){
-        CCSprite* spr = dynamic_cast<CCSprite*>(node->getChildren()->objectAtIndex(i));
+        CCSprite* spr = typeinfo_cast<CCSprite*>(node->getChildren()->objectAtIndex(i));
         if(spr){
             spr->runAction(CCFadeIn::create(1.0f));
             setSpritesVisible(spr);

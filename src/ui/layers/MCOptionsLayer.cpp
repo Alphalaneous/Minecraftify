@@ -36,7 +36,7 @@ bool MCOptionsLayer::init(bool fromRefresh) {
     OptionsLayer* optionsLayer = OptionsLayer::create();
     optionsLayer->setVisible(true);
 
-    CCLayer* layer = dynamic_cast<CCLayer*>(optionsLayer->getChildByID("main-layer"));
+    CCLayer* layer = typeinfo_cast<CCLayer*>(optionsLayer->getChildByID("main-layer"));
 
     layer->setPosition({optionsLayer->getPosition().x, 0});
 

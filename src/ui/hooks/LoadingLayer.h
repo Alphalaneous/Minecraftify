@@ -16,9 +16,9 @@ class $modify(MyLoadingLayer, LoadingLayer){
 	};
 
 	void doFadeOut(float dt){
-		CCLayerColor* loadingBar = dynamic_cast<CCLayerColor*>(this->getChildByID("loading-bar"_spr));
-		CCLayerColor* loadingBarBG2 = dynamic_cast<CCLayerColor*>(this->getChildByID("loading-bar-bg2"_spr));
-		MCLabel* loadingText = dynamic_cast<MCLabel*>(this->getChildByID("loading-text"_spr));
+		CCLayerColor* loadingBar = typeinfo_cast<CCLayerColor*>(this->getChildByID("loading-bar"_spr));
+		CCLayerColor* loadingBarBG2 = typeinfo_cast<CCLayerColor*>(this->getChildByID("loading-bar-bg2"_spr));
+		MCLabel* loadingText = typeinfo_cast<MCLabel*>(this->getChildByID("loading-text"_spr));
 
 		CCFadeOut* fadeOut = CCFadeOut::create(1.0f);
 		loadingBar->runAction(fadeOut);
@@ -39,7 +39,7 @@ class $modify(MyLoadingLayer, LoadingLayer){
 
 	void myUpdate(float dt){
 
-		CCLabelBMFont* loadingTextOrig = dynamic_cast<CCLabelBMFont*>(this->getChildByID("geode-small-label"));
+		CCLabelBMFont* loadingTextOrig = typeinfo_cast<CCLabelBMFont*>(this->getChildByID("geode-small-label"));
 
 		float currentWidth = this->m_sliderBar->getContentSize().width;
 
@@ -48,7 +48,7 @@ class $modify(MyLoadingLayer, LoadingLayer){
 		}
 
 		if(currentWidth != this->m_fields->lastWidth ){
-			CCLayerColor* loadingBar = dynamic_cast<CCLayerColor*>(this->getChildByID("loading-bar"_spr));
+			CCLayerColor* loadingBar = typeinfo_cast<CCLayerColor*>(this->getChildByID("loading-bar"_spr));
 	
 			CCScaleTo* scaleTo = CCScaleTo::create(0.1, currentWidth*this->m_fields->loadingScaleX, this->m_fields->loadingScaleY);
 			loadingBar->runAction(scaleTo);
@@ -57,7 +57,7 @@ class $modify(MyLoadingLayer, LoadingLayer){
 		}
 
 
-		MCLabel* loadingText = dynamic_cast<MCLabel*>(this->getChildByID("loading-text"_spr));
+		MCLabel* loadingText = typeinfo_cast<MCLabel*>(this->getChildByID("loading-text"_spr));
 		loadingText->setString(loadingTextOrig->getString());
 	}
 
@@ -82,7 +82,7 @@ bool LoadingLayer_init(LoadingLayer* self, bool p0){
 	HICON hIcon = (HICON)LoadImage(NULL, path.c_str(), IMAGE_ICON, 32, 32, LR_LOADFROMFILE);
 	SendMessage(hwnd, WM_SETICON, ICON_SMALL, (LPARAM)hIcon);
 
-	CCLabelBMFont* loadingTextOrig = dynamic_cast<CCLabelBMFont*>(self->getChildByID("geode-small-label"));
+	CCLabelBMFont* loadingTextOrig = typeinfo_cast<CCLabelBMFont*>(self->getChildByID("geode-small-label"));
 	loadingTextOrig->setVisible(false);
 
 	self->getChildByID("bg-texture")->setVisible(false);

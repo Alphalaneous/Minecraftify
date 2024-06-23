@@ -20,61 +20,79 @@ ExtrasLayer* ExtrasLayer::create() {
 
 bool ExtrasLayer::init() {
 
-    
     CCScene* scene = MenuLayer::scene(false);
-
-	auto winSize = CCDirector::sharedDirector()->getWinSize();
-
+    auto winSize = CCDirector::sharedDirector()->getWinSize();
     this->addChild(Utils::generateDirtBG());
+    m_menuLayer = typeinfo_cast<CCLayer*>(scene->getChildren()->objectAtIndex(0));
 
-    m_menuLayer = dynamic_cast<CCLayer*>(scene->getChildren()->objectAtIndex(0));
+    if(Loader::get()->isModLoaded("alphalaneous.pages_api")){
+        CCMenu* rightMenu = typeinfo_cast<CCMenu*>(m_menuLayer->getChildByID("right-side-menu"));
+        rightMenu->setPosition({winSize.width/2, 150});
+        rightMenu->setVisible(true);
+        rightMenu->removeFromParent();
 
-	CCMenu* rightMenu = dynamic_cast<CCMenu*>(m_menuLayer->getChildByID("right-side-menu"));
+        this->addChild(rightMenu);
 
-    dynamic_cast<ColumnLayout*>(rightMenu->getLayout())->setAxis(Axis::Row);
+        m_bottomMenu = typeinfo_cast<CCMenu*>(m_menuLayer->getChildByID("bottom-menu"));
 
-    rightMenu->removeChildByID("daily-chest-button");
+        m_bottomMenu->setID("extras-menu"_spr);
+        m_bottomMenu->setPosition({winSize.width/2, 100});
+        m_bottomMenu->setVisible(true);
+        m_bottomMenu->setScale(0.8f);
+        m_bottomMenu->removeFromParent();
 
-    rightMenu->setContentSize({winSize.width, winSize.height/2});
+        this->addChild(m_bottomMenu);
+    }
+    else{
 
-    rightMenu->updateLayout();
-    rightMenu->setPosition({winSize.width/2, 150});
-    rightMenu->setVisible(true);
-    rightMenu->removeFromParent();
-    this->addChild(rightMenu);
+        CCMenu* rightMenu = typeinfo_cast<CCMenu*>(m_menuLayer->getChildByID("right-side-menu"));
 
-    //hacky shit to fix globed
+        typeinfo_cast<ColumnLayout*>(rightMenu->getLayout())->setAxis(Axis::Row);
 
-    CCMenu* dummyMenuToFixGlobed = CCMenu::create();
-    dummyMenuToFixGlobed->setID("bottom-menu");
+        rightMenu->removeChildByID("daily-chest-button");
 
-    CCSprite* dummySprite = CCSprite::create("select.png"_spr);
-    CCMenuItemSpriteExtra* dummyGlobed = CCMenuItemSpriteExtra::create(dummySprite, this, nullptr);
-    dummyGlobed->setID("dankmeme.globed2/main-menu-button");
+        rightMenu->setContentSize({winSize.width, winSize.height/2});
 
-    dummyMenuToFixGlobed->addChild(dummyGlobed);
+        rightMenu->updateLayout();
+        rightMenu->setPosition({winSize.width/2, 150});
+        rightMenu->setVisible(true);
+        rightMenu->removeFromParent();
+        this->addChild(rightMenu);
 
-    m_bottomMenu = dynamic_cast<CCMenu*>(m_menuLayer->getChildByID("bottom-menu"));
+        //hacky shit to fix globed
 
-    m_bottomMenu->setID("extras-menu"_spr);
-    m_bottomMenu->setContentSize({winSize.width, winSize.height/2});
+        CCMenu* dummyMenuToFixGlobed = CCMenu::create();
+        dummyMenuToFixGlobed->setID("bottom-menu");
 
-    m_bottomMenu->removeChildByID("achievements-button");
-    m_bottomMenu->removeChildByID("settings-button");
-    m_bottomMenu->removeChildByID("stats-button");
-    m_bottomMenu->removeChildByID("newgrounds-button");
+        CCSprite* dummySprite = CCSprite::create("select.png"_spr);
+        CCMenuItemSpriteExtra* dummyGlobed = CCMenuItemSpriteExtra::create(dummySprite, this, nullptr);
+        dummyGlobed->setID("dankmeme.globed2/main-menu-button");
 
-    m_bottomMenu->removeChildByID("geode.loader/geode-button");
+        dummyMenuToFixGlobed->addChild(dummyGlobed);
 
-    m_bottomMenu->setScale(0.8f);
+        m_bottomMenu = typeinfo_cast<CCMenu*>(m_menuLayer->getChildByID("bottom-menu"));
 
-    m_bottomMenu->updateLayout();
-    m_bottomMenu->setPosition({winSize.width/2, 100});
-    m_bottomMenu->setVisible(true);
-    m_bottomMenu->removeFromParent();
-    this->addChild(m_bottomMenu);
+        m_bottomMenu->setID("extras-menu"_spr);
+        m_bottomMenu->setContentSize({winSize.width, winSize.height/2});
 
-    m_menuLayer->addChild(dummyMenuToFixGlobed);
+        m_bottomMenu->removeChildByID("achievements-button");
+        m_bottomMenu->removeChildByID("settings-button");
+        m_bottomMenu->removeChildByID("stats-button");
+        m_bottomMenu->removeChildByID("newgrounds-button");
+
+        m_bottomMenu->removeChildByID("geode.loader/geode-button");
+
+        m_bottomMenu->setScale(0.8f);
+
+        m_bottomMenu->updateLayout();
+        m_bottomMenu->setPosition({winSize.width/2, 100});
+        m_bottomMenu->setVisible(true);
+        m_bottomMenu->removeFromParent();
+        this->addChild(m_bottomMenu);
+
+        m_menuLayer->addChild(dummyMenuToFixGlobed);
+        this->scheduleUpdate();
+    }
 
     CCMenu* gdButtons = CCMenu::create();
 
@@ -90,9 +108,9 @@ bool ExtrasLayer::init() {
 
     MCButton* dailyChestButton = MCButton::create("Daily Chests", 39.1f, this, menu_selector(MenuLayer::onDaily));
     MCButton* achievementsButton = MCButton::create("Achievements", 39.1f, this, menu_selector(MenuLayer::onAchievements));
-	MCButton* statsButton = MCButton::create("Stats", 39.1f, this, menu_selector(MenuLayer::onStats));
-	MCButton* newgroundsButton = MCButton::create("Newgrounds", 39.1f, this, menu_selector(ExtrasLayer::onNewgrounds));
-	MCButton* moreGamesButton = MCButton::create("More Games", 39.1f, this, menu_selector(MenuLayer::onMoreGames));
+    MCButton* statsButton = MCButton::create("Stats", 39.1f, this, menu_selector(MenuLayer::onStats));
+    MCButton* newgroundsButton = MCButton::create("Newgrounds", 39.1f, this, menu_selector(ExtrasLayer::onNewgrounds));
+    MCButton* moreGamesButton = MCButton::create("More Games", 39.1f, this, menu_selector(MenuLayer::onMoreGames));
 
     gdButtons->addChild(dailyChestButton);
     dailyChestButton->setID("daily-chests-button"_spr);
@@ -131,8 +149,6 @@ bool ExtrasLayer::init() {
     titleText->setID("title-text"_spr);
 
     setKeypadEnabled(true);
-
-    this->scheduleUpdate();
 
     return true;
 }
