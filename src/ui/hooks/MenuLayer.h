@@ -33,6 +33,7 @@ class $modify(MenuLayer){
 				rightSideMenu->setUserObject("orientation", CCInteger::create(1));
 			}
 		}
+		return true;
 	}
 };
 

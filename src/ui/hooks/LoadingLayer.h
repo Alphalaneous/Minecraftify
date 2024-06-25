@@ -149,11 +149,11 @@ bool LoadingLayer_init(LoadingLayer* self, bool p0){
 	return true;
 }
 
-/*$on_mod(Loaded) {
+$on_mod(Loaded) {
 	Result<Hook*> hook = Mod::get()->hook(
         reinterpret_cast<void*>(geode::base::get() + 0x30db60),
         &LoadingLayer_init,
         "LoadingLayer::init",
         tulip::hook::TulipConvention::Thiscall
     );
-}*/
+}
