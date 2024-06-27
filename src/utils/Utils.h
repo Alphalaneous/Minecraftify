@@ -214,8 +214,6 @@ public:
         return newSplash;
     }
 
-    #define _CRT_SECURE_NO_WARNINGS
-
     static std::string wstrToStr(std::wstring wstr) {
     
         int slength = (int)wstr.length() + 1;
@@ -225,8 +223,6 @@ public:
 
         return r;
     }
-
-    #undef _CRT_SECURE_NO_WARNINGS
 
     static ccColor3B colorForCode(wchar_t code){
 
