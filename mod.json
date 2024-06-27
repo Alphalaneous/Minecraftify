@@ -3,7 +3,7 @@
 	"gd": {
 		"win": "2.206"
 	},
-	"version": "v0.6.7",
+	"version": "v0.6.8",
 	"id": "zalphalaneous.minecraft",
 	"name": "Minecraftify!",
 	"developer": "Alphalaneous",
@@ -21,13 +21,5 @@
       "assets/shaders/blur/*",
       "assets/logo.ico"
     ]
-  },
-
-  "dependencies": [
-    {
-      "id": "geode.node-ids",
-      "version": ">=v1.12.0-beta.2",
-      "importance": "required"
-    }
-  ]
+  }
 }

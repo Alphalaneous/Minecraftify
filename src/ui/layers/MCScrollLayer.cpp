@@ -23,7 +23,11 @@ bool MCScrollLayer::init(std::string title, float topHeight, float bottomHeight)
 
 	auto winSize = CCDirector::sharedDirector()->getWinSize();
 
-    this->addChild(Utils::generateDirtBG());
+    CCNode* dirtBG = Utils::generateDirtBG();
+
+    dirtBG->setID("dirt-background"_spr);
+
+    this->addChild(dirtBG);
 
     ScrollLayer* scrollLayer = ScrollLayer::create({0, bottomHeight, winSize.width, winSize.height - (topHeight + bottomHeight)}, true, true);
     scrollLayer->setID("scroll-layer"_spr);
@@ -41,6 +45,7 @@ bool MCScrollLayer::init(std::string title, float topHeight, float bottomHeight)
     gradientTop->setAnchorPoint({0, 1});
     gradientTop->setPosition({0, winSize.height - topHeight});
     gradientTop->setFlipY(true);
+    gradientTop->setID("gradient-top"_spr);
 
     addChild(gradientTop);
 
@@ -51,6 +56,7 @@ bool MCScrollLayer::init(std::string title, float topHeight, float bottomHeight)
     gradientBottom->setZOrder(10);
     gradientBottom->setAnchorPoint({0, 0});
     gradientBottom->setPosition({0, bottomHeight});
+    gradientBottom->setID("gradient-bottom"_spr);
 
     addChild(gradientBottom);
 
@@ -58,8 +64,6 @@ bool MCScrollLayer::init(std::string title, float topHeight, float bottomHeight)
     titleText->setID("title-text"_spr);
 
     addChild(scrollLayer);
-
-    
 
     setKeypadEnabled(true);
 
@@ -84,6 +88,13 @@ void MCScrollLayer::addContent(CCLayer* content){
     CCSprite* dirtBG = Utils::generateDirtBG({winSize.width, content->getContentSize().height});
     dirtBG->setID("background"_spr);
     dirtBG->setColor({100,100,100});
+    dirtBG->setFlipY(true);
+
+    content->setScaleY(-1);
+
+    for(CCNode* node : CCArrayExt<CCNode*>(content->getChildren())){
+        node->setScaleY(-1);
+    }
 
     content->addChild(dirtBG);
     scrollLayer->m_contentLayer->setContentSize(content->getContentSize());

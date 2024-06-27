@@ -4,7 +4,6 @@
 
 class $modify(MyCCDirector, CCDirector){
 
-
 	bool replaceScene(CCScene *pScene){
 
 		if(!GlobalVars::getSharedInstance()->isInitialLaunch){

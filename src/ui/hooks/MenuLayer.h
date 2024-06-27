@@ -33,6 +33,7 @@ class $modify(MenuLayer){
 				rightSideMenu->setUserObject("orientation", CCInteger::create(1));
 			}
 		}
+		
 		return true;
 	}
 };
@@ -257,7 +258,13 @@ class $modify(MyMenuLayer, MenuLayer) {
 
 	void setAllVisible(float dt){
 
-
+		if(!Loader::get()->isModLoaded("geode.node-ids")) {
+			createQuickPopup("Node IDs", "Install Node IDs to get the full Minecraftify! experience", "Cancel", "Okay", [](FLAlertLayer*, bool p0){
+				if(p0) {
+					geode::openModsList();
+				}
+			}, true);
+		}
 
 		CCMenu* menu = typeinfo_cast<CCMenu*>(this->getChildByID("minecraft-menu"_spr));
 
