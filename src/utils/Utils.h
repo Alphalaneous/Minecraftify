@@ -83,7 +83,10 @@ public:
         case kCCTexture2DPixelFormat_I8:
             glTexImage2D(target, 0, GL_LUMINANCE, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, data);
             break;
+        default:
+            break;
         }
+        
     }
 
 
