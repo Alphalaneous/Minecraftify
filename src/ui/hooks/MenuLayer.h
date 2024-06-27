@@ -62,19 +62,17 @@ class $modify(MyMenuLayer, MenuLayer) {
 
 		this->addChild(panorama);
 
-		this->getChildByIDRecursive("main-menu")->setVisible(false);
-		this->getChildByIDRecursive("profile-menu")->setVisible(false);
-		this->getChildByIDRecursive("player-username")->setVisible(false);
-		this->getChildByIDRecursive("social-media-menu")->setVisible(false);
-		this->getChildByIDRecursive("close-menu")->setVisible(false);
-		this->getChildByIDRecursive("bottom-menu")->setVisible(false);
-		this->getChildByIDRecursive("more-games-menu")->setVisible(false);
-		this->getChildByIDRecursive("main-menu-bg")->setVisible(false);
-		this->getChildByIDRecursive("main-menu-bg")->setScale(0);
-		this->getChildByIDRecursive("right-side-menu")->setVisible(false);
-
-		CCSprite* mainTitle = typeinfo_cast<CCSprite*>(this->getChildByIDRecursive("main-title"));
-		if(mainTitle) mainTitle->setVisible(false);
+		Utils::getNodeSafe(this, "main-menu")->setVisible(false);
+		Utils::getNodeSafe(this, "profile-menu")->setVisible(false);
+		Utils::getNodeSafe(this, "player-username")->setVisible(false);
+		Utils::getNodeSafe(this, "social-media-menu")->setVisible(false);
+		Utils::getNodeSafe(this, "close-menu")->setVisible(false);
+		Utils::getNodeSafe(this, "bottom-menu")->setVisible(false);
+		Utils::getNodeSafe(this, "more-games-menu")->setVisible(false);
+		Utils::getNodeSafe(this, "main-menu-bg")->setVisible(false);
+		Utils::getNodeSafe(this, "main-menu-bg")->setScale(0);
+		Utils::getNodeSafe(this, "right-side-menu")->setVisible(false);
+		Utils::getNodeSafe(this, "main-title")->setVisible(false);
 
 		CCMenu* menu = CCMenu::create();
 

@@ -8,7 +8,7 @@
 #define convertToMCButton(id, text) \
 		if(auto origButton = this->getChildByIDRecursive(id)){\
 			if(MyCCMenuItemSpriteExtra* myButton = static_cast<MyCCMenuItemSpriteExtra*>(origButton)){\
-				MCButton* button = MCButton::create(text, 38.1f, this, myButton->m_fields->m_buttonCallback);\
+				MCButton* button = MCButton::create(text, 38.1f, myButton->m_fields->m_buttonTarget, myButton->m_fields->m_buttonCallback);\
 				minecraftButtonMenu->addChild(button);\
 			}\
 		}
@@ -33,15 +33,13 @@ class $modify(MyCreatorLayer, CreatorLayer){
 
 		CCLayer* content = CCLayer::create();
 
-		CCNode* background = this->getChildByID("background");
-		background->setVisible(false);
-
-		this->getChildByID("creator-buttons-menu")->setVisible(false);
-		this->getChildByID("bottom-left-corner")->setVisible(false);
-		this->getChildByID("top-left-corner")->setVisible(false);
-		this->getChildByIDRecursive("treasure-room-button")->setVisible(false);
-		this->getChildByIDRecursive("vault-button")->setVisible(false);
-		this->getChildByIDRecursive("exit-button")->setVisible(false);
+		Utils::getNodeSafe(this, "background")->setVisible(false);
+		Utils::getNodeSafe(this, "creator-buttons-menu")->setVisible(false);
+		Utils::getNodeSafe(this, "bottom-left-corner")->setVisible(false);
+		Utils::getNodeSafe(this, "top-left-corner")->setVisible(false);
+		Utils::getNodeSafe(this, "treasure-room-button")->setVisible(false);
+		Utils::getNodeSafe(this, "vault-button")->setVisible(false);
+		Utils::getNodeSafe(this, "exit-button")->setVisible(false);
 
     	//this->addChild(Utils::generateDirtBG());
 

@@ -1,12 +1,10 @@
-#pragma once
-
-#ifndef MYCCMENUITEMSPRITEEXTRA_H
-#define MYCCMENUITEMSPRITEEXTRA_H
-
 #include <Geode/Geode.hpp>
-#include <Geode/modify/CCMenuItemSpriteExtra.hpp>
+#include <Geode/modify/CCMenuItemToggler.hpp>
 
-class $modify(MyCCMenuItemSpriteExtra, CCMenuItemSpriteExtra){
+#ifndef MYCCMENUITEMTOGGLER_H
+#define MYCCMENUITEMTOGGLER_H
+
+class $modify(MyCCMenuItemToggler, CCMenuItemToggler){
 
     struct Fields {
         cocos2d::SEL_MenuHandler m_buttonCallback;
@@ -16,7 +14,7 @@ class $modify(MyCCMenuItemSpriteExtra, CCMenuItemSpriteExtra){
     bool init(cocos2d::CCNode* p0, cocos2d::CCNode* p1, cocos2d::CCObject* p2, cocos2d::SEL_MenuHandler p3){
         m_fields->m_buttonCallback = p3;
         m_fields->m_buttonTarget = p2;
-        return CCMenuItemSpriteExtra::init(p0, p1, p2, p3);
+        return CCMenuItemToggler::init(p0, p1, p2, p3);
     }
 };
 

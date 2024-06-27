@@ -4,7 +4,6 @@
 #include "../nodes/MCLabel.h"
 #include "../layers/settings/VideoSettings.h"
 
-
 class $modify(MyLoadingLayer, LoadingLayer){
 
 	struct Fields {
@@ -16,16 +15,19 @@ class $modify(MyLoadingLayer, LoadingLayer){
 	};
 
 	void doFadeOut(float dt){
-		CCLayerColor* loadingBar = typeinfo_cast<CCLayerColor*>(this->getChildByID("loading-bar"_spr));
-		CCLayerColor* loadingBarBG2 = typeinfo_cast<CCLayerColor*>(this->getChildByID("loading-bar-bg2"_spr));
-		MCLabel* loadingText = typeinfo_cast<MCLabel*>(this->getChildByID("loading-text"_spr));
 
-		CCFadeOut* fadeOut = CCFadeOut::create(1.0f);
-		loadingBar->runAction(fadeOut);
-		CCFadeOut* fadeOut2 = CCFadeOut::create(1.0f);
-		loadingBarBG2->runAction(fadeOut2);
-		CCFadeOut* fadeOut3 = CCFadeOut::create(1.0f);
-		loadingText->runAction(fadeOut3);
+		if(CCLayerColor* loadingBar = typeinfo_cast<CCLayerColor*>(this->getChildByID("loading-bar"_spr))) {
+			CCFadeOut* fadeOut = CCFadeOut::create(1.0f);
+			loadingBar->runAction(fadeOut);
+		}
+		if(CCLayerColor* loadingBarBG2 = typeinfo_cast<CCLayerColor*>(this->getChildByID("loading-bar-bg2"_spr))) {
+			CCFadeOut* fadeOut2 = CCFadeOut::create(1.0f);
+			loadingBarBG2->runAction(fadeOut2);
+		}
+		if(MCLabel* loadingText = typeinfo_cast<MCLabel*>(this->getChildByID("loading-text"_spr))) {
+			CCFadeOut* fadeOut3 = CCFadeOut::create(1.0f);
+			loadingText->runAction(fadeOut3);
+		}
 
 		this->scheduleOnce(schedule_selector(MyLoadingLayer::doChangeScene), 1.0f);
 	}
@@ -39,7 +41,11 @@ class $modify(MyLoadingLayer, LoadingLayer){
 
 	void myUpdate(float dt){
 
-		CCLabelBMFont* loadingTextOrig = typeinfo_cast<CCLabelBMFont*>(this->getChildByID("geode-small-label"));
+		if(CCLabelBMFont* loadingTextOrig = typeinfo_cast<CCLabelBMFont*>(this->getChildByID("geode-small-label"))) {
+			MCLabel* loadingText = typeinfo_cast<MCLabel*>(this->getChildByID("loading-text"_spr));
+			loadingText->setString(loadingTextOrig->getString());
+		}
+		
 
 		float currentWidth = this->m_sliderBar->getContentSize().width;
 
@@ -48,17 +54,13 @@ class $modify(MyLoadingLayer, LoadingLayer){
 		}
 
 		if(currentWidth != this->m_fields->lastWidth ){
-			CCLayerColor* loadingBar = typeinfo_cast<CCLayerColor*>(this->getChildByID("loading-bar"_spr));
-	
-			CCScaleTo* scaleTo = CCScaleTo::create(0.1, currentWidth*this->m_fields->loadingScaleX, this->m_fields->loadingScaleY);
-			loadingBar->runAction(scaleTo);
+			if(CCLayerColor* loadingBar = typeinfo_cast<CCLayerColor*>(this->getChildByID("loading-bar"_spr))) {
+				CCScaleTo* scaleTo = CCScaleTo::create(0.1, currentWidth*this->m_fields->loadingScaleX, this->m_fields->loadingScaleY);
+				loadingBar->runAction(scaleTo);
+			}
 
 			this->m_fields->lastWidth = currentWidth;
 		}
-
-
-		MCLabel* loadingText = typeinfo_cast<MCLabel*>(this->getChildByID("loading-text"_spr));
-		loadingText->setString(loadingTextOrig->getString());
 	}
 
 };
@@ -82,17 +84,18 @@ bool LoadingLayer_init(LoadingLayer* self, bool p0){
 	HICON hIcon = (HICON)LoadImage(NULL, path.c_str(), IMAGE_ICON, 32, 32, LR_LOADFROMFILE);
 	SendMessage(hwnd, WM_SETICON, ICON_SMALL, (LPARAM)hIcon);
 
-	CCLabelBMFont* loadingTextOrig = typeinfo_cast<CCLabelBMFont*>(self->getChildByID("geode-small-label"));
-	loadingTextOrig->setVisible(false);
-
-	self->getChildByID("bg-texture")->setVisible(false);
-	self->getChildByID("loading-text")->setVisible(false);
-	self->getChildByID("text-area")->setVisible(false);
-	self->getChildByID("robtop-logo")->setVisible(false);
-	self->getChildByID("gd-logo")->setVisible(false);
-	self->getChildByID("fmod-logo")->setVisible(false);
-	self->getChildByID("cocos2d-logo")->setVisible(false);
-	self->getChildByID("progress-slider")->setVisible(false);
+	if(CCLabelBMFont* loadingTextOrig = typeinfo_cast<CCLabelBMFont*>(self->getChildByID("geode-small-label"))) {
+		loadingTextOrig->setVisible(false);
+	}
+	
+	Utils::getNodeSafe(self, "bg-texture")->setVisible(false);
+	Utils::getNodeSafe(self, "loading-text")->setVisible(false);
+	Utils::getNodeSafe(self, "text-area")->setVisible(false);
+	Utils::getNodeSafe(self, "robtop-logo")->setVisible(false);
+	Utils::getNodeSafe(self, "gd-logo")->setVisible(false);
+	Utils::getNodeSafe(self, "fmod-logo")->setVisible(false);
+	Utils::getNodeSafe(self, "cocos2d-logo")->setVisible(false);
+	Utils::getNodeSafe(self, "progress-slider")->setVisible(false);
 	self->m_sliderBar->setVisible(false);
 
 	auto winSize = CCDirector::sharedDirector()->getWinSize();

@@ -1,4 +1,4 @@
-/*#include "MCOptionsLayer.h"
+#include "MCOptionsLayer.h"
 #include "MCScrollLayer.h"
 #include "../../utils/Utils.h"
 #include "../nodes/MCLabel.h"
@@ -25,6 +25,15 @@ MCOptionsLayer* MCOptionsLayer::create(bool fromRefresh) {
     return ret;
 }
 
+CCNode* safeGet(std::string id, CCNode* layer){
+    CCNode* finalNode = CCNode::create();
+    if(auto node = layer->getChildByIDRecursive(id)){
+        finalNode = node;
+    }
+    return finalNode;
+}
+
+
 bool MCOptionsLayer::init(bool fromRefresh) {
 
     this->fromRefresh = fromRefresh;
@@ -40,10 +49,10 @@ bool MCOptionsLayer::init(bool fromRefresh) {
 
     layer->setPosition({optionsLayer->getPosition().x, 0});
 
-	layer->getChildByID("left-chain")->setVisible(false);
-	layer->getChildByID("right-chain")->setVisible(false);
-	layer->getChildByID("background")->setVisible(false);
-	layer->getChildByIDRecursive("exit-button")->setVisible(false);
+    safeGet("chain-left", layer)->setVisible(false);
+    safeGet("chain-right", layer)->setVisible(false);
+    safeGet("background", layer)->setVisible(false);
+    safeGet("exit-button", layer)->setVisible(false);
 
     this->addChild(optionsLayer);
 
@@ -189,4 +198,3 @@ CCScene* MCOptionsLayer::scene(bool fromRefresh) {
     scene->addChild(layer);
     return scene;
 }
-*/

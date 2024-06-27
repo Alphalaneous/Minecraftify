@@ -2,6 +2,9 @@
 
 #include <Geode/Geode.hpp>
 #include <random>
+#include "../ui/hooks/CCMenuItemSpriteExtra.h"
+#include "../ui/hooks/CCMenuItemToggler.h"
+#include "../ui/nodes/MCButton.h"
 
 using namespace geode::prelude;
 
@@ -257,5 +260,35 @@ public:
             default:
                 return {255,255,255};
         }
+    }
+
+    static CCMenuItemToggler* convertToggler(std::string text, CCMenuItemToggler* toggler){
+
+        CCMenuItemToggler* newToggler = nullptr;
+
+        MCButton* onBtn;
+        MCButton* offBtn;
+
+        if(auto btn = static_cast<MyCCMenuItemSpriteExtra*>(toggler->m_onButton)){
+            onBtn = MCButton::create(fmt::format("{}: ON", text), 38.1f, btn->m_fields->m_buttonTarget, btn->m_fields->m_buttonCallback);
+        }
+        if(auto btn = static_cast<MyCCMenuItemSpriteExtra*>(toggler->m_offButton)){
+            offBtn = MCButton::create(fmt::format("{}: OFF", text), 38.1f, btn->m_fields->m_buttonTarget, btn->m_fields->m_buttonCallback);
+        }
+        if(!onBtn || !offBtn) return nullptr;
+        if(auto btn = static_cast<MyCCMenuItemToggler*>(toggler)){
+            newToggler = CCMenuItemToggler::create(offBtn, onBtn, btn->m_fields->m_buttonTarget, btn->m_fields->m_buttonCallback);
+        }
+
+        return newToggler;
+    }
+
+    static CCNode* getNodeSafe(CCNode* node, std::string id) {
+
+        if(CCNode* ret = node->getChildByIDRecursive(id)){
+            return ret;
+        }
+
+        return CCNode::create();
     }
 };
