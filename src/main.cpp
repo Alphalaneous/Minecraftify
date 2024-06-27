@@ -1,5 +1,3 @@
-#define _CRT_SECURE_NO_DEPRECATE
-
 #include <Geode/Geode.hpp>
 #include "ui/hooks/MenuLayer.h"
 #include "ui/hooks/LoadingLayer.h"
