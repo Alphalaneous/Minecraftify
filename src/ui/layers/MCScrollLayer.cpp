@@ -105,7 +105,6 @@ void MCScrollLayer::addContent(CCLayer* content){
         MCScrollBar* scrollBar = MCScrollBar::create(scrollLayer, winSize.height - (m_topHeight + m_bottomHeight));
 
         scrollBar->setPosition({winSize.width/2+140, winSize.height - m_topHeight});
-
         addChild(scrollBar);
     }
 }

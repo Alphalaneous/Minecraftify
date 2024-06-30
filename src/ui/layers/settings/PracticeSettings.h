@@ -1,16 +1,15 @@
 #pragma once
 
 #include <Geode/Bindings.hpp>
+#include "../MCOptionsInnerLayer.h"
+#include "../MCOptionsOuterLayer.h"
 
 using namespace geode::prelude;
 
-class PracticeSettings : public cocos2d::CCLayer {
+class PracticeSettings : public MCOptionsInnerLayer {
 protected:
-    virtual bool init();
-    virtual void keyBackClicked();
-    void onBack(cocos2d::CCObject*);
+    virtual bool init(MCOptionsOuterLayer* topLayer, CCLayer* prevLayer);
 public:
 
-    static PracticeSettings* create();
-    static cocos2d::CCScene* scene();
+    static PracticeSettings* create(MCOptionsOuterLayer* topLayer, CCLayer* prevLayer);
 };

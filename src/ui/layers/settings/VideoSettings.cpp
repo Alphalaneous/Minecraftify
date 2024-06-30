@@ -9,9 +9,9 @@
 
 using namespace geode::prelude;
 
-VideoSettings* VideoSettings::create(bool fromRefresh) {
+VideoSettings* VideoSettings::create(MCOptionsOuterLayer* topLayer, CCLayer* prevLayer) {
     auto ret = new VideoSettings();
-    if (ret && ret->init(fromRefresh)) {
+    if (ret && ret->init(topLayer, prevLayer)) {
         ret->autorelease();
     } else {
         delete ret;
@@ -20,45 +20,38 @@ VideoSettings* VideoSettings::create(bool fromRefresh) {
     return ret;
 }
 
-bool VideoSettings::init(bool fromRefresh) {
+bool VideoSettings::init(MCOptionsOuterLayer* topLayer, CCLayer* prevLayer) {
 
-    this->fromRefresh = fromRefresh;
+    MCOptionsInnerLayer::init(topLayer, prevLayer);
 
 	auto winSize = CCDirector::sharedDirector()->getWinSize();
 
     auto scrollLayer = MCScrollLayer::create("Video Settings");
 
-    CCLayer* content = CCLayer::create();
+    std::vector<std::pair<int, std::string>> values = {
+        {24, "Show Cursor In-Game"},
+        {135, "Hide Attempts"},
+        {15, "Flip Pause Button"},
+        {129, "No Portal Guide"},
+        {130, "Orb Guide"},
+        {140, "No Orb Scale"},
+        {141, "No Trigger Orb Scale"},
+        {172, "No Shake"},
+        {14, "No Explosion Shake"},
+        {72, "No Gravity Effect"},
+        {60, "Default Mini Icon"},
+        {61, "Swap Spider TP Color"},
+        {62, "Swap Dash Fire Color"},
+        {96, "Swap Wave Trail Color"},
+        {174, "Hide Playtest Text"}
 
-    //MoreOptionsLayer* moreOptionsLayer = new MoreOptionsLayer();
-    //moreOptionsLayer->autorelease();
-    //moreOptionsLayer->init();
+    };
 
-    content->setContentSize({winSize.width, 3000});
+    CCLayer* content = Utils::convertMoreOptionsLayer(values);
+
     scrollLayer->addContent(content);
 
     addChild(scrollLayer);
 
-    setKeypadEnabled(true);
     return true;
-}
-
-void VideoSettings::keyBackClicked() {
-    if(fromRefresh){
-        CCDirector::sharedDirector()->pushScene(MCOptionsLayer::scene(true));
-    }
-    else {
-        CCDirector::sharedDirector()->popScene();
-    }
-}
-
-void VideoSettings::onBack(CCObject* object) {
-    keyBackClicked();
-}
-
-CCScene* VideoSettings::scene(bool fromRefresh) {
-    auto layer = VideoSettings::create(fromRefresh);
-    auto scene = CCScene::create();
-    scene->addChild(layer);
-    return scene;
 }

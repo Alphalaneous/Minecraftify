@@ -52,7 +52,7 @@ MCButtonChild* MCButtonChild::create(gd::string text, float width, CCObject* tar
    
     MCLabel* label = MCLabel::create(text, "minecraft.fnt"_spr);
     label->setScale(0.12f);
-    label->setZOrder(1);
+    label->setZOrder(2);
 
     if (ret && ret->initWithNormalSprite(buttonSprite, nullptr, nullptr, target, selector))
     {

@@ -14,9 +14,9 @@
 #include "../layers/settings/OnlineSettings.h"
 #include "../layers/settings/MusicAndSoundSettings.h"
 
-MCOptionsLayer* MCOptionsLayer::create(bool fromRefresh) {
+MCOptionsLayer* MCOptionsLayer::create(MCOptionsOuterLayer* topLayer) {
     auto ret = new MCOptionsLayer();
-    if (ret && ret->init(fromRefresh)) {
+    if (ret && ret->init(topLayer)) {
         ret->autorelease();
     } else {
         delete ret;
@@ -34,27 +34,17 @@ CCNode* safeGet(std::string id, CCNode* layer){
 }
 
 
-bool MCOptionsLayer::init(bool fromRefresh) {
+bool MCOptionsLayer::init(MCOptionsOuterLayer* topLayer) {
 
-    this->fromRefresh = fromRefresh;
+    MCOptionsInnerLayer::init(topLayer, nullptr);
 
 	auto winSize = CCDirector::sharedDirector()->getWinSize();
 
+    this->m_topLayer->setContentSize(winSize);
+
+    this->setID("settings-layer"_spr);
+
     this->addChild(Utils::generateDirtBG());
-
-    OptionsLayer* optionsLayer = OptionsLayer::create();
-    optionsLayer->setVisible(true);
-
-    CCLayer* layer = typeinfo_cast<CCLayer*>(optionsLayer->getChildByID("main-layer"));
-
-    layer->setPosition({optionsLayer->getPosition().x, 0});
-
-    safeGet("chain-left", layer)->setVisible(false);
-    safeGet("chain-right", layer)->setVisible(false);
-    safeGet("background", layer)->setVisible(false);
-    safeGet("exit-button", layer)->setVisible(false);
-
-    this->addChild(optionsLayer);
 
     MCLabel* titleText = MCLabel::create("Options", "minecraft.fnt"_spr);
     titleText->setScale(0.4f);
@@ -62,6 +52,11 @@ bool MCOptionsLayer::init(bool fromRefresh) {
 
     this->addChild(titleText);
     titleText->setID("title-text"_spr);
+
+    //OptionsLayer* optionsLayer = OptionsLayer::create();
+    //optionsLayer->setKeyboardEnabled(false);
+    //optionsLayer->setKeypadEnabled(false);
+    //addChild(optionsLayer);
 
     MCButton* accountButton = MCButton::create("Online...", 39.1f, this, menu_selector(MCOptionsLayer::onOnlineSettings));
     MCButton* audioButton = MCButton::create("Music & Sounds...", 39.1f, this, menu_selector(MCOptionsLayer::onMusicAndSoundSettings));
@@ -133,67 +128,74 @@ bool MCOptionsLayer::init(bool fromRefresh) {
     this->addChild(minecraftButtonMenu);
     this->addChild(importantButtonMenu);
 
-    setKeypadEnabled(true);
-
     return true;
 }
 
 void MCOptionsLayer::onVideoSettings(CCObject* obj){
-    CCDirector::sharedDirector()->pushScene(VideoSettings::scene());
+    m_topLayer->setLayer(VideoSettings::create(m_topLayer, this));
 }
 
 void MCOptionsLayer::onPerformanceSettings(CCObject* obj){
-    CCDirector::sharedDirector()->pushScene(PerformanceSettings::scene());
+    m_topLayer->setLayer(PerformanceSettings::create(m_topLayer, this));
 }
 
 void MCOptionsLayer::onGameplaySettings(CCObject* obj){
-    CCDirector::sharedDirector()->pushScene(GameplaySettings::scene());
+    m_topLayer->setLayer(GameplaySettings::create(m_topLayer, this));
 }
 
 void MCOptionsLayer::onPracticeSettings(CCObject* obj){
-    CCDirector::sharedDirector()->pushScene(PracticeSettings::scene());
+    m_topLayer->setLayer(PracticeSettings::create(m_topLayer, this));
 }
 
 void MCOptionsLayer::onControlsSettings(CCObject* obj){
-    CCDirector::sharedDirector()->pushScene(ControlsSettings::scene());
+    m_topLayer->setLayer(ControlsSettings::create(m_topLayer, this));
 }
 
 void MCOptionsLayer::onMiscSettings(CCObject* obj){
-    CCDirector::sharedDirector()->pushScene(MiscSettings::scene());
+    m_topLayer->setLayer(MiscSettings::create(m_topLayer, this));
 }
 
 void MCOptionsLayer::onHelpSettings(CCObject* obj){
-    CCDirector::sharedDirector()->pushScene(HelpSettings::scene());
+
+    OptionsLayer* optionsLayer = OptionsLayer::create();
+    optionsLayer->setKeyboardEnabled(false);
+    optionsLayer->setKeypadEnabled(false);
+
+    this->addChild(optionsLayer);
+
+    (optionsLayer->*menu_selector(OptionsLayer::onHelp))(this);
+
+    //CCDirector::sharedDirector()->pushScene(HelpSettings::scene());
 }
 
 void MCOptionsLayer::onTutorialSettings(CCObject* obj){
-    CCDirector::sharedDirector()->pushScene(TutorialSettings::scene());
+
+    //OptionsLayer* optionsLayer = OptionsLayer::create();
+    //this->addChild(optionsLayer);
+
+    (this->*menu_selector(OptionsLayer::onSupport))(this);
+
+    //CCDirector::sharedDirector()->pushScene(TutorialSettings::scene());
 }
 
 void MCOptionsLayer::onOnlineSettings(CCObject* obj){
-    CCDirector::sharedDirector()->pushScene(OnlineSettings::scene());
+    OptionsLayer* optionsLayer = OptionsLayer::create();
+    optionsLayer->setKeyboardEnabled(false);
+    optionsLayer->setKeypadEnabled(false);
+    
+    this->addChild(optionsLayer);
+
+    (optionsLayer->*menu_selector(OptionsLayer::onAccount))(this);
+
+    //CCDirector::sharedDirector()->pushScene(OnlineSettings::scene());
 }
 
 void MCOptionsLayer::onMusicAndSoundSettings(CCObject* obj){
-    CCDirector::sharedDirector()->pushScene(MusicAndSoundSettings::scene());
+    m_topLayer->setLayer(MusicAndSoundSettings::create(m_topLayer, this));
 }
 
-void MCOptionsLayer::keyBackClicked() {
-
-    if(fromRefresh){
-        CCDirector::sharedDirector()->pushScene(MenuLayer::scene(false));
-    }
-    else{
-        CCDirector::sharedDirector()->popScene();
-    }
-}
-
-void MCOptionsLayer::onBack(CCObject* object) {
-    keyBackClicked();
-}
-
-CCScene* MCOptionsLayer::scene(bool fromRefresh) {
-    auto layer = MCOptionsLayer::create(fromRefresh);
+CCScene* MCOptionsLayer::scene(MCOptionsOuterLayer* topLayer) {
+    auto layer = MCOptionsLayer::create(topLayer);
     auto scene = CCScene::create();
     scene->addChild(layer);
     return scene;

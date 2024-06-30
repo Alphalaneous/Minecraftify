@@ -5,9 +5,9 @@
 #include "../../nodes/MCScrollBar.h"
 #include "../../layers/MCScrollLayer.h"
 
-TutorialSettings* TutorialSettings::create() {
+TutorialSettings* TutorialSettings::create(MCOptionsOuterLayer* topLayer, CCLayer* prevLayer) {
     auto ret = new TutorialSettings();
-    if (ret && ret->init()) {
+    if (ret && ret->init(topLayer, prevLayer)) {
         ret->autorelease();
     } else {
         delete ret;
@@ -16,7 +16,9 @@ TutorialSettings* TutorialSettings::create() {
     return ret;
 }
 
-bool TutorialSettings::init() {
+bool TutorialSettings::init(MCOptionsOuterLayer* topLayer, CCLayer* prevLayer) {
+    
+    MCOptionsInnerLayer::init(topLayer, prevLayer);
 
 	auto winSize = CCDirector::sharedDirector()->getWinSize();
 
@@ -29,21 +31,5 @@ bool TutorialSettings::init() {
 
     addChild(scrollLayer);
 
-    setKeypadEnabled(true);
     return true;
-}
-
-void TutorialSettings::keyBackClicked() {
-    CCDirector::sharedDirector()->popScene();
-}
-
-void TutorialSettings::onBack(CCObject* object) {
-    keyBackClicked();
-}
-
-CCScene* TutorialSettings::scene() {
-    auto layer = TutorialSettings::create();
-    auto scene = CCScene::create();
-    scene->addChild(layer);
-    return scene;
 }

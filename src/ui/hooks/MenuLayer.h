@@ -7,6 +7,7 @@
 #include "../nodes/MCLabel.h"
 #include "../nodes/MCButton.h"
 #include "../layers/MCOptionsLayer.h"
+#include "../layers/MCOptionsOuterLayer.h"
 #include "../layers/ExtrasLayer.h"
 #include "../layers/settings/VideoSettings.h"
 
@@ -87,15 +88,13 @@ class $modify(MyMenuLayer, MenuLayer) {
 		MCButton* profileButton = MCButton::create("", 5.0f, this, menu_selector(MyMenuLayer::onMyProfile));
 		MCButton* extrasButton = MCButton::create("", 5.0f, this, menu_selector(MyMenuLayer::onExtras));
 
-		CCSprite* profileSprite = Utils::createPixelSprite("language.png"_spr);
+		CCSprite* profileSprite = Utils::createPixelSprite("teleport_to_player.png"_spr);
 		profileSprite->setZOrder(1);
-		profileSprite->setScale(profileSprite->getScale());
 		profileSprite->setPosition({profileButton->getContentSize().width/2, profileButton->getContentSize().height/2});
 		profileButton->addSprite(profileSprite);
 
-		CCSprite* extrasSprite = Utils::createPixelSprite("select.png"_spr);
+		CCSprite* extrasSprite = Utils::createPixelSprite("search.png"_spr);
 		extrasSprite->setZOrder(1);
-		extrasSprite->setScale(extrasSprite->getScale()/2);
 		extrasSprite->setPosition({extrasButton->getContentSize().width/2, extrasButton->getContentSize().height/2});
 		extrasButton->addSprite(extrasSprite);
 
@@ -288,9 +287,12 @@ class $modify(MyMenuLayer, MenuLayer) {
 	}
 
 	void onMCOptions(CCObject* sender) {
-		CCScene* scene = MCOptionsLayer::scene();
-		auto transition = CCTransitionFade::create(0.0f, scene);
-		CCDirector::sharedDirector()->pushScene(transition);
+		MCOptionsOuterLayer* outerLayer = MCOptionsOuterLayer::create();
+		outerLayer->setLayer(MCOptionsLayer::create(outerLayer));
+
+		CCScene* scene = CCScene::create();
+		scene->addChild(outerLayer);
+		CCDirector::sharedDirector()->pushScene(scene);
 	}
 
 	void onMyProfile(CCObject* sender) {

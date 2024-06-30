@@ -5,9 +5,9 @@
 #include "../../nodes/MCScrollBar.h"
 #include "../../layers/MCScrollLayer.h"
 
-PracticeSettings* PracticeSettings::create() {
+PracticeSettings* PracticeSettings::create(MCOptionsOuterLayer* topLayer, CCLayer* prevLayer) {
     auto ret = new PracticeSettings();
-    if (ret && ret->init()) {
+    if (ret && ret->init(topLayer, prevLayer)) {
         ret->autorelease();
     } else {
         delete ret;
@@ -16,34 +16,31 @@ PracticeSettings* PracticeSettings::create() {
     return ret;
 }
 
-bool PracticeSettings::init() {
+bool PracticeSettings::init(MCOptionsOuterLayer* topLayer, CCLayer* prevLayer) {
+
+    MCOptionsInnerLayer::init(topLayer, prevLayer);
 
 	auto winSize = CCDirector::sharedDirector()->getWinSize();
 
     auto scrollLayer = MCScrollLayer::create("Practice Settings");
 
-    CCLayer* content = CCLayer::create();
+    std::vector<std::pair<int, std::string>> values = {
+        {71, "Hide Practice Buttons"},
+        {134, "Hide Attempts"},
+        {27, "Auto Checkpoints"},
+        {68, "Quick Checkpoints"},
+        {100, "Death Effects"},
+        {125, "Editor Normal Music"},
+        {166, "Show Hitboxes"},
+        {171, "No Player Hitbox"}
+    };
 
-    content->setContentSize({winSize.width, 3000});
+    CCLayer* content = Utils::convertMoreOptionsLayer(values);
+
     scrollLayer->addContent(content);
 
     addChild(scrollLayer);
 
-    setKeypadEnabled(true);
     return true;
 }
 
-void PracticeSettings::keyBackClicked() {
-    CCDirector::sharedDirector()->popScene();
-}
-
-void PracticeSettings::onBack(CCObject* object) {
-    keyBackClicked();
-}
-
-CCScene* PracticeSettings::scene() {
-    auto layer = PracticeSettings::create();
-    auto scene = CCScene::create();
-    scene->addChild(layer);
-    return scene;
-}

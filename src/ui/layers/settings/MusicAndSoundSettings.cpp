@@ -5,9 +5,9 @@
 #include "../../nodes/MCScrollBar.h"
 #include "../../layers/MCScrollLayer.h"
 
-MusicAndSoundSettings* MusicAndSoundSettings::create() {
+MusicAndSoundSettings* MusicAndSoundSettings::create(MCOptionsOuterLayer* topLayer, CCLayer* prevLayer) {
     auto ret = new MusicAndSoundSettings();
-    if (ret && ret->init()) {
+    if (ret && ret->init(topLayer, prevLayer)) {
         ret->autorelease();
     } else {
         delete ret;
@@ -16,7 +16,9 @@ MusicAndSoundSettings* MusicAndSoundSettings::create() {
     return ret;
 }
 
-bool MusicAndSoundSettings::init() {
+bool MusicAndSoundSettings::init(MCOptionsOuterLayer* topLayer, CCLayer* prevLayer) {
+
+    MCOptionsInnerLayer::init(topLayer, prevLayer);
 
 	auto winSize = CCDirector::sharedDirector()->getWinSize();
 
@@ -29,21 +31,5 @@ bool MusicAndSoundSettings::init() {
 
     addChild(scrollLayer);
 
-    setKeypadEnabled(true);
     return true;
-}
-
-void MusicAndSoundSettings::keyBackClicked() {
-    CCDirector::sharedDirector()->popScene();
-}
-
-void MusicAndSoundSettings::onBack(CCObject* object) {
-    keyBackClicked();
-}
-
-CCScene* MusicAndSoundSettings::scene() {
-    auto layer = MusicAndSoundSettings::create();
-    auto scene = CCScene::create();
-    scene->addChild(layer);
-    return scene;
 }

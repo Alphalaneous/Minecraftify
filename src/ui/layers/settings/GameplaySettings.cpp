@@ -5,9 +5,9 @@
 #include "../../nodes/MCScrollBar.h"
 #include "../../layers/MCScrollLayer.h"
 
-GameplaySettings* GameplaySettings::create() {
+GameplaySettings* GameplaySettings::create(MCOptionsOuterLayer* topLayer, CCLayer* prevLayer) {
     auto ret = new GameplaySettings();
-    if (ret && ret->init()) {
+    if (ret && ret->init(topLayer, prevLayer)) {
         ret->autorelease();
     } else {
         delete ret;
@@ -16,34 +16,26 @@ GameplaySettings* GameplaySettings::create() {
     return ret;
 }
 
-bool GameplaySettings::init() {
+bool GameplaySettings::init(MCOptionsOuterLayer* topLayer, CCLayer* prevLayer) {
 
-	auto winSize = CCDirector::sharedDirector()->getWinSize();
+    MCOptionsInnerLayer::init(topLayer, prevLayer);
 
     auto scrollLayer = MCScrollLayer::create("Gameplay Settings");
 
-    CCLayer* content = CCLayer::create();
+    std::vector<std::pair<int, std::string>> values = {
+        {26, "Auto Retry"},
+        {52, "Faster Restart"},
+        {128, "Lock Cursor"},
+        {10, "Flip 2 Player Controls"},
+        {11, "Always Limit Controls"},
+        {28, "Disable Thumbstick"},
+        {163, "Quick Keys"}
+    };
 
-    content->setContentSize({winSize.width, 3000});
+    CCLayer* content = Utils::convertMoreOptionsLayer(values);
+
     scrollLayer->addContent(content);
-
     addChild(scrollLayer);
 
-    setKeypadEnabled(true);
     return true;
-}
-
-void GameplaySettings::keyBackClicked() {
-    CCDirector::sharedDirector()->popScene();
-}
-
-void GameplaySettings::onBack(CCObject* object) {
-    keyBackClicked();
-}
-
-CCScene* GameplaySettings::scene() {
-    auto layer = GameplaySettings::create();
-    auto scene = CCScene::create();
-    scene->addChild(layer);
-    return scene;
 }

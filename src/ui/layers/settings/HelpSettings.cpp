@@ -5,9 +5,9 @@
 #include "../../nodes/MCScrollBar.h"
 #include "../../layers/MCScrollLayer.h"
 
-HelpSettings* HelpSettings::create() {
+HelpSettings* HelpSettings::create(MCOptionsOuterLayer* topLayer, CCLayer* prevLayer) {
     auto ret = new HelpSettings();
-    if (ret && ret->init()) {
+    if (ret && ret->init(topLayer, prevLayer)) {
         ret->autorelease();
     } else {
         delete ret;
@@ -16,7 +16,9 @@ HelpSettings* HelpSettings::create() {
     return ret;
 }
 
-bool HelpSettings::init() {
+bool HelpSettings::init(MCOptionsOuterLayer* topLayer, CCLayer* prevLayer) {
+
+    MCOptionsInnerLayer::init(topLayer, prevLayer);
 
 	auto winSize = CCDirector::sharedDirector()->getWinSize();
 
@@ -29,21 +31,5 @@ bool HelpSettings::init() {
 
     addChild(scrollLayer);
 
-    setKeypadEnabled(true);
     return true;
-}
-
-void HelpSettings::keyBackClicked() {
-    CCDirector::sharedDirector()->popScene();
-}
-
-void HelpSettings::onBack(CCObject* object) {
-    keyBackClicked();
-}
-
-CCScene* HelpSettings::scene() {
-    auto layer = HelpSettings::create();
-    auto scene = CCScene::create();
-    scene->addChild(layer);
-    return scene;
 }

@@ -4,6 +4,8 @@
 #ifndef MYCCMENUITEMTOGGLER_H
 #define MYCCMENUITEMTOGGLER_H
 
+using namespace geode::prelude;
+
 class $modify(MyCCMenuItemToggler, CCMenuItemToggler){
 
     struct Fields {
@@ -11,11 +13,16 @@ class $modify(MyCCMenuItemToggler, CCMenuItemToggler){
         CCObject* m_buttonTarget;
     };
 
-    bool init(cocos2d::CCNode* p0, cocos2d::CCNode* p1, cocos2d::CCObject* p2, cocos2d::SEL_MenuHandler p3){
-        m_fields->m_buttonCallback = p3;
-        m_fields->m_buttonTarget = p2;
-        return CCMenuItemToggler::init(p0, p1, p2, p3);
+    static CCMenuItemToggler* create(cocos2d::CCNode* p0, cocos2d::CCNode* p1, cocos2d::CCObject* p2, cocos2d::SEL_MenuHandler p3){
+        auto ret = CCMenuItemToggler::create(p0, p1, p2, p3);
+        auto myRet = static_cast<MyCCMenuItemToggler*>(ret);
+
+        myRet->m_fields->m_buttonCallback = p3;
+        myRet->m_fields->m_buttonTarget = p2;
+        return ret;
     }
+
+
 };
 
 #endif

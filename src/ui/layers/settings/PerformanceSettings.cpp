@@ -5,9 +5,9 @@
 #include "../../nodes/MCScrollBar.h"
 #include "../../layers/MCScrollLayer.h"
 
-PerformanceSettings* PerformanceSettings::create() {
+PerformanceSettings* PerformanceSettings::create(MCOptionsOuterLayer* topLayer, CCLayer* prevLayer) {
     auto ret = new PerformanceSettings();
-    if (ret && ret->init()) {
+    if (ret && ret->init(topLayer, prevLayer)) {
         ret->autorelease();
     } else {
         delete ret;
@@ -16,34 +16,31 @@ PerformanceSettings* PerformanceSettings::create() {
     return ret;
 }
 
-bool PerformanceSettings::init() {
+bool PerformanceSettings::init(MCOptionsOuterLayer* topLayer, CCLayer* prevLayer) {
+
+    MCOptionsInnerLayer::init(topLayer, prevLayer);
 
 	auto winSize = CCDirector::sharedDirector()->getWinSize();
 
     auto scrollLayer = MCScrollLayer::create("Performance Settings");
 
-    CCLayer* content = CCLayer::create();
+    std::vector<std::pair<int, std::string>> values = {
+        {66, "Increase Draw Capacity"},
+        {108, "Enable Low Detail"},
+        {82, "No High Object Alert"},
+        {136, "Extra LDM"},
+        {42, "Increase Max Levels"},
+        {119, "No Level Saving"},
+        {127, "Save Gauntlets"},
+        {155, "No Shader Antialiasing"}
+    };
 
-    content->setContentSize({winSize.width, 3000});
+    CCLayer* content = Utils::convertMoreOptionsLayer(values);
+
     scrollLayer->addContent(content);
 
     addChild(scrollLayer);
 
-    setKeypadEnabled(true);
     return true;
 }
 
-void PerformanceSettings::keyBackClicked() {
-    CCDirector::sharedDirector()->popScene();
-}
-
-void PerformanceSettings::onBack(CCObject* object) {
-    keyBackClicked();
-}
-
-CCScene* PerformanceSettings::scene() {
-    auto layer = PerformanceSettings::create();
-    auto scene = CCScene::create();
-    scene->addChild(layer);
-    return scene;
-}

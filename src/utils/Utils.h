@@ -268,12 +268,13 @@ public:
     static CCMenuItemToggler* convertToggler(std::string text, CCMenuItemToggler* toggler){
 
         CCMenuItemToggler* newToggler = nullptr;
-
+        
         MCButton* onBtn;
         MCButton* offBtn;
 
         if(auto btn = static_cast<MyCCMenuItemSpriteExtra*>(toggler->m_onButton)){
             onBtn = MCButton::create(fmt::format("{}: ON", text), 38.1f, btn->m_fields->m_buttonTarget, btn->m_fields->m_buttonCallback);
+            
         }
         if(auto btn = static_cast<MyCCMenuItemSpriteExtra*>(toggler->m_offButton)){
             offBtn = MCButton::create(fmt::format("{}: OFF", text), 38.1f, btn->m_fields->m_buttonTarget, btn->m_fields->m_buttonCallback);
@@ -281,6 +282,16 @@ public:
         if(!onBtn || !offBtn) return nullptr;
         if(auto btn = static_cast<MyCCMenuItemToggler*>(toggler)){
             newToggler = CCMenuItemToggler::create(offBtn, onBtn, btn->m_fields->m_buttonTarget, btn->m_fields->m_buttonCallback);
+            newToggler->setTag(toggler->getTag());
+            newToggler->setSizeMult(0);
+
+            auto onBtnToggler = static_cast<MyCCMenuItemSpriteExtra*>(newToggler->m_onButton);
+            onBtnToggler->m_fields->m_isMCButton = true;
+
+            auto offBtnToggler = static_cast<MyCCMenuItemSpriteExtra*>(newToggler->m_offButton);
+            offBtnToggler->m_fields->m_isMCButton = true;
+
+            if(toggler->isOn()) newToggler->toggle(true);
         }
 
         return newToggler;
@@ -293,5 +304,53 @@ public:
         }
 
         return CCNode::create();
+    }
+
+    static CCLayer* convertMoreOptionsLayer(std::vector<std::pair<int, std::string>> values){
+        CCLayer* content = CCLayer::create();
+	    auto winSize = CCDirector::sharedDirector()->getWinSize();
+
+        MoreOptionsLayer* moreOptionsLayer = MoreOptionsLayer::create();
+        moreOptionsLayer->setOpacity(0);
+        float gap = 8;
+        if(auto node = moreOptionsLayer->getChildByIDRecursive("togglers-menu")){
+            CCNode* mainLayer = moreOptionsLayer->getChildByID("main-layer");
+            mainLayer->removeAllChildren();
+            mainLayer->addChild(node);
+
+            node->removeChildByID("key-bindings-button");
+            node->removeChildByID("left-arrow-button");
+            node->removeChildByID("right-arrow-button");
+            node->removeChildByID("close-button");
+            node->removeChildByID("parental-control-button");
+            node->removeChildByID("fmod-debug-button");
+            node->removeChildByID("saved-songs-button");
+            node->setPosition({winSize.width/2, -gap});
+            node->setContentSize({300, 300});
+            node->setAnchorPoint({0.5, 0});
+
+            ColumnLayout* columnLayout = ColumnLayout::create();
+            columnLayout->setAxis(Axis::Row);
+            columnLayout->setGap(5);
+            columnLayout->setAutoScale(false);
+            columnLayout->setGrowCrossAxis(true);
+            columnLayout->ignoreInvisibleChildren(true);
+            node->setLayout(columnLayout);
+
+            for(std::pair<int, std::string> pair : values){
+
+                auto toggler = typeinfo_cast<CCMenuItemToggler*>(node->getChildByID(fmt::format("option-{}-toggler", pair.first)));
+
+                node->addChild(Utils::convertToggler(pair.second, toggler));
+                node->updateLayout();
+
+                mainLayer->setContentSize(node->getContentSize());
+                moreOptionsLayer->setContentSize(node->getContentSize());
+                content->setContentSize({content->getContentSize().width, node->getContentSize().height + gap * 2});
+            }
+        }
+        
+        content->addChild(moreOptionsLayer);
+        return content;
     }
 };

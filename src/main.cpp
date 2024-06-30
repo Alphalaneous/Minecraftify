@@ -5,6 +5,7 @@
 #include "ui/hooks/CCDirector.h"
 #include "ui/hooks/CCMenuItemSpriteExtra.h"
 #include "ui/hooks/CCMenuItemToggler.h"
+#include "ui/hooks/FLAlertLayer.h"
 
 $execute{
     setlocale( LC_ALL, "en_US.utf8" );

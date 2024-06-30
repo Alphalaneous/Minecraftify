@@ -5,9 +5,9 @@
 #include "../../nodes/MCScrollBar.h"
 #include "../../layers/MCScrollLayer.h"
 
-OnlineSettings* OnlineSettings::create() {
+OnlineSettings* OnlineSettings::create(MCOptionsOuterLayer* topLayer, CCLayer* prevLayer) {
     auto ret = new OnlineSettings();
-    if (ret && ret->init()) {
+    if (ret && ret->init(topLayer, prevLayer)) {
         ret->autorelease();
     } else {
         delete ret;
@@ -16,7 +16,9 @@ OnlineSettings* OnlineSettings::create() {
     return ret;
 }
 
-bool OnlineSettings::init() {
+bool OnlineSettings::init(MCOptionsOuterLayer* topLayer, CCLayer* prevLayer) {
+
+    MCOptionsInnerLayer::init(topLayer, prevLayer);
 
 	auto winSize = CCDirector::sharedDirector()->getWinSize();
 
@@ -29,21 +31,5 @@ bool OnlineSettings::init() {
 
     addChild(scrollLayer);
 
-    setKeypadEnabled(true);
     return true;
-}
-
-void OnlineSettings::keyBackClicked() {
-    CCDirector::sharedDirector()->popScene();
-}
-
-void OnlineSettings::onBack(CCObject* object) {
-    keyBackClicked();
-}
-
-CCScene* OnlineSettings::scene() {
-    auto layer = OnlineSettings::create();
-    auto scene = CCScene::create();
-    scene->addChild(layer);
-    return scene;
 }

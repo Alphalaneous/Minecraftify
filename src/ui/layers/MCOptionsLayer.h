@@ -1,16 +1,15 @@
 #pragma once
 
 #include <Geode/Bindings.hpp>
+#include "MCOptionsInnerLayer.h"
+#include "MCOptionsOuterLayer.h"
 
 using namespace geode::prelude;
 
-class MCOptionsLayer : public cocos2d::CCLayer {
+class MCOptionsLayer : public MCOptionsInnerLayer {
 protected:
-    virtual bool init(bool fromRefresh);
-    virtual void keyBackClicked();
-    void onBack(cocos2d::CCObject*);
+    virtual bool init(MCOptionsOuterLayer* topLayer);
 public:
-    bool fromRefresh;
 
     void onVideoSettings(CCObject* obj);
     void onPerformanceSettings(CCObject* obj);
@@ -24,6 +23,6 @@ public:
     void onMusicAndSoundSettings(CCObject* obj);
    
 
-    static MCOptionsLayer* create(bool fromRefresh);
-    static cocos2d::CCScene* scene(bool fromRefresh = false);
+    static MCOptionsLayer* create(MCOptionsOuterLayer* topLayer);
+    static cocos2d::CCScene* scene(MCOptionsOuterLayer* topLayer);
 };
