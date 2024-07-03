@@ -4,18 +4,6 @@
 
 class $modify(MyCCDirector, CCDirector){
 
-	/*void popScene(){
-		CCScene* currentScene = CCDirector::get()->getRunningScene();
-		if(!currentScene->getChildByIDRecursive("settings-layer"_spr)){
-			if(!currentScene->getChildByIDRecursive("MenuLayer")){
-				CCDirector::popScene();
-			}
-		}
-		else{
-			currentScene->getChildByIDRecursive("settings-layer"_spr)->removeFromParent();
-		}
-	}*/
-
 	bool replaceScene(CCScene *pScene){
 
 		if(!GlobalVars::getSharedInstance()->isInitialLaunch){

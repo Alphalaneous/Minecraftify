@@ -12,13 +12,24 @@ class $modify(MyFLAlertLayer, FLAlertLayer){
 		if(!Loader::get()->isModLoaded("geode.node-ids")) return true;
 
         CCNode* mainLayer = getChildByID("main-layer");
+        
+        bool hasScroll = mainLayer->getChildByID("scroll-layer");
 
         float scale = CCDirector::sharedDirector()->getContentScaleFactor()/4;
 
         if(CCScale9Sprite* background = typeinfo_cast<CCScale9Sprite*>(mainLayer->getChildByID("background"))){
             CCScale9Sprite* newBackground = CCScale9Sprite::create("ui_background.png"_spr);
             newBackground->setColor(background->getColor());
-            newBackground->setContentSize(background->getContentSize() / 4 / scale);
+
+            CCSize newBGSize = background->getContentSize() / 4 / scale;
+
+            float sizeIncrease = 0;
+
+            if(!hasScroll){
+                sizeIncrease = 10;
+            }
+
+            newBackground->setContentSize({newBGSize.width + sizeIncrease, newBGSize.height});
             newBackground->setScale(background->getScale() * 4 * scale);
             newBackground->setPosition({mainLayer->getContentSize().width/2, mainLayer->getContentSize().height/2});
             newBackground->setAnchorPoint(background->getAnchorPoint());
@@ -60,6 +71,9 @@ class $modify(MyFLAlertLayer, FLAlertLayer){
                 text->setAnchorPoint({0.5, 0});
                 text->setScale(0.6f);
                 text->setPosition({0, text->getPosition().y});
+                std::string labelText = std::string(text->getString());
+                Utils::trim(labelText);
+                text->setString(labelText.c_str());
             }
         }
 
@@ -77,6 +91,9 @@ class $modify(MyFLAlertLayer, FLAlertLayer){
                         text->setAnchorPoint({0.5, 1});
                         text->setScale(0.6f);
                         text->setPosition({0, text->getPosition().y});
+                        std::string labelText = std::string(text->getString());
+                        Utils::trim(labelText);
+                        text->setString(labelText.c_str());
                     }
 
                     contentLayer->setContentSize(textArea->getScaledContentSize());
@@ -120,7 +137,7 @@ class $modify(MyFLAlertLayer, FLAlertLayer){
             RowLayout* rowLayout = RowLayout::create();
             rowLayout->ignoreInvisibleChildren(true);
 
-            CCMenu* innerButtonMenu = CCMenu::create();
+            CCNode* innerButtonMenu = CCNode::create();
 
             innerButtonMenu->setContentSize({400, 30});
             innerButtonMenu->setLayout(rowLayout);

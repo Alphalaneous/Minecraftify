@@ -2,6 +2,8 @@
 #include "MCLabel.h"
 #include "../../utils/Utils.h"
 
+using namespace geode::prelude;
+
 CCSprite* generateEdgeSprite(gd::string textureName){
 
     float scale = CCDirector::sharedDirector()->getContentScaleFactor()/4;
@@ -133,7 +135,9 @@ void MCButtonChild::onHoverExit(){
 void MCButtonChild::selected(){
     if(this->isHovering){
         FMODAudioEngine::sharedEngine()->playEffect("click.ogg"_spr);
-        CCMenuItem::activate();
+        geode::Loader::get()->queueInMainThread([this]() { //delay it by a frame because for some reason it crashes the touch dispatcher otherwise ???
+            (m_pListener->*m_pfnSelector)(this);
+        });
     }
 }
 

@@ -297,6 +297,11 @@ public:
         return newToggler;
     }
 
+    static void trim(std::string& str) {
+        str.erase(str.find_last_not_of(' ')+1);   
+        str.erase(0, str.find_first_not_of(' '));
+    }
+
     static CCNode* getNodeSafe(CCNode* node, std::string id) {
 
         if(CCNode* ret = node->getChildByIDRecursive(id)){
