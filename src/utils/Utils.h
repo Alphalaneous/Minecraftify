@@ -297,6 +297,17 @@ public:
         return newToggler;
     }
 
+    static std::wstring strToWstr(std::string string){
+
+        const char* str = string.c_str();
+        std::wstring wStr = L"";
+        for(const char* it = str; *it; ++it) {
+            wStr.push_back(std::btowc(*it));
+        }
+
+        return wStr;
+    }
+
     static void trim(std::string& str) {
         str.erase(str.find_last_not_of(' ')+1);   
         str.erase(0, str.find_first_not_of(' '));

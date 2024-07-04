@@ -134,9 +134,24 @@ void MCButtonChild::onHoverExit(){
 
 void MCButtonChild::selected(){
     if(this->isHovering){
-        FMODAudioEngine::sharedEngine()->playEffect("click.ogg"_spr);
+
+        auto engine = FMODAudioEngine::sharedEngine();
+        auto system = engine->m_system;
+
+        FMOD::Channel* channel;
+        FMOD::Sound* sound;
+
+        std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename("click.ogg"_spr, false);;
+        if(engine->m_sfxVolume > 0) {
+            system->createSound(fullPath.c_str(), FMOD_DEFAULT, nullptr, &sound);
+            system->playSound(sound, nullptr, false, &channel);
+            channel->setVolume(engine->m_sfxVolume);
+        }
+
         geode::Loader::get()->queueInMainThread([this]() { //delay it by a frame because for some reason it crashes the touch dispatcher otherwise ???
-            (m_pListener->*m_pfnSelector)(this);
+            if(m_pListener && m_pfnSelector){
+                (m_pListener->*m_pfnSelector)(this);
+            }
         });
     }
 }

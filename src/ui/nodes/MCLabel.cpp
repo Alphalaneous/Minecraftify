@@ -1,6 +1,7 @@
 #include "MCLabel.h"
 #include "../../utils/Utils.h"
 #include <cstdlib>
+#include <iostream>
 
 struct ColorPos {
     unsigned int pos;
@@ -51,16 +52,17 @@ bool MCLabel::init(std::wstring text, std::string font){
 
     for(unsigned int i = 0; i < text.size(); i++) {
         
-        if(text.at(i) == L'§'){
+        if(text.at(i) == L'\u00A7'){
 
             if(i+1 <= text.size() && isValidChar(text.at(i+1))){
-                ColorPos p = {i - offset - 1, text.at(i+1)};
+                ColorPos p = {i - offset, text.at(i+1)};
 
                 colorPositions.push_back(p);
 
-                finalString = finalString.erase(i - offset - 1, 3);
 
-                offset += 3;
+                finalString = finalString.erase(i - offset, 2);
+
+                offset += 2;
             }
         }
     }

@@ -195,7 +195,7 @@ class $modify(MyFLAlertLayer, FLAlertLayer){
             stopAllActions();
             mainLayer->stopAllActions();
             mainLayer->setScale(1);
-            setColor({20, 20, 20});
+            setColor({15, 15, 15});
             setOpacity(200);
         }
     }
