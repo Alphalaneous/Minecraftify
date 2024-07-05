@@ -406,7 +406,7 @@ public:
 
         std::array<char, 64> charBuffer = {};
 
-        constexpr std::array<int, 3> functionIds = {
+        constexpr std::array<unsigned int, 3> functionIds = {
             0x80000002,
             0x80000003,
             0x80000004
