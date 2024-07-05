@@ -107,6 +107,13 @@ class $modify(MyPlayLayer, PlayLayer){
 
         schedule(schedule_selector(MyPlayLayer::setFPS), 1);
 
+        if(CCLabelBMFont* debugText = typeinfo_cast<CCLabelBMFont*>(getChildByID("debug-text"))) {
+            if(strcmp(debugText->getString(), "Ignore Damage") == 0){
+                debugText = typeinfo_cast<CCLabelBMFont*>(getChildByID("percentage-label")); //hacky fix for wrong node IDs
+            }
+            debugText->setOpacity(0);
+        }
+
         return true;
     }
 
@@ -115,6 +122,10 @@ class $modify(MyPlayLayer, PlayLayer){
         m_fields->rightDebugNode->removeAllChildren();
 
         if(CCLabelBMFont* debugText = typeinfo_cast<CCLabelBMFont*>(getChildByID("debug-text"))) {
+            if(strcmp(debugText->getString(), "Ignore Damage") == 0){
+                debugText = typeinfo_cast<CCLabelBMFont*>(getChildByID("percentage-label")); //hacky fix for wrong node IDs
+            }
+
             if(!debugText->isVisible()) return;
 
             debugText->setOpacity(0);
