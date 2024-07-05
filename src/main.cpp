@@ -7,6 +7,7 @@
 #include "ui/hooks/CCMenuItemToggler.h"
 #include "ui/hooks/FLAlertLayer.h"
 #include "ui/hooks/PauseLayer.h"
+#include "ui/hooks/PlayLayer.h"
 
 $execute{
     setlocale( LC_ALL, "en_US.utf8" );

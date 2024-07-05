@@ -1,5 +1,4 @@
 #include <Geode/Geode.hpp>
-#include <Geode/modify/CCDirector.hpp>
 #include <Geode/modify/PauseLayer.hpp>
 
 class $modify(MyPauseLayer, PauseLayer){

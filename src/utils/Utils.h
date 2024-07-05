@@ -6,6 +6,20 @@
 #include "../ui/hooks/CCMenuItemToggler.h"
 #include "../ui/nodes/MCButton.h"
 
+#define public_cast(value, member) [](auto* v) { \
+    class FriendClass__; \
+    using T = std::remove_pointer<decltype(v)>::type; \
+    class FriendeeClass__: public T { \
+    protected: \
+        friend FriendClass__; \
+    }; \
+    class FriendClass__ { \
+    public: \
+        auto& get(FriendeeClass__* v) { return v->member; } \
+    } c; \
+    return c.get(reinterpret_cast<FriendeeClass__*>(v)); \
+}(value)
+
 using namespace geode::prelude;
 
 struct ImageData {
@@ -162,6 +176,22 @@ public:
         std::wstring::size_type pos = 0;
         std::wstring::size_type prev = 0;
         while ((pos = str.find(delimiter, prev)) != std::wstring::npos)
+        {
+            strings.push_back(str.substr(prev, pos - prev));
+            prev = pos + delimiter.size();
+        }
+
+        strings.push_back(str.substr(prev));
+
+        return strings;
+    }
+
+    static std::vector<std::string> splitString(const std::string& str, const std::string& delimiter) {
+        std::vector<std::string> strings;
+
+        std::string::size_type pos = 0;
+        std::string::size_type prev = 0;
+        while ((pos = str.find(delimiter, prev)) != std::string::npos)
         {
             strings.push_back(str.substr(prev, pos - prev));
             prev = pos + delimiter.size();
@@ -368,5 +398,28 @@ public:
         
         content->addChild(moreOptionsLayer);
         return content;
+    }
+
+    static std::string getCPUInfo() {
+        std::array<int, 4> integerBuffer = {};
+        constexpr size_t sizeofIntegerBuffer = sizeof(int) * integerBuffer.size();
+
+        std::array<char, 64> charBuffer = {};
+
+        constexpr std::array<int, 3> functionIds = {
+            0x80000002,
+            0x80000003,
+            0x80000004
+        };
+
+        std::string cpu;
+
+        for (int id : functionIds) {
+            __cpuid(integerBuffer.data(), id);
+            std::memcpy(charBuffer.data(), integerBuffer.data(), sizeofIntegerBuffer);
+            cpu += std::string(charBuffer.data());
+        }
+
+        return cpu;
     }
 };
