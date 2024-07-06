@@ -53,6 +53,12 @@ class $modify(MyPlayLayer, PlayLayer){
         m_fields->cocosVersion = std::string(typeinfo_cast<CCString*>(dict->objectForKey("cocos2d.x.version"))->getCString());
         m_fields->cpuName = Utils::getCPUInfo();
 
+        Utils::trim(m_fields->gpuVendor);
+        Utils::trim(m_fields->gpuRenderer);
+        Utils::trim(m_fields->gpuVersion);
+        Utils::trim(m_fields->cocosVersion);
+        Utils::trim(m_fields->cpuName);
+
         MEMORYSTATUSEX memInfo;
         memInfo.dwLength = sizeof(MEMORYSTATUSEX);
         GlobalMemoryStatusEx(&memInfo);
