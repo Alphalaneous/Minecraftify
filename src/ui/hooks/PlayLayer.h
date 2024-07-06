@@ -3,25 +3,6 @@
 #include <Geode/modify/CCKeyboardDispatcher.hpp>
 #include "psapi.h"
 
-class $modify(MyCCKeyboardDispatcher, CCKeyboardDispatcher) {
-
-    bool dispatchKeyboardMSG(enumKeyCodes key, bool down, bool arr) {
-		
-        if(PlayLayer* playLayer = PlayLayer::get()){
-            if(key == KEY_F3 && down && !arr){
-                GameManager* gm = GameManager::get();
-                if(CCNode* debugText = playLayer->getChildByID("debug-text")){
-                    bool isVisible = debugText->isVisible();
-                    debugText->setVisible(!isVisible);
-                    gm->setGameVariable("0109", !isVisible);
-                }
-            }
-        }
-
-        return CCKeyboardDispatcher::dispatchKeyboardMSG(key, down, arr);
-    }
-};
-
 class $modify(MyPlayLayer, PlayLayer){
 
     struct Fields {
@@ -36,6 +17,7 @@ class $modify(MyPlayLayer, PlayLayer){
         int fpsVal = 0;
         int currentFps = 0;
         int totalMemory = 0;
+        CCLabelBMFont* debugText;
     };
 
 
@@ -105,52 +87,51 @@ class $modify(MyPlayLayer, PlayLayer){
 
         m_fields->rightDebugNode->setLayout(layout1);
 
+        m_fields->leftDebugNode->setZOrder(99);
+        m_fields->rightDebugNode->setZOrder(99);
+
         addChild(m_fields->leftDebugNode);
         addChild(m_fields->rightDebugNode);
 
         schedule(schedule_selector(MyPlayLayer::updateDebugLabels));
         setFPS(0);
-
         schedule(schedule_selector(MyPlayLayer::setFPS), 1);
-
-        if(CCLabelBMFont* debugText = typeinfo_cast<CCLabelBMFont*>(getChildByID("debug-text"))) {
-            if(strcmp(debugText->getString(), "Ignore Damage") == 0){ //hacky fix for wrong node IDs
-                if(CCNode* node = getChildByID("percentage-label")){
-                    debugText = typeinfo_cast<CCLabelBMFont*>(node); 
-                }
-                else if(CCNode* node = getChildByID("time-label")){
-                    debugText = typeinfo_cast<CCLabelBMFont*>(node); 
-                }
-            }
-            debugText->setOpacity(0);
-        }
 
         return true;
     }
 
     void updateDebugLabels(float dt){
+
+        if(!m_fields->debugText){
+            if(CCLabelBMFont* debugText = typeinfo_cast<CCLabelBMFont*>(getChildByID("debug-text"))) {
+                m_fields->debugText = debugText;
+
+                if(strcmp(debugText->getString(), "Ignore Damage") == 0) { //hacky fix for wrong node IDs
+                    if(CCNode* node = getChildByID("percentage-label")){
+                        m_fields->debugText = typeinfo_cast<CCLabelBMFont*>(node); 
+                    }
+                    else if(CCNode* node = getChildByID("time-label")){
+                        m_fields->debugText = typeinfo_cast<CCLabelBMFont*>(node); 
+                    }
+                }
+                
+                m_fields->debugText->setOpacity(0);
+            }
+        }
+
         m_fields->leftDebugNode->removeAllChildren();
         m_fields->rightDebugNode->removeAllChildren();
 
-        if(CCLabelBMFont* debugText = typeinfo_cast<CCLabelBMFont*>(getChildByID("debug-text"))) {
-            if(strcmp(debugText->getString(), "Ignore Damage") == 0){ //hacky fix for wrong node IDs
-                if(CCNode* node = getChildByID("percentage-label")){
-                    debugText = typeinfo_cast<CCLabelBMFont*>(node); 
-                }
-                else if(CCNode* node = getChildByID("time-label")){
-                    debugText = typeinfo_cast<CCLabelBMFont*>(node); 
-                }
-            }
+        if(m_fields->debugText) {
+            
+            if(!m_fields->debugText->isVisible()) return;
 
-            if(!debugText->isVisible()) return;
-
-            debugText->setOpacity(0);
-            m_fields->leftDebugNode->setZOrder(debugText->getZOrder());
-            m_fields->leftDebugNode->setVisible(debugText->isVisible());
+            m_fields->debugText->setOpacity(0);
+            m_fields->leftDebugNode->setVisible(m_fields->debugText->isVisible());
 
             m_fields->currentFps = std::ceil(1/dt);
 
-            std::vector<std::string> lines = Utils::splitString(debugText->getString(), "\n");
+            std::vector<std::string> lines = Utils::splitString(m_fields->debugText->getString(), "\n");
 
             std::vector<std::pair<std::string, std::string>> values;
 
@@ -308,5 +289,24 @@ class $modify(MyPlayLayer, PlayLayer){
         }
 
         return "";
+    }
+};
+
+class $modify(MyCCKeyboardDispatcher, CCKeyboardDispatcher) {
+
+    bool dispatchKeyboardMSG(enumKeyCodes key, bool down, bool arr) {
+		
+        if(MyPlayLayer* playLayer = static_cast<MyPlayLayer*>(PlayLayer::get())){
+            if(key == KEY_F3 && down && !arr){
+                GameManager* gm = GameManager::get();
+                if(playLayer->m_fields->debugText){
+                    bool isVisible = playLayer->m_fields->debugText->isVisible();
+                    playLayer->m_fields->debugText->setVisible(!isVisible);
+                    gm->setGameVariable("0109", !isVisible);
+                }
+            }
+        }
+
+        return CCKeyboardDispatcher::dispatchKeyboardMSG(key, down, arr);
     }
 };
