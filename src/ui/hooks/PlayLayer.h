@@ -119,82 +119,40 @@ class $modify(MyPlayLayer, PlayLayer){
             }
         }
 
-        m_fields->leftDebugNode->removeAllChildren();
-        m_fields->rightDebugNode->removeAllChildren();
-
         if(m_fields->debugText) {
             
-            if(!m_fields->debugText->isVisible()) return;
-
-            m_fields->debugText->setOpacity(0);
             m_fields->leftDebugNode->setVisible(m_fields->debugText->isVisible());
+            m_fields->rightDebugNode->setVisible(m_fields->debugText->isVisible());
+
+            if(!m_fields->debugText->isVisible()) return;
 
             m_fields->currentFps = std::ceil(1/dt);
 
             std::vector<std::string> lines = Utils::splitString(m_fields->debugText->getString(), "\n");
 
-            std::vector<std::pair<std::string, std::string>> values;
+            createTextLayer("version-label"_spr, m_fields->leftDebugNode, "Minecraft 2.206 (2.206/Geode)");
+            createTextLayer("fps-label"_spr, m_fields->leftDebugNode, fmt::format("{} fps", m_fields->fpsVal));
+            createTextLayer("level-id-label"_spr, m_fields->leftDebugNode, fmt::format("ID: {}", getFromPos(0, lines)));
 
-            for(std::string str : lines){
+            std::string timeVal = getFromPos(1, lines);
+            std::string attemptVal = getFromPos(2, lines);
+            std::string clickVal = getFromPos(3, lines);
 
-                std::pair<std::string, std::string> pair;
+            createTextLayer("more-info-label"_spr, m_fields->leftDebugNode, fmt::format("A: {}, TW: {}, G: {}", getFromPos(8, lines), getFromPos(4, lines), getFromPos(5, lines)));
+            createTextLayer("level-info-label"_spr, m_fields->leftDebugNode, fmt::format("Time: {:.2f} Attempt: {} Clicks: {}", std::stof(timeVal), attemptVal, clickVal));
 
-                std::vector<std::string> parts = Utils::splitString(str, ":");
 
-                if(parts.size() > 1){
-
-                    pair.first = parts.at(0);
-                    Utils::trim(pair.first);
-
-                    pair.second = parts.at(1);
-                    Utils::trim(pair.second);
-
-                    values.push_back(pair);
-                }
-            }
-
-            CCLayerColor* versionText = createTextLayer("Minecraft 2.206 (2.206/Geode)");
-            CCLayerColor* fpsText = createTextLayer(fmt::format("{} fps", m_fields->fpsVal));
-
-            CCLayerColor* levelIDText = createTextLayer(fmt::format("ID: {}", getFromVector("LevelID", values)));
-
-            std::string timeVal = getFromVector("Time", values);
-            std::string attemptVal = getFromVector("Attempt", values);
-            std::string clickVal =  getFromVector("Taps", values);
-
-            CCLayerColor* moreInfoText = createTextLayer(fmt::format("A: {}, TW: {}, G: {}", getFromVector("Active", values), getFromVector("TimeWarp", values), getFromVector("Gravity", values)));
-            CCLayerColor* levelInfoText = createTextLayer(fmt::format("Time: {:.2f} Attempt: {} Clicks: {}", std::stof(timeVal), attemptVal, clickVal));
-
-            m_fields->leftDebugNode->addChild(versionText);
-            m_fields->leftDebugNode->addChild(fpsText);
-            m_fields->leftDebugNode->addChild(levelIDText);
-            m_fields->leftDebugNode->addChild(moreInfoText);
-            m_fields->leftDebugNode->addChild(levelInfoText);
-
-            CCLayerColor* dummySpace0 = createTextLayer(" ");
+            CCLayerColor* dummySpace0 = createTextLayer("blank-label-0"_spr, m_fields->leftDebugNode, " ");
             dummySpace0->setOpacity(0);
-            m_fields->leftDebugNode->addChild(dummySpace0);
 
-            CCLayerColor* coordsText = createTextLayer(fmt::format("XY: {} / {}", getFromVector("X", values), getFromVector("Y", values)));
-            CCLayerColor* songsSFXText = createTextLayer(fmt::format("Sounds: {} Songs: {}", getFromVector("SFX", values), getFromVector("Songs", values)));
-            CCLayerColor* gradients = createTextLayer(fmt::format("Gradients: {}", getFromVector("Gradients", values)));
-            CCLayerColor* particles = createTextLayer(fmt::format("Particles: {}", getFromVector("Particles", values)));
-            CCLayerColor* perfText = createTextLayer(fmt::format("Perf M: {}, R: {}, S: {}, F: {}", getFromVector("Move", values), getFromVector("Rotate", values), getFromVector("Scale", values), getFromVector("Follow", values)));
-            CCLayerColor* areaText = createTextLayer(fmt::format("Area M: {}, R: {}, S: {}, ColOp: {}", getFromVector("Move", values, 1), getFromVector("Rotate", values, 1), getFromVector("Scale", values, 1), getFromVector("ColOp", values)));
-
-
-            m_fields->leftDebugNode->addChild(coordsText);
-            m_fields->leftDebugNode->addChild(songsSFXText);
-            m_fields->leftDebugNode->addChild(gradients);
-            m_fields->leftDebugNode->addChild(particles);
-            m_fields->leftDebugNode->addChild(perfText);
-            m_fields->leftDebugNode->addChild(areaText);
+            createTextLayer("coords-label"_spr, m_fields->leftDebugNode, fmt::format("XY: {} / {}", getFromPos(6, lines), getFromPos(7, lines)));
+            createTextLayer("audio-label"_spr, m_fields->leftDebugNode, fmt::format("Sounds: {} Songs: {}", getFromPos(13, lines), getFromPos(12, lines)));
+            createTextLayer("gradients-label"_spr, m_fields->leftDebugNode, fmt::format("Gradients: {}", getFromPos(9, lines)));
+            createTextLayer("particles-label"_spr, m_fields->leftDebugNode, fmt::format("Particles: {}", getFromPos(10, lines)));
+            createTextLayer("perf-label"_spr, m_fields->leftDebugNode, fmt::format("Perf M: {}, R: {}, S: {}, F: {}", getFromPos(15, lines), getFromPos(16, lines), getFromPos(17, lines), getFromPos(18, lines)));
+            createTextLayer("area-label"_spr, m_fields->leftDebugNode, fmt::format("Area M: {}, R: {}, S: {}, ColOp: {}", getFromPos(20, lines), getFromPos(21, lines), getFromPos(22, lines), getFromPos(23, lines)));
 
             m_fields->leftDebugNode->updateLayout();
-
-            CCConfiguration* config = CCConfiguration::sharedConfiguration();
-            CCDictionary* dict = public_cast(config, m_pValueDict);
-
 
             CCSize winSizePixels = CCDirector::get()->getWinSizeInPixels();
 
@@ -203,8 +161,7 @@ class $modify(MyPlayLayer, PlayLayer){
             if(sizeof(void*) == 8) bit = 64;
             else if(sizeof(void*) == 4) bit = 32;
             
-            CCLayerColor* cocosVersionText = createTextLayer(fmt::format("Cocos2d-x: {} {}bit", m_fields->cocosVersion, bit));
-            m_fields->rightDebugNode->addChild(cocosVersionText);
+            CCLayerColor* cocosVersionText = createTextLayer("cocos-label"_spr, m_fields->rightDebugNode, fmt::format("Cocos2d-x: {} {}bit", m_fields->cocosVersion, bit));
 
             MEMORYSTATUSEX memInfo;
             memInfo.dwLength = sizeof(MEMORYSTATUSEX);
@@ -224,30 +181,19 @@ class $modify(MyPlayLayer, PlayLayer){
 
             int percentUsed = (usedMemory/(float)availableMemory) * 100;
 
-            CCLayerColor* memUsageText = createTextLayer(fmt::format("Mem: {}% {}/{}MB", percentUsed, usedMemory, availableMemory + usedMemory));
-            m_fields->rightDebugNode->addChild(memUsageText);
-
-            CCLayerColor* totalMemText = createTextLayer(fmt::format("Total Mem: {}MB", m_fields->totalMemory));
-            m_fields->rightDebugNode->addChild(totalMemText);
-
-            CCLayerColor* dummySpace1 = createTextLayer(" ");
+            createTextLayer("mem-usage-label"_spr, m_fields->rightDebugNode, fmt::format("Mem: {}% {}/{}MB", percentUsed, usedMemory, availableMemory + usedMemory));
+            createTextLayer("total-mem-label"_spr, m_fields->rightDebugNode, fmt::format("Total Mem: {}MB", m_fields->totalMemory));
+            CCLayerColor* dummySpace1 = createTextLayer("blank-label-1"_spr, m_fields->rightDebugNode, " ");
             dummySpace1->setOpacity(0);
-            m_fields->rightDebugNode->addChild(dummySpace1);
 
-            CCLayerColor* cpuText = createTextLayer(fmt::format("CPU: {}", m_fields->cpuName));
-            m_fields->rightDebugNode->addChild(cpuText);
+            createTextLayer("cpu-label"_spr, m_fields->rightDebugNode, fmt::format("CPU: {}", m_fields->cpuName));
 
-            CCLayerColor* dummySpace2 = createTextLayer(" ");
+            CCLayerColor* dummySpace2 = createTextLayer("blank-label-2"_spr, m_fields->rightDebugNode, " ");
             dummySpace2->setOpacity(0);
-            m_fields->rightDebugNode->addChild(dummySpace2);
 
-            CCLayerColor* resolutionText = createTextLayer(fmt::format("Display: {}x{} ({})", winSizePixels.width, winSizePixels.height, m_fields->gpuVendor));
-            CCLayerColor* gpuInfoText = createTextLayer(m_fields->gpuRenderer);
-            CCLayerColor* gpuVersionText = createTextLayer(m_fields->gpuVersion);
-
-            m_fields->rightDebugNode->addChild(resolutionText);
-            m_fields->rightDebugNode->addChild(gpuInfoText);
-            m_fields->rightDebugNode->addChild(gpuVersionText);
+            createTextLayer("resolution-label"_spr, m_fields->rightDebugNode, fmt::format("Display: {}x{} ({})", winSizePixels.width, winSizePixels.height, m_fields->gpuVendor));
+            createTextLayer("gpu-info-label"_spr, m_fields->rightDebugNode, m_fields->gpuRenderer);
+            createTextLayer("gpu-version-label"_spr, m_fields->rightDebugNode, m_fields->gpuVersion);
 
             m_fields->rightDebugNode->updateLayout();
         }
@@ -257,38 +203,41 @@ class $modify(MyPlayLayer, PlayLayer){
         m_fields->fpsVal = m_fields->currentFps;
     }
 
-    CCLayerColor* createTextLayer(std::string text){
-        MCLabel* versionText = MCLabel::create(text, "minecraft-flat.fnt"_spr);
-        versionText->setScale(0.4);
+    CCLayerColor* createTextLayer(std::string id, CCNode* node, std::string text){
 
-        CCLayerColor* bg = CCLayerColor::create();
-        bg->setContentSize({versionText->getScaledContentSize().width + 2, versionText->getScaledContentSize().height-1});
-        bg->setColor({128, 128, 128});
-        bg->setOpacity(96);
-
-        versionText->setPosition({versionText->getPosition().x + 1, versionText->getPosition().y - 0.1f});
-        versionText->setAnchorPoint({0, 0});
-        bg->addChild(versionText);
-
-        return bg;
-    }
-
-    std::string getFromVector(std::string value, std::vector<std::pair<std::string, std::string>> values) {
-        return getFromVector(value, values, 0);
-    }
-
-    std::string getFromVector(std::string value, std::vector<std::pair<std::string, std::string>> values, int index){
-       
-        int idx = 0;
-
-        for(std::pair<std::string, std::string> valueA : values){
-            if(valueA.first == value){
-                if(idx == index) return valueA.second;
-                idx++;
+        if(CCLayerColor* bg0 = typeinfo_cast<CCLayerColor*>(node->getChildByID(id))){
+            if(MCLabel* label = getChildOfType<MCLabel>(bg0, 0)){
+                label->setString(text.c_str());
+                bg0->setContentSize({label->getScaledContentSize().width + 2, label->getScaledContentSize().height-1});
             }
+            return bg0;
         }
+        else {
+            MCLabel* label = MCLabel::create(text, "minecraft-flat.fnt"_spr);
+            label->setScale(0.4);
 
-        return "";
+            CCLayerColor* bg = CCLayerColor::create();
+            bg->setContentSize({label->getScaledContentSize().width + 2, label->getScaledContentSize().height-1});
+            bg->setColor({128, 128, 128});
+            bg->setOpacity(96);
+
+            label->setPosition({label->getPosition().x + 1, label->getPosition().y - 0.1f});
+            label->setAnchorPoint({0, 0});
+            bg->addChild(label);
+
+            bg->setID(id);
+            node->addChild(bg);
+            return bg;
+        }
+    }
+
+    std::string getFromPos(int pos, std::vector<std::string> values){
+
+        std::string value = values.at(pos);
+        std::string splitValue = Utils::splitString(value, ":").at(1);
+        Utils::trim(splitValue);
+
+        return splitValue;
     }
 };
 

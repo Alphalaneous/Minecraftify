@@ -63,6 +63,11 @@ class $modify(MyPauseLayer, PauseLayer){
                 time->setScale(0.45f);
                 time->setPosition({title->getPosition().x, title->getPosition().y - 15});
             }
+            if(CCLabelBMFont* points = typeinfo_cast<CCLabelBMFont*>(getChildByID("points-label"))) {
+                points->setFntFile("minecraft.fnt"_spr);
+                points->setScale(0.45f);
+                points->setPosition({title->getPosition().x, title->getPosition().y - 30});
+            }
 
             if(getChildByID("normal-progress-bar")){
 
