@@ -32,6 +32,8 @@ class $modify(MenuLayer){
 				}
 				rightSideMenu->setContentSize({170, 70});
 				rightSideMenu->setUserObject("orientation", CCInteger::create(1));
+        		rightSideMenu->removeChildByID("daily-chest-button");
+
 			}
 		}
 		

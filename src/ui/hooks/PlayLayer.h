@@ -26,6 +26,8 @@ class $modify(MyPlayLayer, PlayLayer){
             return false;
         }
 
+		if(!Loader::get()->isModLoaded("geode.node-ids")) return true;
+
         CCConfiguration* config = CCConfiguration::sharedConfiguration();
         CCDictionary* dict = public_cast(config, m_pValueDict);
 
@@ -93,7 +95,7 @@ class $modify(MyPlayLayer, PlayLayer){
         addChild(m_fields->leftDebugNode);
         addChild(m_fields->rightDebugNode);
 
-        schedule(schedule_selector(MyPlayLayer::updateDebugLabels));
+        schedule(schedule_selector(MyPlayLayer::updateDebugLabels), 1/60);
         setFPS(0);
         schedule(schedule_selector(MyPlayLayer::setFPS), 1);
 
@@ -106,7 +108,7 @@ class $modify(MyPlayLayer, PlayLayer){
             if(CCLabelBMFont* debugText = typeinfo_cast<CCLabelBMFont*>(getChildByID("debug-text"))) {
                 m_fields->debugText = debugText;
 
-                if(strcmp(debugText->getString(), "Ignore Damage") == 0) { //hacky fix for wrong node IDs
+                if(strcmp(debugText->getString(), "Ignore Damage") == 0 || strcmp(debugText->getString(), "Testmode") == 0) { //hacky fix for wrong node IDs
                     if(CCNode* node = getChildByID("percentage-label")){
                         m_fields->debugText = typeinfo_cast<CCLabelBMFont*>(node); 
                     }
@@ -114,7 +116,6 @@ class $modify(MyPlayLayer, PlayLayer){
                         m_fields->debugText = typeinfo_cast<CCLabelBMFont*>(node); 
                     }
                 }
-                
                 m_fields->debugText->setOpacity(0);
             }
         }
@@ -233,11 +234,19 @@ class $modify(MyPlayLayer, PlayLayer){
 
     std::string getFromPos(int pos, std::vector<std::string> values){
 
-        std::string value = values.at(pos);
-        std::string splitValue = Utils::splitString(value, ":").at(1);
-        Utils::trim(splitValue);
+        std::string ret = "";
 
-        return splitValue;
+        if(pos < values.size()){
+
+            std::string value = values.at(pos);
+            std::vector<std::string> splitValue = Utils::splitString(value, ":");
+
+            if(splitValue.size() > 0){
+                ret = splitValue.at(1);
+            }
+            Utils::trim(ret);
+        }
+        return ret;
     }
 };
 
@@ -245,13 +254,16 @@ class $modify(MyCCKeyboardDispatcher, CCKeyboardDispatcher) {
 
     bool dispatchKeyboardMSG(enumKeyCodes key, bool down, bool arr) {
 		
-        if(MyPlayLayer* playLayer = static_cast<MyPlayLayer*>(PlayLayer::get())){
-            if(key == KEY_F3 && down && !arr){
-                GameManager* gm = GameManager::get();
-                if(playLayer->m_fields->debugText){
-                    bool isVisible = playLayer->m_fields->debugText->isVisible();
-                    playLayer->m_fields->debugText->setVisible(!isVisible);
-                    gm->setGameVariable("0109", !isVisible);
+		if(Loader::get()->isModLoaded("geode.node-ids")) {
+
+            if(MyPlayLayer* playLayer = static_cast<MyPlayLayer*>(PlayLayer::get())){
+                if(key == KEY_F3 && down && !arr){
+                    GameManager* gm = GameManager::get();
+                    if(playLayer->m_fields->debugText){
+                        bool isVisible = playLayer->m_fields->debugText->isVisible();
+                        playLayer->m_fields->debugText->setVisible(!isVisible);
+                        gm->setGameVariable("0109", !isVisible);
+                    }
                 }
             }
         }

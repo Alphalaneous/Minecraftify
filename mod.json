@@ -1,9 +1,9 @@
 {
-	"geode": "3.1.1",
+	"geode": "3.2.0",
 	"gd": {
 		"win": "2.206"
 	},
-	"version": "v0.8.7",
+	"version": "v0.8.8",
 	"id": "zalphalaneous.minecraft",
 	"name": "Minecraftify!",
 	"developer": "Alphalaneous",
@@ -21,5 +21,12 @@
       "assets/shaders/blur/*",
       "assets/logo.ico"
     ]
-  }
+  },
+  "dependencies": [
+      {
+          "id": "geode.node-ids",
+          "version": ">=v1.12.0-alpha.2",
+          "importance": "required"
+      }
+  ]
 }

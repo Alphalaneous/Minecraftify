@@ -29,19 +29,25 @@ bool ExtrasLayer::init() {
         CCMenu* rightMenu = typeinfo_cast<CCMenu*>(m_menuLayer->getChildByID("right-side-menu"));
         rightMenu->setPosition({winSize.width/2, 150});
         rightMenu->setVisible(true);
-        rightMenu->removeFromParent();
+        rightMenu->removeFromParentAndCleanup(false);
+
+        CCMenu* pagedRightMenu = typeinfo_cast<CCMenu*>(m_menuLayer->getChildByID("paged-right-side-menu"));
 
         this->addChild(rightMenu);
+        this->addChild(pagedRightMenu);
 
         m_bottomMenu = typeinfo_cast<CCMenu*>(m_menuLayer->getChildByID("bottom-menu"));
 
         m_bottomMenu->setID("extras-menu"_spr);
         m_bottomMenu->setPosition({winSize.width/2, 100});
         m_bottomMenu->setVisible(true);
-        m_bottomMenu->setScale(0.8f);
-        m_bottomMenu->removeFromParent();
+        m_bottomMenu->removeFromParentAndCleanup(false);
+
+        CCMenu* pagedBottomtMenu = typeinfo_cast<CCMenu*>(m_menuLayer->getChildByID("paged-bottom-menu"));
 
         this->addChild(m_bottomMenu);
+        this->addChild(pagedBottomtMenu);
+
     }
     else{
 
