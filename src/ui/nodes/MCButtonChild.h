@@ -14,8 +14,9 @@ public:
     void onHover();
     void onHoverExit();
     void selected();
+    void unselected();
     void activate();
-
+    void doClick();
     void setInvisible();
     void setVisibleFade();
     void setVisibleDelay(float dt);

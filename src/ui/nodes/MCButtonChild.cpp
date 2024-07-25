@@ -132,13 +132,18 @@ void MCButtonChild::onHoverExit(){
     }
 }
 
-void MCButtonChild::selected(){
+void MCButtonChild::unselected(){
+    onHoverExit();
+}
 
+void MCButtonChild::doClick(){
     bool doAndroidBypass = false;
 
     #ifdef GEODE_IS_ANDROID
     doAndroidBypass = true;
     #endif
+
+    onHover();
 
     if(this->isHovering || doAndroidBypass){
 
@@ -163,8 +168,16 @@ void MCButtonChild::selected(){
     }
 }
 
+void MCButtonChild::selected(){
+    #ifndef GEODE_IS_ANDROID
+    doClick();
+    #endif
+}
+
 void MCButtonChild::activate(){
-    //do nothing
+    #ifdef GEODE_IS_ANDROID
+    doClick();
+    #endif
 }
 
 void MCButtonChild::update(float dt) {
