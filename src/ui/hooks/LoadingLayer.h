@@ -76,6 +76,8 @@ bool LoadingLayer_init(LoadingLayer* self, bool p0){
 	MyLoadingLayer* myself = static_cast<MyLoadingLayer*>(self);
 	myself->m_fields->didHook = true;
 
+	#ifndef GEODE_IS_WINDOWS
+
 	auto hwnd = FindWindowW(NULL, L"Geometry Dash");
 	SetWindowTextA(hwnd, "Minecraft* 2.2");
 
@@ -83,6 +85,8 @@ bool LoadingLayer_init(LoadingLayer* self, bool p0){
 
 	HICON hIcon = (HICON)LoadImage(NULL, path.c_str(), IMAGE_ICON, 32, 32, LR_LOADFROMFILE);
 	SendMessage(hwnd, WM_SETICON, ICON_SMALL, (LPARAM)hIcon);
+
+	#endif
 
 	if(CCLabelBMFont* loadingTextOrig = typeinfo_cast<CCLabelBMFont*>(self->getChildByID("geode-small-label"))) {
 		loadingTextOrig->setVisible(false);
