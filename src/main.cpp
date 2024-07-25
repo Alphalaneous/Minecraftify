@@ -9,7 +9,3 @@
 #include "ui/hooks/PauseLayer.h"
 #include "ui/hooks/PlayLayer.h"
 #include "ui/hooks/GJDropDownLayer.h"
-
-$execute{
-    setlocale( LC_ALL, "en_US.utf8" );
-}

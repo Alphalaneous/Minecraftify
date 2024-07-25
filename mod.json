@@ -1,32 +1,33 @@
 {
-	"geode": "3.2.0",
-	"gd": {
-		"win": "2.206"
-	},
-	"version": "v0.8.8",
-	"id": "zalphalaneous.minecraft",
-	"name": "Minecraftify!",
-	"developer": "Alphalaneous",
-	"description": "Makes GD turn into Minecraft",
-  "early-load": true,
+    "geode": "3.2.0",
+    "gd": {
+        "win": "2.206",
+        "android": "2.206"
+    },
+    "version": "v0.8.8",
+    "id": "zalphalaneous.minecraft",
+    "name": "Minecraftify!",
+    "developer": "Alphalaneous",
+    "description": "Makes GD turn into Minecraft",
+    "early-load": true,
 
-  "resources": {
-    "files": [
-      "assets/sounds/*",
-      "assets/fonts/*",
-      "assets/textures/*",
-      "assets/texts/*",
-      "assets/panorama/*",
-      "assets/shaders/cubemap/*",
-      "assets/shaders/blur/*",
-      "assets/logo.ico"
+    "resources": {
+        "files": [
+        "assets/sounds/*",
+        "assets/fonts/*",
+        "assets/textures/*",
+        "assets/texts/*",
+        "assets/panorama/*",
+        "assets/shaders/cubemap/*",
+        "assets/shaders/blur/*",
+        "assets/logo.ico"
+        ]
+    },
+    "dependencies": [
+        {
+            "id": "geode.node-ids",
+            "version": ">=v1.12.0-alpha.2",
+            "importance": "required"
+        }
     ]
-  },
-  "dependencies": [
-      {
-          "id": "geode.node-ids",
-          "version": ">=v1.12.0-alpha.2",
-          "importance": "required"
-      }
-  ]
 }
