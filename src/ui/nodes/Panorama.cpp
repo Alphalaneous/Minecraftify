@@ -13,11 +13,11 @@ Panorama* Panorama::create(){
 }
 
 bool Panorama::init(){
-    std::filesystem::path vertexPath = CCFileUtils::sharedFileUtils()->fullPathForFilename("cubemap_vert.glsl"_spr, false);
-    std::filesystem::path fragmentPath = CCFileUtils::sharedFileUtils()->fullPathForFilename("cubemap_frag.glsl"_spr, false);
+    std::string vertexPath = CCFileUtils::sharedFileUtils()->fullPathForFilename("cubemap_vert.glsl"_spr, false);
+    std::string fragmentPath = CCFileUtils::sharedFileUtils()->fullPathForFilename("cubemap_frag.glsl"_spr, false);
     
-    auto vertexSource = file::readString(vertexPath);
-    auto fragmentSource = file::readString(fragmentPath);
+    auto vertexSource = file::readString(std::filesystem::path(vertexPath));
+    auto fragmentSource = file::readString(std::filesystem::path(fragmentPath));
 
     m_shader.setup(vertexSource.unwrap(), fragmentSource.unwrap());
     glBindAttribLocation(m_shader.program, 0, "aPosition");
