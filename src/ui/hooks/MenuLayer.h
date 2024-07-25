@@ -197,7 +197,7 @@ class $modify(MyMenuLayer, MenuLayer) {
 
 			this->addChild(layerColor);
 
-			CCSprite* titleSprite = Utils::createSprite("/geode/unzipped/zalphalaneous.minecraft/resources/zalphalaneous.minecraft/mojangstudios.png");
+			CCSprite* titleSprite = Utils::createSprite("mojangstudios.png"_spr);
 
 			titleSprite->setPosition({winSize.width/2, winSize.height/2});
 			titleSprite->setScale(titleSprite->getScale()*0.3f);

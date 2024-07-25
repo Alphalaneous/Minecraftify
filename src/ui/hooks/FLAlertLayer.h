@@ -48,7 +48,7 @@ class $modify(MyFLAlertLayer, FLAlertLayer){
             background->removeFromParent();
             mainLayer->addChild(newBackground);
 
-            CCSize textBGSize = {newBackground->getContentSize().width - 8, newBackground->getContentSize().height - 24};
+            CCSize textBGSize = {newBackground->getContentSize().width - 8 / scale, newBackground->getContentSize().height - 24 / scale};
 
             CCScale9Sprite* textBackground = CCScale9Sprite::create("text_field.png"_spr);
             CCSpriteBatchNode* batchNodeA = getChildOfType<CCSpriteBatchNode>(textBackground, 0);
@@ -56,7 +56,7 @@ class $modify(MyFLAlertLayer, FLAlertLayer){
             batchNodeA->getTexture()->setTexParameters(&paramsA);
 
             textBackground->setScale(4 * scale);
-            textBackground->setContentSize(textBGSize / scale);
+            textBackground->setContentSize(textBGSize);
             textBackground->setZOrder(5);
             textBackground->setPosition({mainLayer->getContentSize().width/2, mainLayer->getContentSize().height/2});
             mainLayer->addChild(textBackground);
