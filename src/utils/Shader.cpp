@@ -2,6 +2,18 @@
 
 void Shader::setup(std::string vertexSource, std::string fragmentSource){
 
+    auto getShaderLog = [](GLuint id) -> std::string {
+            GLint length, written;
+            glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
+            if (length <= 0)
+                return "";
+            auto stuff = new char[length + 1];
+            glGetShaderInfoLog(id, length, &written, stuff);
+            std::string result(stuff);
+            delete[] stuff;
+            return result;
+        };
+
     GLint res;
 
     vertex = glCreateShader(GL_VERTEX_SHADER);
@@ -17,6 +29,8 @@ void Shader::setup(std::string vertexSource, std::string fragmentSource){
 
     glShaderSource(vertex, sizeof(vertexSources) / sizeof(char*), vertexSources, nullptr);
     glCompileShader(vertex);
+
+    auto vertexLog = string::trim(getShaderLog(vertex));
 
     glGetShaderiv(vertex, GL_COMPILE_STATUS, &res);
     if(!res) {
@@ -39,6 +53,8 @@ void Shader::setup(std::string vertexSource, std::string fragmentSource){
     glShaderSource(fragment, sizeof(fragmentSources) / sizeof(char*), fragmentSources, nullptr);
     glCompileShader(fragment);
 
+    auto fragmentLog = string::trim(getShaderLog(fragment));
+
     glGetShaderiv(fragment, GL_COMPILE_STATUS, &res);
     if(!res) {
         glDeleteShader(vertex);
@@ -57,6 +73,9 @@ void Shader::setup(std::string vertexSource, std::string fragmentSource){
     glDeleteShader(fragment);
     vertex = 0;
     fragment = 0;
+
+    log::info("vertex log: {}", vertexLog);
+    log::info("fragment log: {}", fragmentLog);
 
     glGetProgramiv(program, GL_LINK_STATUS, &res);
     if(!res) {
