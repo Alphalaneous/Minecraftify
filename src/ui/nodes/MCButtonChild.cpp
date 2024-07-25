@@ -133,7 +133,14 @@ void MCButtonChild::onHoverExit(){
 }
 
 void MCButtonChild::selected(){
-    if(this->isHovering){
+
+    bool doAndroidBypass = false;
+
+    #ifdef GEODE_IS_ANDROID
+    doAndroidBypass = true;
+    #endif
+
+    if(this->isHovering || doAndroidBypass){
 
         auto engine = FMODAudioEngine::sharedEngine();
         auto system = engine->m_system;
@@ -186,5 +193,6 @@ void MCButtonChild::update(float dt) {
             isHovering = false;
         }
     }
+    
 }
 
