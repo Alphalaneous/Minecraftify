@@ -26,45 +26,43 @@ bool ExtrasLayer::init() {
     m_menuLayer = typeinfo_cast<CCLayer*>(scene->getChildren()->objectAtIndex(0));
 
     if(Loader::get()->isModLoaded("alphalaneous.pages_api")){
-        CCMenu* rightMenu = typeinfo_cast<CCMenu*>(m_menuLayer->getChildByID("right-side-menu"));
-        rightMenu->setPosition({winSize.width/2, 150});
-        rightMenu->setVisible(true);
-        rightMenu->removeFromParentAndCleanup(false);
+        if(CCMenu* rightMenu = typeinfo_cast<CCMenu*>(m_menuLayer->getChildByID("right-side-menu"))) {
+            rightMenu->setPosition({winSize.width/2, 150});
+            rightMenu->setVisible(true);
+            rightMenu->removeFromParentAndCleanup(false);
+            this->addChild(rightMenu);
+        }
+        if(CCMenu* pagedRightMenu = typeinfo_cast<CCMenu*>(m_menuLayer->getChildByID("paged-right-side-menu"))) {
+            this->addChild(pagedRightMenu);
+        }
 
-        CCMenu* pagedRightMenu = typeinfo_cast<CCMenu*>(m_menuLayer->getChildByID("paged-right-side-menu"));
-
-        this->addChild(rightMenu);
-        this->addChild(pagedRightMenu);
-
-        m_bottomMenu = typeinfo_cast<CCMenu*>(m_menuLayer->getChildByID("bottom-menu"));
-
-        m_bottomMenu->setID("extras-menu"_spr);
-        m_bottomMenu->setPosition({winSize.width/2, 100});
-        m_bottomMenu->setVisible(true);
-        m_bottomMenu->removeFromParentAndCleanup(false);
-
-        CCMenu* pagedBottomtMenu = typeinfo_cast<CCMenu*>(m_menuLayer->getChildByID("paged-bottom-menu"));
-
-        this->addChild(m_bottomMenu);
-        this->addChild(pagedBottomtMenu);
-
+        if(m_bottomMenu = typeinfo_cast<CCMenu*>(m_menuLayer->getChildByID("bottom-menu"))) {
+            m_bottomMenu->setID("extras-menu"_spr);
+            m_bottomMenu->setPosition({winSize.width/2, 100});
+            m_bottomMenu->setVisible(true);
+            m_bottomMenu->removeFromParentAndCleanup(false);
+            this->addChild(m_bottomMenu);
+        }
+        
+        if(CCMenu* pagedBottomtMenu = typeinfo_cast<CCMenu*>(m_menuLayer->getChildByID("paged-bottom-menu"))) {
+            this->addChild(pagedBottomtMenu);
+        }
     }
     else{
 
-        CCMenu* rightMenu = typeinfo_cast<CCMenu*>(m_menuLayer->getChildByID("right-side-menu"));
+        if(CCMenu* rightMenu = typeinfo_cast<CCMenu*>(m_menuLayer->getChildByID("right-side-menu"))) {
+            typeinfo_cast<ColumnLayout*>(rightMenu->getLayout())->setAxis(Axis::Row);
 
-        typeinfo_cast<ColumnLayout*>(rightMenu->getLayout())->setAxis(Axis::Row);
+            rightMenu->removeChildByID("daily-chest-button");
 
-        rightMenu->removeChildByID("daily-chest-button");
+            rightMenu->setContentSize({winSize.width, winSize.height/2});
 
-        rightMenu->setContentSize({winSize.width, winSize.height/2});
-
-        rightMenu->updateLayout();
-        rightMenu->setPosition({winSize.width/2, 150});
-        rightMenu->setVisible(true);
-        rightMenu->removeFromParent();
-        this->addChild(rightMenu);
-
+            rightMenu->updateLayout();
+            rightMenu->setPosition({winSize.width/2, 150});
+            rightMenu->setVisible(true);
+            rightMenu->removeFromParent();
+            this->addChild(rightMenu);
+        }
         //hacky shit to fix globed
 
         CCMenu* dummyMenuToFixGlobed = CCMenu::create();
@@ -76,26 +74,25 @@ bool ExtrasLayer::init() {
 
         dummyMenuToFixGlobed->addChild(dummyGlobed);
 
-        m_bottomMenu = typeinfo_cast<CCMenu*>(m_menuLayer->getChildByID("bottom-menu"));
+        if(m_bottomMenu = typeinfo_cast<CCMenu*>(m_menuLayer->getChildByID("bottom-menu"))) {
+            m_bottomMenu->setID("extras-menu"_spr);
+            m_bottomMenu->setContentSize({winSize.width, winSize.height/2});
 
-        m_bottomMenu->setID("extras-menu"_spr);
-        m_bottomMenu->setContentSize({winSize.width, winSize.height/2});
+            m_bottomMenu->removeChildByID("achievements-button");
+            m_bottomMenu->removeChildByID("settings-button");
+            m_bottomMenu->removeChildByID("stats-button");
+            m_bottomMenu->removeChildByID("newgrounds-button");
 
-        m_bottomMenu->removeChildByID("achievements-button");
-        m_bottomMenu->removeChildByID("settings-button");
-        m_bottomMenu->removeChildByID("stats-button");
-        m_bottomMenu->removeChildByID("newgrounds-button");
+            m_bottomMenu->removeChildByID("geode.loader/geode-button");
 
-        m_bottomMenu->removeChildByID("geode.loader/geode-button");
+            m_bottomMenu->setScale(0.8f);
 
-        m_bottomMenu->setScale(0.8f);
-
-        m_bottomMenu->updateLayout();
-        m_bottomMenu->setPosition({winSize.width/2, 100});
-        m_bottomMenu->setVisible(true);
-        m_bottomMenu->removeFromParent();
-        this->addChild(m_bottomMenu);
-
+            m_bottomMenu->updateLayout();
+            m_bottomMenu->setPosition({winSize.width/2, 100});
+            m_bottomMenu->setVisible(true);
+            m_bottomMenu->removeFromParent();
+            this->addChild(m_bottomMenu);
+        }
         m_menuLayer->addChild(dummyMenuToFixGlobed);
         this->scheduleUpdate();
     }
@@ -182,12 +179,12 @@ void ExtrasLayer::update(float dt){
 
     if(Loader::get()->isModLoaded("dankmeme.globed2")){
 
-        CCNode* button = m_bottomMenu->getChildByIDRecursive("dankmeme.globed2/main-menu-button");
-
-        if(!button){
-            CCScene* scene = ExtrasLayer::scene();
-            auto transition = CCTransitionFade::create(0.0f, scene);
-            CCDirector::sharedDirector()->replaceScene(transition);
+        if(CCNode* button = m_bottomMenu->getChildByIDRecursive("dankmeme.globed2/main-menu-button")) {
+            if(!button){
+                CCScene* scene = ExtrasLayer::scene();
+                auto transition = CCTransitionFade::create(0.0f, scene);
+                CCDirector::sharedDirector()->replaceScene(transition);
+            }
         }
     }
 }
