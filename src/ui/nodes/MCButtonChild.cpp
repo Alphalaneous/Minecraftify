@@ -143,7 +143,6 @@ void MCButtonChild::doClick(){
     doAndroidBypass = true;
     #endif
 
-    onHover();
 
     if(this->isHovering || doAndroidBypass){
 
@@ -169,6 +168,9 @@ void MCButtonChild::doClick(){
 }
 
 void MCButtonChild::selected(){
+
+    onHover();
+
     #ifndef GEODE_IS_ANDROID
     doClick();
     #endif
