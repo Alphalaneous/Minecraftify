@@ -1,5 +1,3 @@
-#version 130
-
 attribute vec4 aPosition;
 
 void main() {

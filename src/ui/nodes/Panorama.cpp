@@ -68,7 +68,6 @@ bool Panorama::init(){
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, 0x8072, GL_CLAMP_TO_EDGE);
 
     auto glv = CCDirector::sharedDirector()->getOpenGLView();
     auto winSize = CCDirector::sharedDirector()->getWinSize();

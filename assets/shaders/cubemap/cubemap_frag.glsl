@@ -1,5 +1,3 @@
-#version 130
-
 uniform vec2 center; 
 uniform vec2 resolution;
 uniform float time;
@@ -9,11 +7,10 @@ uniform samplerCube skybox;
 
 void main(){
 
-
     float rotX = (time / resolution.x) * -20.0 * 3.14;
-    float rotY = (resolution.y/2 / resolution.y) * 3.14;
+    float rotY = (resolution.y / 2.0 / resolution.y) * 3.14;
     
-    vec2 uv = 4 * (gl_FragCoord.xy - 0.5 * resolution.xy) / resolution.xx;
+    vec2 uv = 4.0 * (gl_FragCoord.xy - 0.5 * resolution.xy) / resolution.xx;
     
     vec3 camO = vec3(cos(rotX), cos(rotY), sin(rotX));
     
@@ -24,9 +21,6 @@ void main(){
     vec3 camU = cross(camR,camD);
     
    	vec3 dir =  normalize(-uv.x * camR + uv.y * camU + camD);
-
-
-
 
     gl_FragColor = texture(skybox, dir);
 
