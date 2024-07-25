@@ -18,12 +18,6 @@ void Shader::setup(std::string vertexSource, std::string fragmentSource){
 
     vertex = glCreateShader(GL_VERTEX_SHADER);
     const char* vertexSources[] = {
-#ifdef GEODE_IS_WINDOWS
-        "#version 130\n",
-#endif
-#ifdef GEODE_IS_MOBILE
-        "precision highp float;\n",
-#endif
         vertexSource.c_str()
     };
 
@@ -33,6 +27,9 @@ void Shader::setup(std::string vertexSource, std::string fragmentSource){
     auto vertexLog = string::trim(getShaderLog(vertex));
 
     glGetShaderiv(vertex, GL_COMPILE_STATUS, &res);
+
+    log::info("vertex log: {}", vertexLog);
+
     if(!res) {
         glDeleteShader(vertex);
         vertex = 0;
@@ -41,12 +38,6 @@ void Shader::setup(std::string vertexSource, std::string fragmentSource){
 
     fragment = glCreateShader(GL_FRAGMENT_SHADER);
     const char* fragmentSources[] = {
-#ifdef GEODE_IS_WINDOWS
-        "#version 130\n",
-#endif
-#ifdef GEODE_IS_MOBILE
-        "precision highp float;\n",
-#endif
         fragmentSource.c_str()
     };
 
@@ -56,6 +47,9 @@ void Shader::setup(std::string vertexSource, std::string fragmentSource){
     auto fragmentLog = string::trim(getShaderLog(fragment));
 
     glGetShaderiv(fragment, GL_COMPILE_STATUS, &res);
+
+    log::info("fragment log: {}", fragmentLog);
+
     if(!res) {
         glDeleteShader(vertex);
         glDeleteShader(fragment);
@@ -74,10 +68,8 @@ void Shader::setup(std::string vertexSource, std::string fragmentSource){
     vertex = 0;
     fragment = 0;
 
-    log::info("vertex log: {}", vertexLog);
-    log::info("fragment log: {}", fragmentLog);
-
     glGetProgramiv(program, GL_LINK_STATUS, &res);
+
     if(!res) {
         glDeleteProgram(program);
         program = 0;

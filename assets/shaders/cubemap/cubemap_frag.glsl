@@ -1,9 +1,15 @@
+#version 300 es
+
+precision highp float;
+
 uniform vec2 center; 
 uniform vec2 resolution;
 uniform float time;
 uniform vec2 mouse; 
 
 uniform samplerCube skybox;
+
+out vec4 FragColor;
 
 void main(){
 
@@ -22,6 +28,6 @@ void main(){
     
    	vec3 dir =  normalize(-uv.x * camR + uv.y * camU + camD);
 
-    gl_FragColor = texture(skybox, dir);
+    FragColor = texture(skybox, dir);
 
 }
