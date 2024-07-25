@@ -1,7 +1,10 @@
 #include <Geode/Geode.hpp>
 #include <Geode/modify/PlayLayer.hpp>
 #include <Geode/modify/CCKeyboardDispatcher.hpp>
+
+#ifndef GEODE_IS_ANDROID
 #include "psapi.h"
+#endif
 
 class $modify(MyPlayLayer, PlayLayer){
 
@@ -35,7 +38,12 @@ class $modify(MyPlayLayer, PlayLayer){
         m_fields->gpuRenderer = std::string(typeinfo_cast<CCString*>(dict->objectForKey("gl.renderer"))->getCString());
         m_fields->gpuVersion = std::string(typeinfo_cast<CCString*>(dict->objectForKey("gl.version"))->getCString());
         m_fields->cocosVersion = std::string(typeinfo_cast<CCString*>(dict->objectForKey("cocos2d.x.version"))->getCString());
+
+        #ifndef GEODE_IS_ANDROID
+
         m_fields->cpuName = Utils::getCPUInfo();
+
+        #endif
 
         Utils::trim(m_fields->gpuVendor);
         Utils::trim(m_fields->gpuRenderer);
@@ -164,6 +172,8 @@ class $modify(MyPlayLayer, PlayLayer){
             
             CCLayerColor* cocosVersionText = createTextLayer("cocos-label"_spr, m_fields->rightDebugNode, fmt::format("Cocos2d-x: {} {}bit", m_fields->cocosVersion, bit));
 
+            #ifndef GEODE_IS_ANDROID
+
             MEMORYSTATUSEX memInfo;
             memInfo.dwLength = sizeof(MEMORYSTATUSEX);
             GlobalMemoryStatusEx(&memInfo);
@@ -191,6 +201,8 @@ class $modify(MyPlayLayer, PlayLayer){
 
             CCLayerColor* dummySpace2 = createTextLayer("blank-label-2"_spr, m_fields->rightDebugNode, " ");
             dummySpace2->setOpacity(0);
+
+            #endif
 
             createTextLayer("resolution-label"_spr, m_fields->rightDebugNode, fmt::format("Display: {}x{} ({})", winSizePixels.width, winSizePixels.height, m_fields->gpuVendor));
             createTextLayer("gpu-info-label"_spr, m_fields->rightDebugNode, m_fields->gpuRenderer);

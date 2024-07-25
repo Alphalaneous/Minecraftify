@@ -76,7 +76,7 @@ bool LoadingLayer_init(LoadingLayer* self, bool p0){
 	MyLoadingLayer* myself = static_cast<MyLoadingLayer*>(self);
 	myself->m_fields->didHook = true;
 
-	#ifndef GEODE_IS_WINDOWS
+	#ifndef GEODE_IS_ANDROID
 
 	auto hwnd = FindWindowW(NULL, L"Geometry Dash");
 	SetWindowTextA(hwnd, "Minecraft* 2.2");
