@@ -4,7 +4,7 @@
         "win": "2.206",
         "android": "2.206"
     },
-    "version": "v0.9.3",
+    "version": "v0.9.4",
     "id": "zalphalaneous.minecraft",
     "name": "Minecraftify!",
     "developer": "Alphalaneous",
@@ -33,6 +33,16 @@
     "incompatibilities": [
         {
             "id": "ninxout.redash",
+            "version": "*",
+            "importance": "breaking"
+        },
+        {
+            "id": "muhammadgames.bettermenu",
+            "version": "*",
+            "importance": "breaking"
+        },
+        {
+            "id": "sanes.daily-transfer",
             "version": "*",
             "importance": "breaking"
         }

@@ -13,7 +13,6 @@ protected:
     virtual void keyBackClicked();
     void onBack(cocos2d::CCObject*);
 public:
-    void update(float dt);
     void onNewgrounds(CCObject*);
     static ExtrasLayer* create();
     static cocos2d::CCScene* scene();

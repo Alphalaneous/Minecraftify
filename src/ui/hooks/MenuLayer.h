@@ -26,14 +26,19 @@ class $modify(MenuLayer){
 			bottomMenu->getChildByIDRecursive("geode.loader/geode-button")->setVisible(false);
 		}
 		if(Loader::get()->isModLoaded("alphalaneous.pages_api")){
-			if(CCNode* rightSideMenu = this->getChildByIDRecursive("right-side-menu")){
-				if(AxisLayout* layout = typeinfo_cast<AxisLayout*>(rightSideMenu->getLayout())){
-					layout->setAxis(Axis::Row);
-				}
-				rightSideMenu->setContentSize({170, 70});
-				rightSideMenu->setUserObject("orientation", CCInteger::create(1));
-        		rightSideMenu->removeChildByID("daily-chest-button");
 
+			Mod* mod = Loader::get()->getLoadedMod("alphalaneous.pages_api");
+
+			if(mod->getSettingValue<bool>("menulayer-right-menu")){
+				if(CCNode* rightSideMenu = this->getChildByIDRecursive("right-side-menu")){
+					if(AxisLayout* layout = typeinfo_cast<AxisLayout*>(rightSideMenu->getLayout())){
+						layout->setAxis(Axis::Row);
+					}
+					rightSideMenu->setContentSize({170, 70});
+					rightSideMenu->setUserObject("orientation", CCInteger::create(1));
+					rightSideMenu->removeChildByID("daily-chest-button");
+
+				}
 			}
 		}
 		

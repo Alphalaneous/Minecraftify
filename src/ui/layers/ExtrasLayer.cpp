@@ -25,33 +25,46 @@ bool ExtrasLayer::init() {
     this->addChild(Utils::generateDirtBG());
     m_menuLayer = typeinfo_cast<CCLayer*>(scene->getChildren()->objectAtIndex(0));
 
+    bool modifyRightMenu = true;
+    bool modifyBottomMenu = true;
+
+
     if(Loader::get()->isModLoaded("alphalaneous.pages_api")){
-        if(CCMenu* rightMenu = typeinfo_cast<CCMenu*>(m_menuLayer->getChildByID("right-side-menu"))) {
-            rightMenu->setPosition({winSize.width/2, 150});
-            rightMenu->setVisible(true);
-            rightMenu->removeFromParentAndCleanup(false);
-            this->addChild(rightMenu);
-        }
-        if(CCMenu* pagedRightMenu = typeinfo_cast<CCMenu*>(m_menuLayer->getChildByID("paged-right-side-menu"))) {
-            this->addChild(pagedRightMenu);
+
+        Mod* mod = Loader::get()->getLoadedMod("alphalaneous.pages_api");
+
+        if(mod->getSettingValue<bool>("menulayer-right-menu")){
+            modifyRightMenu = false;
+            if(CCMenu* rightMenu = typeinfo_cast<CCMenu*>(m_menuLayer->getChildByID("right-side-menu"))) {
+                rightMenu->setPosition({winSize.width/2, 150});
+                rightMenu->setVisible(true);
+                rightMenu->removeFromParentAndCleanup(false);
+                this->addChild(rightMenu);
+            }
+            if(CCMenu* pagedRightMenu = typeinfo_cast<CCMenu*>(m_menuLayer->getChildByID("paged-right-side-menu"))) {
+                this->addChild(pagedRightMenu);
+            }
         }
 
-        if(m_bottomMenu = typeinfo_cast<CCMenu*>(m_menuLayer->getChildByID("bottom-menu"))) {
-            m_bottomMenu->setID("extras-menu"_spr);
-            m_bottomMenu->setPosition({winSize.width/2, 100});
-            m_bottomMenu->setVisible(true);
-            m_bottomMenu->removeFromParentAndCleanup(false);
-            this->addChild(m_bottomMenu);
-        }
+        if(mod->getSettingValue<bool>("menulayer-bottom-menu")){
+            modifyBottomMenu = false;
+            if(m_bottomMenu = typeinfo_cast<CCMenu*>(m_menuLayer->getChildByID("bottom-menu"))) {
+                m_bottomMenu->setID("extras-menu"_spr);
+                m_bottomMenu->setPosition({winSize.width/2, 100});
+                m_bottomMenu->setVisible(true);
+                m_bottomMenu->removeFromParentAndCleanup(false);
+                this->addChild(m_bottomMenu);
+            }
         
-        if(CCMenu* pagedBottomtMenu = typeinfo_cast<CCMenu*>(m_menuLayer->getChildByID("paged-bottom-menu"))) {
-            this->addChild(pagedBottomtMenu);
+            if(CCMenu* pagedBottomtMenu = typeinfo_cast<CCMenu*>(m_menuLayer->getChildByID("paged-bottom-menu"))) {
+                this->addChild(pagedBottomtMenu);
+            }
         }
     }
-    else{
 
+    if(modifyRightMenu){
         if(CCMenu* rightMenu = typeinfo_cast<CCMenu*>(m_menuLayer->getChildByID("right-side-menu"))) {
-            typeinfo_cast<ColumnLayout*>(rightMenu->getLayout())->setAxis(Axis::Row);
+            typeinfo_cast<AxisLayout*>(rightMenu->getLayout())->setAxis(Axis::Row);
 
             rightMenu->removeChildByID("daily-chest-button");
 
@@ -63,17 +76,9 @@ bool ExtrasLayer::init() {
             rightMenu->removeFromParent();
             this->addChild(rightMenu);
         }
-        //hacky shit to fix globed
+    }
 
-        CCMenu* dummyMenuToFixGlobed = CCMenu::create();
-        dummyMenuToFixGlobed->setID("bottom-menu");
-
-        CCSprite* dummySprite = CCSprite::create("select.png"_spr);
-        CCMenuItemSpriteExtra* dummyGlobed = CCMenuItemSpriteExtra::create(dummySprite, this, nullptr);
-        dummyGlobed->setID("dankmeme.globed2/main-menu-button");
-
-        dummyMenuToFixGlobed->addChild(dummyGlobed);
-
+    if(modifyBottomMenu){
         if(m_bottomMenu = typeinfo_cast<CCMenu*>(m_menuLayer->getChildByID("bottom-menu"))) {
             m_bottomMenu->setID("extras-menu"_spr);
             m_bottomMenu->setContentSize({winSize.width, winSize.height/2});
@@ -93,9 +98,8 @@ bool ExtrasLayer::init() {
             m_bottomMenu->removeFromParent();
             this->addChild(m_bottomMenu);
         }
-        m_menuLayer->addChild(dummyMenuToFixGlobed);
-        this->scheduleUpdate();
     }
+    
 
     CCMenu* gdButtons = CCMenu::create();
 
@@ -171,22 +175,6 @@ void ExtrasLayer::keyBackClicked() {
 
 void ExtrasLayer::onBack(CCObject* object) {
     keyBackClicked();
-}
-
-//hacky shit to fix globed
-
-void ExtrasLayer::update(float dt){
-
-    if(Loader::get()->isModLoaded("dankmeme.globed2")){
-
-        if(CCNode* button = m_bottomMenu->getChildByIDRecursive("dankmeme.globed2/main-menu-button")) {
-            if(!button){
-                CCScene* scene = ExtrasLayer::scene();
-                auto transition = CCTransitionFade::create(0.0f, scene);
-                CCDirector::sharedDirector()->replaceScene(transition);
-            }
-        }
-    }
 }
 
 CCScene* ExtrasLayer::scene() {
