@@ -51,6 +51,8 @@ class $modify(MyPlayLayer, PlayLayer){
         Utils::trim(m_fields->cocosVersion);
         Utils::trim(m_fields->cpuName);
 
+        #ifndef GEODE_IS_ANDROID
+
         MEMORYSTATUSEX memInfo;
         memInfo.dwLength = sizeof(MEMORYSTATUSEX);
         GlobalMemoryStatusEx(&memInfo);
@@ -60,6 +62,8 @@ class $modify(MyPlayLayer, PlayLayer){
         int conversion = 1048576;
 
         m_fields->totalMemory = totalPhysMem/conversion;
+
+        #endif
 
         CCSize winSize = CCDirector::get()->getWinSize();
 
