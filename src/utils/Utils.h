@@ -401,6 +401,9 @@ public:
     }
 
     static std::string getCPUInfo() {
+
+        #ifndef GEODE_IS_ANDROID
+
         std::array<int, 4> integerBuffer = {};
         constexpr size_t sizeofIntegerBuffer = sizeof(int) * integerBuffer.size();
 
@@ -421,5 +424,11 @@ public:
         }
 
         return cpu;
+
+        #endif
+
+        #ifdef GEODE_IS_ANDROID
+        return "(null)";
+        #endif
     }
 };
