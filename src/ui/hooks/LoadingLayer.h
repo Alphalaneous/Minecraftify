@@ -62,6 +62,9 @@ class $modify(MyLoadingLayer, LoadingLayer){
 			this->m_fields->lastWidth = currentWidth;
 		}
 	}
+
+#ifndef GEODE_IS_ANDROID
+
 	bool init(bool p0){
 
 		if(!LoadingLayer::init(p0)){
@@ -150,4 +153,7 @@ class $modify(MyLoadingLayer, LoadingLayer){
 
 		return true;
 	}
+
+#endif
+
 };
