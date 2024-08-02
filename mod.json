@@ -1,16 +1,20 @@
 {
-    "geode": "3.2.0",
+    "geode": "3.4.0",
     "gd": {
         "win": "2.206",
         "android": "2.206"
     },
-    "version": "v0.9.6",
+    "version": "v0.9.7",
     "id": "zalphalaneous.minecraft",
     "name": "Minecraftify!",
     "developer": "Alphalaneous",
     "description": "Makes GD turn into Minecraft",
     "early-load": true,
-
+    "links": {
+        "homepage": "https://twitter.com/alphalaneous",
+        "source": "https://github.com/Alphalaneous/Minecraftify",
+        "community": "https://discord.gg/Txn2CA5dHF"
+    },
     "resources": {
         "files": [
             "assets/sounds/*",
