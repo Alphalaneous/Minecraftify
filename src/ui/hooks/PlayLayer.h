@@ -223,7 +223,7 @@ class $modify(MyPlayLayer, PlayLayer){
     CCLayerColor* createTextLayer(std::string id, CCNode* node, std::string text){
 
         if(CCLayerColor* bg0 = typeinfo_cast<CCLayerColor*>(node->getChildByID(id))){
-            if(MCLabel* label = getChildOfType<MCLabel>(bg0, 0)){
+            if(MCLabel* label = bg0->getChildByType<MCLabel>(0)){
                 label->setString(text.c_str());
                 bg0->setContentSize({label->getScaledContentSize().width + 2, label->getScaledContentSize().height-1});
             }

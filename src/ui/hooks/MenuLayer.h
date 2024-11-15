@@ -89,7 +89,7 @@ class $modify(MyMenuLayer, MenuLayer) {
 		MCButton* modsButton = MCButton::create("Mods", 24.0f, this, menu_selector(MyMenuLayer::onMods));
 		MCButton* skinButton = MCButton::create("Skins", 24.0f, this, menu_selector(MenuLayer::onGarage));
 
-		MCButton* optionsButton = MCButton::create("Options...", 24.0f, this, menu_selector(MenuLayer::onOptions));
+		MCButton* optionsButton = MCButton::create("Options...", 24.0f, this, menu_selector(MyMenuLayer::onOptions));
 		MCButton* quitButton = MCButton::create("Quit Game", 24.0f, this, menu_selector(MenuLayer::onQuit));
 
 		MCButton* profileButton = MCButton::create("", 5.0f, this, menu_selector(MyMenuLayer::onMyProfile));

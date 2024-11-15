@@ -41,7 +41,7 @@ class $modify(MyFLAlertLayer, FLAlertLayer){
             newBackground->setVisible(background->isVisible());
             newBackground->setZOrder(background->getZOrder());
 
-            CCSpriteBatchNode* batchNode = getChildOfType<CCSpriteBatchNode>(newBackground, 0);
+            CCSpriteBatchNode* batchNode = newBackground->getChildByType<CCSpriteBatchNode>(0);
             ccTexParams params = {GL_NEAREST, GL_NEAREST, GL_REPEAT, GL_REPEAT};
             batchNode->getTexture()->setTexParameters(&params);
 
@@ -51,7 +51,7 @@ class $modify(MyFLAlertLayer, FLAlertLayer){
             CCSize textBGSize = {newBackground->getContentSize().width - 8 / scale, newBackground->getContentSize().height - 24 / scale};
 
             CCScale9Sprite* textBackground = CCScale9Sprite::create("text_field.png"_spr);
-            CCSpriteBatchNode* batchNodeA = getChildOfType<CCSpriteBatchNode>(textBackground, 0);
+            CCSpriteBatchNode* batchNodeA = textBackground->getChildByType<CCSpriteBatchNode>(0);
             ccTexParams paramsA = {GL_NEAREST, GL_NEAREST, GL_REPEAT, GL_REPEAT};
             batchNodeA->getTexture()->setTexParameters(&paramsA);
 
@@ -66,7 +66,7 @@ class $modify(MyFLAlertLayer, FLAlertLayer){
         if(CCNode* contentTextArea = mainLayer->getChildByID("content-text-area")) {
             contentTextArea->setPosition({mainLayer->getContentSize().width/2, mainLayer->getContentSize().height/2});
             contentTextArea->setZOrder(7);
-            for(CCLabelBMFont* text : CCArrayExt<CCLabelBMFont*>(getChildOfType<MultilineBitmapFont>(contentTextArea, 0)->getChildren())){
+            for(CCLabelBMFont* text : CCArrayExt<CCLabelBMFont*>(contentTextArea->getChildByType<MultilineBitmapFont>(0)->getChildren())){
                 text->setFntFile("minecraft.fnt"_spr);
                 text->setAnchorPoint({0.5, 0});
                 text->setScale(0.6f);
@@ -79,14 +79,14 @@ class $modify(MyFLAlertLayer, FLAlertLayer){
 
         if(CCNode* scrollingLayer = mainLayer->getChildByID("scroll-layer")) {
 
-            if(CCLayer* contentLayer = getChildOfType<CCLayer>(scrollingLayer, 1)) {
+            if(CCLayer* contentLayer = scrollingLayer->getChildByType<CCLayer>(1)) {
 
                 if(CCNode* textArea = contentLayer->getChildByID("content-text-area")){
                     textArea->ignoreAnchorPointForPosition(false);
                     textArea->setAnchorPoint({0.5, 0});
                     textArea->setPosition({textArea->getPosition().x, 0});
 
-                    for(CCLabelBMFont* text : CCArrayExt<CCLabelBMFont*>(getChildOfType<MultilineBitmapFont>(textArea, 0)->getChildren())){
+                    for(CCLabelBMFont* text : CCArrayExt<CCLabelBMFont*>(textArea->getChildByType<MultilineBitmapFont>(0)->getChildren())){
                         text->setFntFile("minecraft.fnt"_spr);
                         text->setAnchorPoint({0.5, 1});
                         text->setScale(0.6f);
@@ -152,11 +152,11 @@ class $modify(MyFLAlertLayer, FLAlertLayer){
             }
   
 
-            if(MyCCMenuItemSpriteExtra* button = static_cast<MyCCMenuItemSpriteExtra*>(getChildOfType<CCMenuItemSpriteExtra>(menu, 0))){
+            if(MyCCMenuItemSpriteExtra* button = static_cast<MyCCMenuItemSpriteExtra*>(menu->getChildByType<CCMenuItemSpriteExtra>(0))){
                 std::string text = "";
 
-                if(ButtonSprite* spr = getChildOfType<ButtonSprite>(button, 0)) {
-                    if(CCLabelBMFont* label = getChildOfType<CCLabelBMFont>(spr, 0)) {
+                if(ButtonSprite* spr = button->getChildByType<ButtonSprite>(0)) {
+                    if(CCLabelBMFont* label = spr->getChildByType<CCLabelBMFont>(0)) {
                         text = std::string(label->getString());
                     }
                 }
@@ -166,11 +166,11 @@ class $modify(MyFLAlertLayer, FLAlertLayer){
                 button->setVisible(false);
                 innerButtonMenu->addChild(btn1);
             }
-            if(MyCCMenuItemSpriteExtra* button = static_cast<MyCCMenuItemSpriteExtra*>(getChildOfType<CCMenuItemSpriteExtra>(menu, 1))){
+            if(MyCCMenuItemSpriteExtra* button = static_cast<MyCCMenuItemSpriteExtra*>(menu->getChildByType<CCMenuItemSpriteExtra>(1))){
                 std::string text = "";
 
-                if(ButtonSprite* spr = getChildOfType<ButtonSprite>(button, 0)) {
-                    if(CCLabelBMFont* label = getChildOfType<CCLabelBMFont>(spr, 0)) {
+                if(ButtonSprite* spr = button->getChildByType<ButtonSprite>(0)) {
+                    if(CCLabelBMFont* label = spr->getChildByType<CCLabelBMFont>(0)) {
                         text = std::string(label->getString());
                     }
                 }
