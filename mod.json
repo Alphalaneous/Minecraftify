@@ -1,17 +1,17 @@
 {
-    "geode": "4.0.0-alpha.1",
+    "geode": "4.0.0-beta.1",
     "gd": {
         "win": "2.2074",
         "android": "2.2074"
     },
-    "version": "v0.9.8-alpha.1",
+    "version": "v0.9.8",
     "id": "zalphalaneous.minecraft",
     "name": "Minecraftify!",
     "developer": "Alphalaneous",
     "description": "Makes GD turn into Minecraft",
     "early-load": true,
     "links": {
-        "homepage": "https://twitter.com/alphalaneous",
+        "homepage": "https://linktr.ee/Alphalaneous",
         "source": "https://github.com/Alphalaneous/Minecraftify",
         "community": "https://discord.gg/Txn2CA5dHF"
     },
