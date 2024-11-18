@@ -18,16 +18,16 @@ class $modify(MenuLayer){
 		if (!MenuLayer::init()) {
 			return false;
 		}
-		if(CCNode* bottomMenu = this->getChildByIDRecursive("bottom-menu")){
+		if (CCNode* bottomMenu = this->getChildByIDRecursive("bottom-menu")){
 			bottomMenu->getChildByIDRecursive("achievements-button")->setVisible(false);
 			bottomMenu->getChildByIDRecursive("settings-button")->setVisible(false);
 			bottomMenu->getChildByIDRecursive("stats-button")->setVisible(false);
 			bottomMenu->getChildByIDRecursive("newgrounds-button")->setVisible(false);
 			bottomMenu->getChildByIDRecursive("geode.loader/geode-button")->setVisible(false);
 		}
-		if(Loader::get()->isModLoaded("alphalaneous.pages_api")){
+		if (Loader::get()->isModLoaded("alphalaneous.vanilla_pages")){
 
-			Mod* mod = Loader::get()->getLoadedMod("alphalaneous.pages_api");
+			Mod* mod = Loader::get()->getLoadedMod("alphalaneous.vanilla_pages");
 
 			if(mod->getSettingValue<bool>("menulayer-right-menu")){
 				if(CCNode* rightSideMenu = this->getChildByIDRecursive("right-side-menu")){
@@ -53,7 +53,7 @@ class $modify(MyMenuLayer, MenuLayer) {
 	};
 
 	static void onModify(auto& self) {
-        (void) self.setHookPriority("MenuLayer::init", INT_MIN/2-1);
+        (void) self.setHookPriority("MenuLayer::init", -1000);
     }
 
 	bool init() {
@@ -215,6 +215,7 @@ class $modify(MyMenuLayer, MenuLayer) {
 			
 			setAllInvisible();
 			this->scheduleOnce(schedule_selector(MyMenuLayer::setAllVisible), 1.0f);
+			GlobalVars::getSharedInstance()->isInitialLaunch = false;
 		}
 
 

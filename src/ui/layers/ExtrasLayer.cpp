@@ -29,9 +29,9 @@ bool ExtrasLayer::init() {
     bool modifyBottomMenu = true;
 
 
-    if(Loader::get()->isModLoaded("alphalaneous.pages_api")){
+    if(Loader::get()->isModLoaded("alphalaneous.vanilla_pages")){
 
-        Mod* mod = Loader::get()->getLoadedMod("alphalaneous.pages_api");
+        Mod* mod = Loader::get()->getLoadedMod("alphalaneous.vanilla_pages");
 
         if(mod->getSettingValue<bool>("menulayer-right-menu")){
             modifyRightMenu = false;

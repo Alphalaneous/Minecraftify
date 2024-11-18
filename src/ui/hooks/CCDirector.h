@@ -6,23 +6,21 @@ class $modify(MyCCDirector, CCDirector){
 
 	bool replaceScene(CCScene *pScene){
 
-		if(!GlobalVars::getSharedInstance()->isInitialLaunch){
+		if (!GlobalVars::getSharedInstance()->isInitialLaunch){
 			return CCDirector::replaceScene(pScene);
 		}
-		else{
+		else {
 			CCScene* currentScene = CCScene::get();
 			CCLayer* child = typeinfo_cast<CCLayer*>(currentScene->getChildren()->objectAtIndex(0));
 
 			LoadingLayer* loadingLayer = typeinfo_cast<LoadingLayer*>(child);
 			
-			if(loadingLayer){
+			if (loadingLayer) {
 				MyLoadingLayer* myLoadingLayer = static_cast<MyLoadingLayer*>(child);
-				if(myLoadingLayer->m_fields->didHook){
-					if(GlobalVars::getSharedInstance()->isInitialLaunch){
-						myLoadingLayer->scheduleOnce(schedule_selector(MyLoadingLayer::doFadeOut), 0.05f);
-					}
+				if (GlobalVars::getSharedInstance()->isInitialLaunch){
+					myLoadingLayer->scheduleOnce(schedule_selector(MyLoadingLayer::doFadeOut), 0.05f);
 				}
-				else{
+				else {
 					GlobalVars::getSharedInstance()->isInitialLaunch = false;
 					return CCDirector::replaceScene(pScene);
 				}

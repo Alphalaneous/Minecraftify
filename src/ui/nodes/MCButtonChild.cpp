@@ -143,7 +143,6 @@ void MCButtonChild::doClick(){
     doAndroidBypass = true;
     #endif
 
-
     if(this->isHovering || doAndroidBypass){
 
         auto engine = FMODAudioEngine::sharedEngine();

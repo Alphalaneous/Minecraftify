@@ -11,7 +11,6 @@ class $modify(MyLoadingLayer, LoadingLayer){
 		float loadingScaleX = 1.5;
 		float loadingScaleY = 1.4;
 		bool isInitialOpen = true;
-		bool didHook = false;
 	};
 
 	void doFadeOut(float dt){
@@ -72,7 +71,6 @@ class $modify(MyLoadingLayer, LoadingLayer){
 		}
 
 		MyLoadingLayer* myself = static_cast<MyLoadingLayer*>(this);
-		myself->m_fields->didHook = true;
 
 		#ifndef GEODE_IS_ANDROID
 

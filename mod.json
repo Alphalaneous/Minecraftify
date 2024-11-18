@@ -4,7 +4,7 @@
         "win": "2.2074",
         "android": "2.2074"
     },
-    "version": "v0.9.8",
+    "version": "v0.9.9",
     "id": "zalphalaneous.minecraft",
     "name": "Minecraftify!",
     "developer": "Alphalaneous",
@@ -47,6 +47,11 @@
         },
         {
             "id": "sanes.daily-transfer",
+            "version": "*",
+            "importance": "breaking"
+        },
+        {
+            "id": "undefined0.icon_ninja",
             "version": "*",
             "importance": "breaking"
         }
