@@ -1,7 +1,8 @@
-#pragma once
-
 #include <Geode/Geode.hpp>
 #include <Geode/modify/CCMenuItemToggler.hpp>
+
+#ifndef MYCCMENUITEMTOGGLER_H
+#define MYCCMENUITEMTOGGLER_H
 
 using namespace geode::prelude;
 
@@ -20,4 +21,8 @@ class $modify(MyCCMenuItemToggler, CCMenuItemToggler){
         myRet->m_fields->m_buttonTarget = p2;
         return ret;
     }
+
+
 };
+
+#endif

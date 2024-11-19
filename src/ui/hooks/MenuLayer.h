@@ -3,9 +3,13 @@
 #include <Geode/ui/GeodeUI.hpp>
 #include "../../utils/GlobalVars.h"
 #include "../../utils/Utils.h"
+#include "../nodes/Panorama.h"
 #include "../nodes/MCLabel.h"
 #include "../nodes/MCButton.h"
+#include "../layers/MCOptionsLayer.h"
+#include "../layers/MCOptionsOuterLayer.h"
 #include "../layers/ExtrasLayer.h"
+#include "../layers/settings/VideoSettings.h"
 
 using namespace geode::prelude;
 
@@ -60,6 +64,11 @@ class $modify(MyMenuLayer, MenuLayer) {
 		auto winSize = CCDirector::sharedDirector()->getWinSize();
 
         float scale = CCDirector::sharedDirector()->getContentScaleFactor()/4;
+
+		Panorama* panorama = Panorama::create();
+		panorama->setID("minecraft-panorama"_spr);
+
+		this->addChild(panorama);
 
 		Utils::getNodeSafe(this, "main-menu")->setVisible(false);
 		Utils::getNodeSafe(this, "profile-menu")->setVisible(false);
@@ -264,6 +273,8 @@ class $modify(MyMenuLayer, MenuLayer) {
 
 		CCMenu* menu = typeinfo_cast<CCMenu*>(this->getChildByID("minecraft-menu"_spr));
 
+		Panorama* panorama = typeinfo_cast<Panorama*>(this->getChildByIDRecursive("minecraft-panorama"_spr));
+
 		CCSprite* title = typeinfo_cast<CCSprite*>(this->getChildByIDRecursive("minecraft-title"_spr));
 		CCSprite* subtitle = typeinfo_cast<CCSprite*>(this->getChildByIDRecursive("minecraft-subtitle"_spr));
 		CCLabelBMFont* splash = typeinfo_cast<CCLabelBMFont*>(this->getChildByIDRecursive("splash-text"_spr));
@@ -281,6 +292,15 @@ class $modify(MyMenuLayer, MenuLayer) {
 
 	void onMods(CCObject* sender) {
 		geode::openModsList();
+	}
+
+	void onMCOptions(CCObject* sender) {
+		MCOptionsOuterLayer* outerLayer = MCOptionsOuterLayer::create();
+		outerLayer->setLayer(MCOptionsLayer::create(outerLayer));
+
+		CCScene* scene = CCScene::create();
+		scene->addChild(outerLayer);
+		CCDirector::sharedDirector()->pushScene(scene);
 	}
 
 	void onMyProfile(CCObject* sender) {
