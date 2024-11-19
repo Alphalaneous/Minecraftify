@@ -143,7 +143,7 @@ class $modify(MyPlayLayer, PlayLayer){
 
             std::vector<std::string> lines = Utils::splitString(m_fields->debugText->getString(), "\n");
 
-            createTextLayer("version-label"_spr, m_fields->leftDebugNode, "Minecraft 2.206 (2.206/Geode)");
+            createTextLayer("version-label"_spr, m_fields->leftDebugNode, "Minecraft 2.2074 (2.2074/Geode)");
             createTextLayer("fps-label"_spr, m_fields->leftDebugNode, fmt::format("{} fps", m_fields->fpsVal));
             createTextLayer("level-id-label"_spr, m_fields->leftDebugNode, fmt::format("ID: {}", getFromPos(0, lines)));
 
