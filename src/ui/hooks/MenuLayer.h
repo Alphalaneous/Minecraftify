@@ -90,7 +90,7 @@ class $modify(MyMenuLayer, MenuLayer) {
 		MCButton* skinButton = MCButton::create("Skins", 24.0f, this, menu_selector(MenuLayer::onGarage));
 
 		MCButton* optionsButton = MCButton::create("Options...", 24.0f, this, menu_selector(MyMenuLayer::onOptions));
-		MCButton* quitButton = MCButton::create("Quit Game", 24.0f, this, menu_selector(MenuLayer::onQuit));
+		MCButton* quitButton = MCButton::create("Quit Game", 24.0f, this, menu_selector(MyMenuLayer::onExit));
 
 		MCButton* profileButton = MCButton::create("", 5.0f, this, menu_selector(MyMenuLayer::onMyProfile));
 		MCButton* extrasButton = MCButton::create("", 5.0f, this, menu_selector(MyMenuLayer::onExtras));
@@ -358,5 +358,14 @@ class $modify(MyMenuLayer, MenuLayer) {
 		title->setPosition({winSize.width/2.0f, winSize.height-55});
 		creator->setPosition({winSize.width-2,0});
 		version->setPosition({2,0});
+	}
+
+	void onExit(CCObject* object){
+
+		createQuickPopup("Quit Game", "Are you sure you want to <cr>quit</c>?", "Cancel", "Yes", [this](FLAlertLayer*, bool button2){
+			if(button2){
+				endGame();
+			}
+		});
 	}
 };

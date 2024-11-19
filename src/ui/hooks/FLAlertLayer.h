@@ -161,8 +161,9 @@ class $modify(MyFLAlertLayer, FLAlertLayer){
                     }
                 }
 
-                MCButton* btn1 = MCButton::create(text.c_str(), 39.1f, button->m_fields->m_buttonTarget, button->m_fields->m_buttonCallback);
+                MCButton* btn1 = MCButton::create(text.c_str(), 39.1f, button->m_pListener, button->m_pfnSelector);
                 btn1->setID(button->getID());
+                btn1->setTag(button->getTag());
                 button->setVisible(false);
                 innerButtonMenu->addChild(btn1);
             }
@@ -175,7 +176,8 @@ class $modify(MyFLAlertLayer, FLAlertLayer){
                     }
                 }
                 
-                MCButton* btn2 = MCButton::create(text.c_str(), 39.1f, button->m_fields->m_buttonTarget, button->m_fields->m_buttonCallback);
+                MCButton* btn2 = MCButton::create(text.c_str(), 39.1f, button->m_pListener, button->m_pfnSelector);
+                btn2->setTag(button->getTag());
                 btn2->setID(button->getID());
                 button->setVisible(false);
                 innerButtonMenu->addChild(btn2);

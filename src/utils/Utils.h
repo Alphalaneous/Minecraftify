@@ -303,15 +303,15 @@ public:
         MCButton* offBtn;
 
         if(auto btn = static_cast<MyCCMenuItemSpriteExtra*>(toggler->m_onButton)){
-            onBtn = MCButton::create(fmt::format("{}: ON", text), 38.1f, btn->m_fields->m_buttonTarget, btn->m_fields->m_buttonCallback);
+            onBtn = MCButton::create(fmt::format("{}: ON", text), 38.1f, btn->m_pListener, btn->m_pfnSelector);
             
         }
         if(auto btn = static_cast<MyCCMenuItemSpriteExtra*>(toggler->m_offButton)){
-            offBtn = MCButton::create(fmt::format("{}: OFF", text), 38.1f, btn->m_fields->m_buttonTarget, btn->m_fields->m_buttonCallback);
+            offBtn = MCButton::create(fmt::format("{}: OFF", text), 38.1f, btn->m_pListener, btn->m_pfnSelector);
         }
         if(!onBtn || !offBtn) return nullptr;
         if(auto btn = static_cast<MyCCMenuItemToggler*>(toggler)){
-            newToggler = CCMenuItemToggler::create(offBtn, onBtn, btn->m_fields->m_buttonTarget, btn->m_fields->m_buttonCallback);
+            newToggler = CCMenuItemToggler::create(offBtn, onBtn, btn->m_pListener, btn->m_pfnSelector);
             newToggler->setTag(toggler->getTag());
             newToggler->setSizeMult(0);
 

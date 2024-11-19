@@ -8,7 +8,7 @@
 #define convertToMCButton(id, text) \
 		if(auto origButton = this->getChildByIDRecursive(id)){\
 			if(MyCCMenuItemSpriteExtra* myButton = static_cast<MyCCMenuItemSpriteExtra*>(origButton)){\
-				MCButton* button = MCButton::create(text, 38.1f, myButton->m_fields->m_buttonTarget, myButton->m_fields->m_buttonCallback);\
+				MCButton* button = MCButton::create(text, 38.1f, myButton->m_pListener, myButton->m_pfnSelector);\
 				minecraftButtonMenu->addChild(button);\
 			}\
 		}

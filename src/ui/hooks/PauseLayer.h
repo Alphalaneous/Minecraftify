@@ -117,7 +117,7 @@ class $modify(MyPauseLayer, PauseLayer){
 
         if(MyCCMenuItemSpriteExtra* button = static_cast<MyCCMenuItemSpriteExtra*>(getChildByIDRecursive("play-button"))) {
             
-            MCButton* btn2 = MCButton::create("Back to Game", 50.0f, button->m_fields->m_buttonTarget, button->m_fields->m_buttonCallback);
+            MCButton* btn2 = MCButton::create("Back to Game", 50.0f, button->m_pListener, button->m_pfnSelector);
             btn2->setID(button->getID());
             button->setVisible(false);
             innerButtonMenu->addChild(btn2);
@@ -134,7 +134,7 @@ class $modify(MyPauseLayer, PauseLayer){
             }
             
 
-            MCButton* btn2 = MCButton::create(practiceText.c_str(), 24.3f, button->m_fields->m_buttonTarget, button->m_fields->m_buttonCallback);
+            MCButton* btn2 = MCButton::create(practiceText.c_str(), 24.3f, button->m_pListener, button->m_pfnSelector);
             btn2->setID(button->getID());
             button->setVisible(false);
             innerButtonMenu->addChild(btn2);
@@ -149,7 +149,7 @@ class $modify(MyPauseLayer, PauseLayer){
 
         if(MyCCMenuItemSpriteExtra* button = static_cast<MyCCMenuItemSpriteExtra*>(getChildByIDRecursive("options-button"))) {
             
-            MCButton* btn2 = MCButton::create("", 5.0f, button->m_fields->m_buttonTarget, button->m_fields->m_buttonCallback);
+            MCButton* btn2 = MCButton::create("", 5.0f, button->m_pListener, button->m_pfnSelector);
             CCSprite* spr = Utils::createPixelSprite("accessibility.png"_spr);
             btn2->setID(button->getID());
             spr->setPosition({btn2->getContentSize().width/2, btn2->getContentSize().height/2});
@@ -161,7 +161,7 @@ class $modify(MyPauseLayer, PauseLayer){
 
         if(MyCCMenuItemSpriteExtra* button = static_cast<MyCCMenuItemSpriteExtra*>(getChildByIDRecursive("retry-button"))) {
             
-            MCButton* btn2 = MCButton::create("Retry", 24.3f, button->m_fields->m_buttonTarget, button->m_fields->m_buttonCallback);
+            MCButton* btn2 = MCButton::create("Retry", 24.3f, button->m_pListener, button->m_pfnSelector);
             btn2->setID(button->getID());
             button->setVisible(false);
             innerButtonMenu->addChild(btn2);
@@ -175,7 +175,7 @@ class $modify(MyPauseLayer, PauseLayer){
                 buttonSize = 24.3f;
             }
 
-            MCButton* btn2 = MCButton::create("Edit Level", buttonSize, button->m_fields->m_buttonTarget, button->m_fields->m_buttonCallback);
+            MCButton* btn2 = MCButton::create("Edit Level", buttonSize, button->m_pListener, button->m_pfnSelector);
             btn2->setID(button->getID());
             button->setVisible(false);
             innerButtonMenu->addChild(btn2);
@@ -183,7 +183,7 @@ class $modify(MyPauseLayer, PauseLayer){
 
         if(MyCCMenuItemSpriteExtra* button = static_cast<MyCCMenuItemSpriteExtra*>(getChildByIDRecursive("full-restart-button"))) {
 
-            MCButton* btn2 = MCButton::create("Restart Level", buttonSize, button->m_fields->m_buttonTarget, button->m_fields->m_buttonCallback);
+            MCButton* btn2 = MCButton::create("Restart Level", buttonSize, button->m_pListener, button->m_pfnSelector);
             btn2->setID(button->getID());
             button->setVisible(false);
             innerButtonMenu->addChild(btn2);
@@ -191,7 +191,7 @@ class $modify(MyPauseLayer, PauseLayer){
 
         if(MyCCMenuItemSpriteExtra* button = static_cast<MyCCMenuItemSpriteExtra*>(getChildByIDRecursive("exit-button"))) {
             
-            MCButton* btn2 = MCButton::create("Quit to Title", 50.0f, button->m_fields->m_buttonTarget, button->m_fields->m_buttonCallback);
+            MCButton* btn2 = MCButton::create("Quit to Title", 50.0f, button->m_pListener, button->m_pfnSelector);
             btn2->setID(button->getID());
             button->setVisible(false);
             innerButtonMenu->addChild(btn2);

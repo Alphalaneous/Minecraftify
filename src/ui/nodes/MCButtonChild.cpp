@@ -160,7 +160,7 @@ void MCButtonChild::doClick(){
         #endif
 
         geode::Loader::get()->queueInMainThread([this]() { //delay it by a frame because for some reason it crashes the touch dispatcher otherwise ???
-            if(m_pListener && m_pfnSelector){
+            if (m_pListener && m_pfnSelector) {
                 (m_pListener->*m_pfnSelector)(this);
             }
         });
