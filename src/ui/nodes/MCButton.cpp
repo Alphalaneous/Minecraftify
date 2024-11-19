@@ -17,7 +17,7 @@ MCButton* MCButton::create(gd::string text, float width, CCObject* target, SEL_M
         delete ret;
         ret = nullptr;
     }
-    return nullptr;
+    return ret;
 }
 
 void MCButton::setInvisible(){

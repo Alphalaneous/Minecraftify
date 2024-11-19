@@ -8,7 +8,7 @@ MCScrollBar* MCScrollBar::create(ScrollLayer* node, float height){
         delete ret;
         ret = nullptr;
     }
-    return nullptr;
+    return ret;
 }
 
 bool MCScrollBar::init(ScrollLayer* node, float height){

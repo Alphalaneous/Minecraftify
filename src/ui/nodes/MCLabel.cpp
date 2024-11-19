@@ -24,7 +24,7 @@ MCLabel* MCLabel::create(std::wstring text, std::string font){
         delete ret;
         ret = nullptr;
     }
-    return nullptr;
+    return ret;
 }
 
 

@@ -68,7 +68,7 @@ MCButtonChild* MCButtonChild::create(gd::string text, float width, CCObject* tar
         delete ret;
         ret = nullptr;
     }
-    return nullptr;
+    return ret;
 }
 
 
