@@ -295,7 +295,7 @@ public:
         }
     }
 
-    /*static CCMenuItemToggler* convertToggler(std::string text, CCMenuItemToggler* toggler){
+    static CCMenuItemToggler* convertToggler(std::string text, CCMenuItemToggler* toggler){
 
         CCMenuItemToggler* newToggler = nullptr;
         
@@ -325,7 +325,7 @@ public:
         }
 
         return newToggler;
-    }*/
+    }
 
     static std::wstring strToWstr(std::string string){
 
@@ -352,7 +352,7 @@ public:
         return CCNode::create();
     }
 
-    /*static CCLayer* convertMoreOptionsLayer(std::vector<std::pair<int, std::string>> values){
+    static CCLayer* convertMoreOptionsLayer(std::vector<std::pair<int, std::string>> values){
         CCLayer* content = CCLayer::create();
 	    auto winSize = CCDirector::sharedDirector()->getWinSize();
 
@@ -398,7 +398,7 @@ public:
         
         content->addChild(moreOptionsLayer);
         return content;
-    }*/
+    }
 
     static std::string getCPUInfo() {
 

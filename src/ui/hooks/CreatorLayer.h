@@ -109,10 +109,10 @@ class $modify(MyCreatorLayer, CreatorLayer){
 		minecraftButtonMenu->addChild(vaultButton);
 		minecraftButtonMenu->addChild(treasureButton);
 
-		//convertToMCButton("super-expert-button", "Super Expert");
-		//convertToMCButton("spaghettdev.gd-roulette/roulette-button", "Roulette");
-		//convertToMCButton("demon-progression-button", "Demon Progression");
-		//convertToMCButton("cvolton.betterinfo/main-button", "BetterInfo");
+		convertToMCButton("super-expert-button", "Super Expert");
+		convertToMCButton("spaghettdev.gd-roulette/roulette-button", "Roulette");
+		convertToMCButton("demon-progression-button", "Demon Progression");
+		convertToMCButton("cvolton.betterinfo/main-button", "BetterInfo");
 
 		minecraftButtonMenu->updateLayout();
 

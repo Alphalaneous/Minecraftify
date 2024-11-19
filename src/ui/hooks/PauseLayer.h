@@ -1,7 +1,7 @@
 #include <Geode/Geode.hpp>
 #include <Geode/modify/PauseLayer.hpp>
 
-/*class $modify(MyPauseLayer, PauseLayer){
+class $modify(MyPauseLayer, PauseLayer){
 
     void customSetup(){
         PauseLayer::customSetup();
@@ -218,4 +218,4 @@
         LevelInfoLayer* lil = LevelInfoLayer::create(playLayer->m_level, false);
         lil->onLevelInfo(nullptr);
     }
-};*/
+};

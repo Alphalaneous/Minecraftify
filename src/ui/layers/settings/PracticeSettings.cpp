@@ -35,9 +35,9 @@ bool PracticeSettings::init(MCOptionsOuterLayer* topLayer, CCLayer* prevLayer) {
         {171, "No Player Hitbox"}
     };
 
-    //CCLayer* content = Utils::convertMoreOptionsLayer(values);
+    CCLayer* content = Utils::convertMoreOptionsLayer(values);
 
-    //scrollLayer->addContent(content);
+    scrollLayer->addContent(content);
 
     addChild(scrollLayer);
 
