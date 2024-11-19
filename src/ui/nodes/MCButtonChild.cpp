@@ -132,7 +132,7 @@ void MCButtonChild::onHoverExit(){
     }
 }
 
-void MCButtonChild::unselected(){
+/*void MCButtonChild::unselected(){
     onHoverExit();
 }
 
@@ -179,7 +179,7 @@ void MCButtonChild::activate(){
     #ifdef GEODE_IS_ANDROID
     doClick();
     #endif
-}
+}*/
 
 void MCButtonChild::update(float dt) {
 
