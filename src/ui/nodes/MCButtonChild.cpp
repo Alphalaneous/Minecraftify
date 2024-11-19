@@ -145,6 +145,8 @@ void MCButtonChild::doClick(){
 
     if (this->isHovering || doAndroidBypass) {
 
+        #ifndef GEODE_IS_ANDROID
+
         auto engine = FMODAudioEngine::sharedEngine();
         auto system = engine->m_system;
 
@@ -157,6 +159,8 @@ void MCButtonChild::doClick(){
             system->playSound(sound, nullptr, false, &channel);
             channel->setVolume(engine->m_sfxVolume);
         }
+
+        #endif
 
         geode::Loader::get()->queueInMainThread([this]() { //delay it by a frame because for some reason it crashes the touch dispatcher otherwise ???
             if (m_pListener && m_pfnSelector) {
