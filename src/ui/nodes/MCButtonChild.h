@@ -5,17 +5,17 @@
 
 using namespace geode::prelude;
 
-class MCButtonChild : public CCMenuItemSpriteExtra
+class MCButtonChild : public CCMenuItemSprite
 {
 public:
     CCSprite* edgeTexture;
-    static MCButtonChild* create(gd::string text, float width, CCObject* target, SEL_MenuHandler selector);
+    static MCButtonChild* create(std::string text, float width, CCObject* target, SEL_MenuHandler selector);
     void update(float dt);
     void onHover();
     void onHoverExit();
-    //void selected();
-    //void unselected();
-    //void activate();
+    void selected();
+    void unselected();
+    void activate();
     void doClick();
     void setInvisible();
     void setVisibleFade();

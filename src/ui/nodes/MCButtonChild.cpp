@@ -4,7 +4,7 @@
 
 using namespace geode::prelude;
 
-CCSprite* generateEdgeSprite(gd::string textureName){
+CCSprite* generateEdgeSprite(std::string textureName){
 
     float scale = CCDirector::sharedDirector()->getContentScaleFactor()/4;
 
@@ -19,7 +19,7 @@ CCSprite* generateEdgeSprite(gd::string textureName){
     return sprite;
 }
 
-CCSprite* generateSprite(MCButtonChild* parent, gd::string textureName, float width){
+CCSprite* generateSprite(MCButtonChild* parent, std::string textureName, float width){
 
     float scale = CCDirector::sharedDirector()->getContentScaleFactor()/4;
 
@@ -45,9 +45,9 @@ CCSprite* generateSprite(MCButtonChild* parent, gd::string textureName, float wi
     return sprite;
 }
 
-MCButtonChild* MCButtonChild::create(gd::string text, float width, CCObject* target, SEL_MenuHandler selector){
+MCButtonChild* MCButtonChild::create(std::string text, float width, CCObject* target, SEL_MenuHandler selector){
 
-    MCButtonChild *ret = new (std::nothrow) MCButtonChild();
+    MCButtonChild *ret = new MCButtonChild();
     ret->width = width;
 
     CCSprite* buttonSprite = generateSprite(ret, "button.png"_spr, width);
@@ -131,8 +131,8 @@ void MCButtonChild::onHoverExit(){
     }
 }
 
-/*void MCButtonChild::unselected(){
-    //onHoverExit();
+void MCButtonChild::unselected(){
+    onHoverExit();
 }
 
 void MCButtonChild::doClick(){
@@ -169,7 +169,7 @@ void MCButtonChild::doClick(){
 
 void MCButtonChild::selected(){
 
-    //onHover();
+    onHover();
 
     #ifndef GEODE_IS_ANDROID
     doClick();
@@ -180,7 +180,7 @@ void MCButtonChild::activate(){
     #ifdef GEODE_IS_ANDROID
     doClick();
     #endif
-}*/
+}
 
 void MCButtonChild::update(float dt) {
 
@@ -208,6 +208,4 @@ void MCButtonChild::update(float dt) {
             isHovering = false;
         }
     }
-    
 }
-

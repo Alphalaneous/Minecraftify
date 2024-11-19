@@ -104,7 +104,7 @@ public:
     }
 
 
-    static CCSprite* createSprite(gd::string path){
+    static CCSprite* createSprite(std::string path){
 
         float scale = CCDirector::sharedDirector()->getContentScaleFactor()/4;
 
@@ -115,7 +115,7 @@ public:
         return spr;
     }
 
-    static CCSprite* createPanoSprite(gd::string path){
+    static CCSprite* createPanoSprite(std::string path){
 
         float scale = CCDirector::sharedDirector()->getContentScaleFactor()/4;
 
@@ -127,7 +127,7 @@ public:
         return spr;
     }
 
-    static CCSprite* createPixelSprite(gd::string path){
+    static CCSprite* createPixelSprite(std::string path){
 
         float scale = CCDirector::sharedDirector()->getContentScaleFactor()/4;
 

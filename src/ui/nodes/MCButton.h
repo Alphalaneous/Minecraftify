@@ -12,7 +12,7 @@ public:
 
     bool isBeingTouched = false;
 
-    static MCButton* create(gd::string text, float width, CCObject* target, SEL_MenuHandler selector);
+    static MCButton* create(std::string text, float width, CCObject* target, SEL_MenuHandler selector);
     
     MCButtonChild* child;
     void setInvisible();
