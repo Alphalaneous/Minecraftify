@@ -6,7 +6,7 @@
 #include <Geode/Geode.hpp>
 #include <Geode/modify/CCMenuItemSpriteExtra.hpp>
 
-/*class $modify(MyCCMenuItemSpriteExtra, CCMenuItemSpriteExtra){
+class $modify(MyCCMenuItemSpriteExtra, CCMenuItemSpriteExtra){
 
     struct Fields {
         cocos2d::SEL_MenuHandler m_buttonCallback;
@@ -20,7 +20,7 @@
         return CCMenuItemSpriteExtra::init(p0, p1, p2, p3);
     }
 
-    void selected(){
+    /*void selected(){
         if(!m_fields->m_isMCButton){
             CCMenuItemSpriteExtra::selected();
         }
@@ -40,8 +40,8 @@
         if(!m_fields->m_isMCButton){
             CCMenuItemSpriteExtra::activate();
         }
-    }
+    }*/
 
-};*/
+};
 
 #endif
