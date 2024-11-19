@@ -1,8 +1,5 @@
 #pragma once
 
-#ifndef MYCCMENUITEMSPRITEEXTRA_H
-#define MYCCMENUITEMSPRITEEXTRA_H
-
 #include <Geode/Geode.hpp>
 #include <Geode/modify/CCMenuItemSpriteExtra.hpp>
 
@@ -41,7 +38,4 @@ class $modify(MyCCMenuItemSpriteExtra, CCMenuItemSpriteExtra){
             CCMenuItemSpriteExtra::activate();
         }
     }
-
 };
-
-#endif

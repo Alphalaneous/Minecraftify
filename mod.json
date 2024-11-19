@@ -4,11 +4,11 @@
         "win": "2.2074",
         "android": "2.2074"
     },
-    "version": "v0.9.9",
-    "id": "zalphalaneous.minecraft",
-    "name": "Minecraftify!",
+    "version": "v6.9.420",
+    "id": "alphalaneous.crashtheandroid",
+    "name": "Crash Minecraftify!",
     "developer": "Alphalaneous",
-    "description": "Makes GD turn into Minecraft",
+    "description": "Makes GD crash into Minecraft",
     "early-load": true,
     "links": {
         "homepage": "https://linktr.ee/Alphalaneous",
