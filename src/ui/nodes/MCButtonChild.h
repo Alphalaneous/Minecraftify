@@ -5,7 +5,7 @@
 
 using namespace geode::prelude;
 
-class MCButtonChild : public CCMenuItemSpriteExtra
+class MCButtonChild : public CCMenuItemSprite
 {
 public:
     CCSprite* edgeTexture;
@@ -13,9 +13,9 @@ public:
     void update(float dt);
     void onHover();
     void onHoverExit();
-    //void selected();
-    //void unselected();
-    //void activate();
+    void selected();
+    void unselected();
+    void activate();
     void doClick();
     void setInvisible();
     void setVisibleFade();
