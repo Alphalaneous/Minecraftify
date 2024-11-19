@@ -3,13 +3,14 @@
 #include "../../utils/Utils.h"
 
 Panorama* Panorama::create(){
-    auto node = new Panorama();
-    if (!node->init()) {
-        CC_SAFE_DELETE(node);
-        return nullptr;
+    auto ret = new Panorama();
+    if (ret && ret->init()) {
+        ret->autorelease();
+    } else {
+        delete ret;
+        ret = nullptr;
     }
-    node->autorelease();
-    return node;
+    return ret;
 }
 
 bool Panorama::init(){

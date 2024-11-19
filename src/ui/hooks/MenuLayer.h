@@ -19,11 +19,11 @@ class $modify(MenuLayer){
 			return false;
 		}
 		if (CCNode* bottomMenu = this->getChildByIDRecursive("bottom-menu")){
-			bottomMenu->getChildByIDRecursive("achievements-button")->setVisible(false);
-			bottomMenu->getChildByIDRecursive("settings-button")->setVisible(false);
-			bottomMenu->getChildByIDRecursive("stats-button")->setVisible(false);
-			bottomMenu->getChildByIDRecursive("newgrounds-button")->setVisible(false);
-			bottomMenu->getChildByIDRecursive("geode.loader/geode-button")->setVisible(false);
+			Utils::getNodeSafe(bottomMenu, "achievements-button")->setVisible(false);
+			Utils::getNodeSafe(bottomMenu, "settings-button")->setVisible(false);
+			Utils::getNodeSafe(bottomMenu, "stats-button")->setVisible(false);
+			Utils::getNodeSafe(bottomMenu, "newgrounds-button")->setVisible(false);
+			Utils::getNodeSafe(bottomMenu, "geode.loader/geode-button")->setVisible(false);
 		}
 		if (Loader::get()->isModLoaded("alphalaneous.vanilla_pages")){
 

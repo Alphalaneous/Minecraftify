@@ -7,16 +7,16 @@ MCButton* MCButton::create(gd::string text, float width, CCObject* target, SEL_M
 
     MCButtonChild* child = MCButtonChild::create(text, width, target, selector);
     ret->child = child;
-    if (ret && ret->init())
-    {
+    if (ret && ret->init()) {
         ret->setContentSize(child->getScaledContentSize());
         ret->addChild(child);
         ret->ignoreAnchorPointForPosition(false);
         ret->autorelease();
         ret->scheduleUpdate();
-        return ret;
+    } else {
+        delete ret;
+        ret = nullptr;
     }
-    CC_SAFE_DELETE(ret);
     return nullptr;
 }
 

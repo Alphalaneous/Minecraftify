@@ -18,12 +18,12 @@ MCLabel* MCLabel::create(std::wstring text, std::string font){
 
     MCLabel *ret = new (std::nothrow) MCLabel();
 
-    if (ret && ret->init(text, font))
-    {
+    if (ret && ret->init(text, font)) {
         ret->autorelease();
-        return ret;
+    } else {
+        delete ret;
+        ret = nullptr;
     }
-    CC_SAFE_DELETE(ret);
     return nullptr;
 }
 

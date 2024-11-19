@@ -49,11 +49,11 @@ public:
         }
 
         if(!found){
-            CCImage* img = new CCImage;
+            CCImage* img = new CCImage();
             img->initWithImageFile(filePath.c_str());
             img->retain();
 
-            CCTexture2D* texture = new CCTexture2D;
+            CCTexture2D* texture = new CCTexture2D();
             texture->initWithImage(img);
             texture->retain();
 

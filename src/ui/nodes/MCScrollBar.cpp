@@ -2,12 +2,12 @@
 
 MCScrollBar* MCScrollBar::create(ScrollLayer* node, float height){
     MCScrollBar *ret = new (std::nothrow) MCScrollBar();
-    if (ret && ret->init(node, height))
-    {
+    if (ret && ret->init(node, height)) {
         ret->autorelease();
-        return ret;
+    } else {
+        delete ret;
+        ret = nullptr;
     }
-    CC_SAFE_DELETE(ret);
     return nullptr;
 }
 

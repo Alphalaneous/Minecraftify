@@ -25,7 +25,9 @@ class $modify(MyCCMenuItemSpriteExtra, CCMenuItemSpriteExtra){
             CCMenuItemSpriteExtra::selected();
         }
         else {
+            #ifndef GEODE_IS_ANDROID
             FMODAudioEngine::sharedEngine()->playEffect("click.ogg"_spr);
+            #endif
             (m_pListener->*m_pfnSelector)(this);
         }
     }

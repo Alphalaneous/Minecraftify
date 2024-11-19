@@ -56,8 +56,7 @@ MCButtonChild* MCButtonChild::create(gd::string text, float width, CCObject* tar
     label->setScale(0.12f);
     label->setZOrder(2);
 
-    if (ret && ret->initWithNormalSprite(buttonSprite, nullptr, nullptr, target, selector))
-    {
+    if (ret && ret->initWithNormalSprite(buttonSprite, nullptr, nullptr, target, selector)) {
         ret->autorelease();
         ret->scheduleUpdate();
         ret->setScale(3.5);
@@ -65,10 +64,10 @@ MCButtonChild* MCButtonChild::create(gd::string text, float width, CCObject* tar
         ret->setAnchorPoint({0,0});
         ret->label = label;
         label->setPosition({ret->getContentSize().width/2, ret->getContentSize().height/2});
-
-        return ret;
+    } else {
+        delete ret;
+        ret = nullptr;
     }
-    CC_SAFE_DELETE(ret);
     return nullptr;
 }
 
