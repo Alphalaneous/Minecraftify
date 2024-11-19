@@ -38,5 +38,4 @@
             CCMenuItemSpriteExtra::activate();
         }
     }
-
 };*/
