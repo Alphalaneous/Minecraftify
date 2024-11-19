@@ -35,9 +35,9 @@ bool PerformanceSettings::init(MCOptionsOuterLayer* topLayer, CCLayer* prevLayer
         {155, "No Shader Antialiasing"}
     };
 
-    CCLayer* content = Utils::convertMoreOptionsLayer(values);
+    //CCLayer* content = Utils::convertMoreOptionsLayer(values);
 
-    scrollLayer->addContent(content);
+    //scrollLayer->addContent(content);
 
     addChild(scrollLayer);
 

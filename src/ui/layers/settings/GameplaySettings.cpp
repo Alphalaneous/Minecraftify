@@ -32,9 +32,9 @@ bool GameplaySettings::init(MCOptionsOuterLayer* topLayer, CCLayer* prevLayer) {
         {163, "Quick Keys"}
     };
 
-    CCLayer* content = Utils::convertMoreOptionsLayer(values);
+    //CCLayer* content = Utils/::convertMoreOptionsLayer(values);
 
-    scrollLayer->addContent(content);
+    //scrollLayer->addContent(content);
     addChild(scrollLayer);
 
     return true;

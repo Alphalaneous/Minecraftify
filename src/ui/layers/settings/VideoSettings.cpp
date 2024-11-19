@@ -47,9 +47,9 @@ bool VideoSettings::init(MCOptionsOuterLayer* topLayer, CCLayer* prevLayer) {
 
     };
 
-    CCLayer* content = Utils::convertMoreOptionsLayer(values);
+    //CCLayer* content = Utils::convertMoreOptionsLayer(values);
 
-    scrollLayer->addContent(content);
+    //scrollLayer->addContent(content);
 
     addChild(scrollLayer);
 
