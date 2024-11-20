@@ -49,6 +49,7 @@ class $modify(MyCreatorLayer, CreatorLayer){
 		MCButton* featuredButton = MCButton::create("Featured", 38.1f, this, menu_selector(CreatorLayer::onFeaturedLevels));
 		MCButton* dailyButton = MCButton::create("Daily", 38.1f, this, menu_selector(CreatorLayer::onDailyLevel));
 		MCButton* weeklyButton = MCButton::create("Weekly", 38.1f, this, menu_selector(CreatorLayer::onWeeklyLevel));
+		MCButton* eventButton = MCButton::create("Event", 38.1f, this, menu_selector(CreatorLayer::onEventLevel));
 		MCButton* scoresButton = MCButton::create("Leaderboard", 38.1f, this, menu_selector(CreatorLayer::onLeaderboards));
 		MCButton* savedButton = MCButton::create("Saved", 38.1f, this, menu_selector(CreatorLayer::onSavedLevels));
 
@@ -98,8 +99,9 @@ class $modify(MyCreatorLayer, CreatorLayer){
 		
 		minecraftButtonMenu->addChild(dailyButton);
 		minecraftButtonMenu->addChild(weeklyButton);
-		minecraftButtonMenu->addChild(scoresButton);
+		minecraftButtonMenu->addChild(eventButton);
 		minecraftButtonMenu->addChild(pathsButton);
+		minecraftButtonMenu->addChild(scoresButton);
 		minecraftButtonMenu->addChild(savedButton);
 		minecraftButtonMenu->addChild(questsButton);
 		minecraftButtonMenu->addChild(gauntletsButton);
