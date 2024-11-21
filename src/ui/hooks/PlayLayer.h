@@ -51,7 +51,7 @@ class $modify(MyPlayLayer, PlayLayer){
         Utils::trim(m_fields->cocosVersion);
         Utils::trim(m_fields->cpuName);
 
-        #ifndef GEODE_IS_ANDROID
+        #ifdef GEODE_IS_WINDOWS
 
         MEMORYSTATUSEX memInfo;
         memInfo.dwLength = sizeof(MEMORYSTATUSEX);
