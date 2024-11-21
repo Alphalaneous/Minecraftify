@@ -84,12 +84,12 @@ class $modify(MyMenuLayer, MenuLayer) {
 
 		CCMenu* menu = CCMenu::create();
 
-		MCButton* playButton = MCButton::create("Singleplayer", 49.1f, this, menu_selector(MenuLayer::onPlay));
-		MCButton* editButton = MCButton::create("Online Levels", 49.1f, this, menu_selector(MenuLayer::onPlay));//(MenuLayer::onCreator));
+		MCButton* playButton = MCButton::create("Singleplayer", 49.1f, this, menu_selector(MyMenuLayer::onMods));//(MenuLayer::onPlay));
+		MCButton* editButton = MCButton::create("Online Levels", 49.1f, this, menu_selector(MyMenuLayer::onMods));//(MenuLayer::onCreator));
 		MCButton* modsButton = MCButton::create("Mods", 24.0f, this, menu_selector(MyMenuLayer::onMods));
-		MCButton* skinButton = MCButton::create("Skins", 24.0f, this, menu_selector(MenuLayer::onGarage));
+		MCButton* skinButton = MCButton::create("Skins", 24.0f, this, menu_selector(MyMenuLayer::onMods));//(MenuLayer::onGarage));
 
-		MCButton* optionsButton = MCButton::create("Options...", 24.0f, this, menu_selector(MenuLayer::onPlay));//(MyMenuLayer::onOptions));
+		MCButton* optionsButton = MCButton::create("Options...", 24.0f, this, menu_selector(MyMenuLayer::onMods));//(MyMenuLayer::onOptions));
 		MCButton* quitButton = MCButton::create("Quit Game", 24.0f, this, menu_selector(MyMenuLayer::onExit));
 
 		MCButton* profileButton = MCButton::create("", 5.0f, this, menu_selector(MyMenuLayer::onMyProfile));
