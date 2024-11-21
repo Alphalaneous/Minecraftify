@@ -55,9 +55,9 @@ class $modify(MyCreatorLayer, CreatorLayer){
 
 		MCButton* questsButton = MCButton::create("Quests", 38.1f, this, menu_selector(CreatorLayer::onChallenge));
 		MCButton* gauntletsButton = MCButton::create("Gauntlets", 38.1f, this, menu_selector(CreatorLayer::onGauntlets));
-		MCButton* pathsButton = MCButton::create("Paths", 38.1f, this, menu_selector(CreatorLayer::onGauntlets));//(CreatorLayer::onPaths));
+		MCButton* pathsButton = MCButton::create("Paths", 38.1f, this, menu_selector(CreatorLayer::onPaths));
 		MCButton* listsButton = MCButton::create("Lists", 38.1f, this, menu_selector(CreatorLayer::onTopLists));
-		MCButton* mapPacksButton = MCButton::create("Map Packs", 38.1f, this, menu_selector(CreatorLayer::onGauntlets));//(CreatorLayer::onMapPacks));
+		MCButton* mapPacksButton = MCButton::create("Map Packs", 38.1f, this, menu_selector(CreatorLayer::onMapPacks));
 		MCButton* vaultButton = MCButton::create("Vault", 38.1f, this, menu_selector(CreatorLayer::onSecretVault));
 		MCButton* treasureButton = MCButton::create("Treasure", 38.1f, this, menu_selector(CreatorLayer::onTreasureRoom));
 
@@ -122,7 +122,7 @@ class $modify(MyCreatorLayer, CreatorLayer){
 		content->addChild(importantButtonMenu);
 
 		
-		MCButton* doneButton = MCButton::create("Done", 49.1f, this, menu_selector(CreatorLayer::onGauntlets));//(CreatorLayer::onBack));
+		MCButton* doneButton = MCButton::create("Done", 49.1f, this, menu_selector(CreatorLayer::onBack));
 
 		doneButton->setPosition({winSize.width/2, 16});
 		doneButton->setID("done-button"_spr);

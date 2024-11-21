@@ -132,7 +132,9 @@ void MCButtonChild::onHoverExit(){
 }
 
 void MCButtonChild::unselected(){
+    #ifdef GEODE_IS_ANDROID
     onHoverExit();
+    #endif
 }
 
 void MCButtonChild::doClick(){

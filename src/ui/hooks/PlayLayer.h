@@ -34,10 +34,10 @@ class $modify(MyPlayLayer, PlayLayer){
         CCConfiguration* config = CCConfiguration::sharedConfiguration();
         CCDictionary* dict = public_cast(config, m_pValueDict);
 
-        m_fields->gpuVendor = std::string(typeinfo_cast<CCString*>(dict->objectForKey("gl.vendor"))->getCString());
-        m_fields->gpuRenderer = std::string(typeinfo_cast<CCString*>(dict->objectForKey("gl.renderer"))->getCString());
-        m_fields->gpuVersion = std::string(typeinfo_cast<CCString*>(dict->objectForKey("gl.version"))->getCString());
-        m_fields->cocosVersion = std::string(typeinfo_cast<CCString*>(dict->objectForKey("cocos2d.x.version"))->getCString());
+        m_fields->gpuVendor = std::string(static_cast<CCString*>(dict->objectForKey("gl.vendor"))->getCString());
+        m_fields->gpuRenderer = std::string(static_cast<CCString*>(dict->objectForKey("gl.renderer"))->getCString());
+        m_fields->gpuVersion = std::string(static_cast<CCString*>(dict->objectForKey("gl.version"))->getCString());
+        m_fields->cocosVersion = std::string(static_cast<CCString*>(dict->objectForKey("cocos2d.x.version"))->getCString());
 
         #ifndef GEODE_IS_ANDROID
 
