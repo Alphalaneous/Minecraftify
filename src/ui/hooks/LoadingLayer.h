@@ -72,7 +72,7 @@ class $modify(MyLoadingLayer, LoadingLayer){
 
 		MyLoadingLayer* myself = static_cast<MyLoadingLayer*>(this);
 
-		#ifndef GEODE_IS_ANDROID
+		#ifdef GEODE_IS_WINDOWS
 
 		auto hwnd = FindWindowW(NULL, L"Geometry Dash");
 		SetWindowTextA(hwnd, "Minecraft* 2.2");

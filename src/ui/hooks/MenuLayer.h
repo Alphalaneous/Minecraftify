@@ -85,11 +85,11 @@ class $modify(MyMenuLayer, MenuLayer) {
 		CCMenu* menu = CCMenu::create();
 
 		MCButton* playButton = MCButton::create("Singleplayer", 49.1f, this, menu_selector(MenuLayer::onPlay));
-		MCButton* editButton = MCButton::create("Online Levels", 49.1f, this, menu_selector(MenuLayer::onCreator));
+		MCButton* editButton = MCButton::create("Online Levels", 49.1f, this, menu_selector(MenuLayer::onPlay));//(MenuLayer::onCreator));
 		MCButton* modsButton = MCButton::create("Mods", 24.0f, this, menu_selector(MyMenuLayer::onMods));
 		MCButton* skinButton = MCButton::create("Skins", 24.0f, this, menu_selector(MenuLayer::onGarage));
 
-		MCButton* optionsButton = MCButton::create("Options...", 24.0f, this, menu_selector(MyMenuLayer::onOptions));
+		MCButton* optionsButton = MCButton::create("Options...", 24.0f, this, menu_selector(MenuLayer::onPlay));//(MyMenuLayer::onOptions));
 		MCButton* quitButton = MCButton::create("Quit Game", 24.0f, this, menu_selector(MyMenuLayer::onExit));
 
 		MCButton* profileButton = MCButton::create("", 5.0f, this, menu_selector(MyMenuLayer::onMyProfile));
@@ -364,7 +364,7 @@ class $modify(MyMenuLayer, MenuLayer) {
 
 		createQuickPopup("Quit Game", "Are you sure you want to <cr>quit</c>?", "Cancel", "Yes", [this](FLAlertLayer*, bool button2){
 			if(button2){
-				endGame();
+				//endGame();
 			}
 		});
 	}

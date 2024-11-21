@@ -2,7 +2,7 @@
 #include <Geode/modify/PlayLayer.hpp>
 #include <Geode/modify/CCKeyboardDispatcher.hpp>
 
-#ifndef GEODE_IS_ANDROID
+#ifdef GEODE_IS_WINDOWS
 #include "psapi.h"
 #endif
 
