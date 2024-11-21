@@ -313,7 +313,7 @@ public:
         if(auto btn = static_cast<MyCCMenuItemToggler*>(toggler)){
             newToggler = CCMenuItemToggler::create(offBtn, onBtn, btn->m_pListener, btn->m_pfnSelector);
             newToggler->setTag(toggler->getTag());
-            newToggler->setSizeMult(0);
+            //newToggler->setSizeMult(0);
 
             auto onBtnToggler = static_cast<MyCCMenuItemSpriteExtra*>(newToggler->m_onButton);
             onBtnToggler->m_fields->m_isMCButton = true;

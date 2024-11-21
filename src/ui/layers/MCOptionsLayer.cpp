@@ -163,7 +163,7 @@ void MCOptionsLayer::onHelpSettings(CCObject* obj){
 
     this->addChild(optionsLayer);
 
-    (optionsLayer->*menu_selector(OptionsLayer::onHelp))(this);
+    //(optionsLayer->*menu_selector(OptionsLayer::onHelp))(this);
 
     //CCDirector::sharedDirector()->pushScene(HelpSettings::scene());
 }
@@ -173,7 +173,7 @@ void MCOptionsLayer::onTutorialSettings(CCObject* obj){
     //OptionsLayer* optionsLayer = OptionsLayer::create();
     //this->addChild(optionsLayer);
 
-    (this->*menu_selector(OptionsLayer::onSupport))(this);
+    //(this->*menu_selector(OptionsLayer::onSupport))(this);
 
     //CCDirector::sharedDirector()->pushScene(TutorialSettings::scene());
 }
@@ -185,7 +185,7 @@ void MCOptionsLayer::onOnlineSettings(CCObject* obj){
     
     this->addChild(optionsLayer);
 
-    (optionsLayer->*menu_selector(OptionsLayer::onAccount))(this);
+    //(optionsLayer->*menu_selector(OptionsLayer::onAccount))(this);
 
     //CCDirector::sharedDirector()->pushScene(OnlineSettings::scene());
 }

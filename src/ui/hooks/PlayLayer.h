@@ -176,7 +176,7 @@ class $modify(MyPlayLayer, PlayLayer){
             
             CCLayerColor* cocosVersionText = createTextLayer("cocos-label"_spr, m_fields->rightDebugNode, fmt::format("Cocos2d-x: {} {}bit", m_fields->cocosVersion, bit));
 
-            #ifndef GEODE_IS_ANDROID
+            #ifdef GEODE_IS_WINDOWS
 
             MEMORYSTATUSEX memInfo;
             memInfo.dwLength = sizeof(MEMORYSTATUSEX);
