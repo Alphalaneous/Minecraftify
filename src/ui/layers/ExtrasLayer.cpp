@@ -115,7 +115,7 @@ bool ExtrasLayer::init() {
 
     MCButton* dailyChestButton = MCButton::create("Daily Chests", 39.1f, this, menu_selector(MenuLayer::onDaily));
     MCButton* achievementsButton = MCButton::create("Achievements", 39.1f, this, menu_selector(MenuLayer::onAchievements));
-    MCButton* statsButton = MCButton::create("Stats", 39.1f, this, menu_selector(MenuLayer::onStats));
+    MCButton* statsButton = MCButton::create("Stats", 39.1f, this, menu_selector(MenuLayer::onAchievements));//(MenuLayer::onStats));
     MCButton* newgroundsButton = MCButton::create("Newgrounds", 39.1f, this, menu_selector(ExtrasLayer::onNewgrounds));
     MCButton* moreGamesButton = MCButton::create("More Games", 39.1f, this, menu_selector(MenuLayer::onMoreGames));
 
