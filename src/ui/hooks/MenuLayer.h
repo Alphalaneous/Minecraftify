@@ -148,7 +148,7 @@ class $modify(MyMenuLayer, MenuLayer) {
 		title->addChild(subTitle);
 		subTitle->setID("minecraft-subtitle"_spr);
 
-		MCLabel* versionText = MCLabel::create("Minecraft 2.206 (Geode)", "minecraft.fnt"_spr);
+		MCLabel* versionText = MCLabel::create("Minecraft 2.2074 (Geode)", "minecraft.fnt"_spr);
 		versionText->setAnchorPoint({0, 0});
 		versionText->setScale(0.42f);
 		this->addChild(versionText);

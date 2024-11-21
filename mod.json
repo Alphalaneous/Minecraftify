@@ -1,9 +1,10 @@
 {
-    "geode": "4.0.0-beta.1",
+    "geode": "4.0.1",
     "gd": {
-        "win": "2.2074"
+        "win": "2.2074",
+        "android": "2.2074"
     },
-    "version": "v0.9.11",
+    "version": "v0.9.12",
     "id": "zalphalaneous.minecraft",
     "name": "Minecraftify!",
     "developer": "Alphalaneous",
