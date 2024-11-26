@@ -62,7 +62,7 @@ class $modify(MyLoadingLayer, LoadingLayer){
 		}
 	}
 
-#ifndef GEODE_IS_ANDROID
+#ifdef GEODE_IS_WINDOWS
 
 	bool init(bool p0){
 
