@@ -65,10 +65,12 @@ class $modify(MyMenuLayer, MenuLayer) {
 
         float scale = CCDirector::sharedDirector()->getContentScaleFactor()/4;
 
+		#ifndef GEODE_IS_MACOS
 		Panorama* panorama = Panorama::create();
 		panorama->setID("minecraft-panorama"_spr);
 
 		this->addChild(panorama);
+		#endif
 
 		Utils::getNodeSafe(this, "main-menu")->setVisible(false);
 		Utils::getNodeSafe(this, "profile-menu")->setVisible(false);
@@ -272,9 +274,6 @@ class $modify(MyMenuLayer, MenuLayer) {
 		}
 
 		CCMenu* menu = typeinfo_cast<CCMenu*>(this->getChildByID("minecraft-menu"_spr));
-
-		Panorama* panorama = typeinfo_cast<Panorama*>(this->getChildByIDRecursive("minecraft-panorama"_spr));
-
 		CCSprite* title = typeinfo_cast<CCSprite*>(this->getChildByIDRecursive("minecraft-title"_spr));
 		CCSprite* subtitle = typeinfo_cast<CCSprite*>(this->getChildByIDRecursive("minecraft-subtitle"_spr));
 		CCLabelBMFont* splash = typeinfo_cast<CCLabelBMFont*>(this->getChildByIDRecursive("splash-text"_spr));

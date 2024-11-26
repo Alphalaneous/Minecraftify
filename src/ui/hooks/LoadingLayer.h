@@ -62,13 +62,14 @@ class $modify(MyLoadingLayer, LoadingLayer){
 		}
 	}
 
-#ifdef GEODE_IS_WINDOWS
-
 	bool init(bool p0){
 
 		if(!LoadingLayer::init(p0)){
 			return false;
 		}
+
+		auto searchPath = dirs::getModRuntimeDir() / Mod::get()->getID() / "resources";
+		CCFileUtils::get()->addSearchPath(searchPath.string().c_str());
 
 		MyLoadingLayer* myself = static_cast<MyLoadingLayer*>(this);
 
@@ -133,14 +134,14 @@ class $modify(MyLoadingLayer, LoadingLayer){
 		loadingBar->setID("loading-bar"_spr);
 		this->addChild(loadingBar);
 
-		CCSprite* titleSprite = Utils::createSprite("/geode/unzipped/zalphalaneous.minecraft/resources/zalphalaneous.minecraft/mojangstudios.png");
+		CCSprite* titleSprite = Utils::createSprite("mojangstudios.png"_spr);
 
 		titleSprite->setPosition({winSize.width/2, winSize.height/2});
 		titleSprite->setScale(titleSprite->getScale()*0.3f);
 
 		this->addChild(titleSprite);
 
-		MCLabel* loadingText = MCLabel::create("", "/geode/unzipped/zalphalaneous.minecraft/resources/zalphalaneous.minecraft/minecraft.fnt");
+		MCLabel* loadingText = MCLabel::create("", "minecraft.fnt"_spr);
 		loadingText->setScale(0.4f);
 		loadingText->setPosition({winSize.width/2, 30});
 
@@ -151,7 +152,4 @@ class $modify(MyLoadingLayer, LoadingLayer){
 
 		return true;
 	}
-
-#endif
-
 };
