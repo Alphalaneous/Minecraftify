@@ -55,6 +55,11 @@
             "id": "undefined0.icon_ninja",
             "version": "*",
             "importance": "breaking"
+        },
+        {
+            "id": "timestepyt.deltarune_textboxes",
+            "version": "*",
+            "importance": "breaking"
         }
     ]
 }

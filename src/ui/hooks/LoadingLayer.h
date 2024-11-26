@@ -97,6 +97,8 @@ class $modify(MyLoadingLayer, LoadingLayer){
 		Utils::getNodeSafe(this, "fmod-logo")->setVisible(false);
 		Utils::getNodeSafe(this, "cocos2d-logo")->setVisible(false);
 		Utils::getNodeSafe(this, "progress-slider")->setVisible(false);
+		Utils::getNodeSafe(this, "raydeeux.loadingscreentweaks/custom-splash-text")->setVisible(false);
+		
 		this->m_sliderBar->setVisible(false);
 
 		auto winSize = CCDirector::sharedDirector()->getWinSize();

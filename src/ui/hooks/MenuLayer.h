@@ -65,10 +65,41 @@ class $modify(MyMenuLayer, MenuLayer) {
 
         float scale = CCDirector::sharedDirector()->getContentScaleFactor()/4;
 
-		#ifndef GEODE_IS_MACOS
+		#ifdef GEODE_IS_MACOS
+		CCNode* bgContainer = CCNode::create();
+		CCSprite* bg0 = CCSprite::create("panorama_0.png"_spr);
+		CCSprite* bg1 = CCSprite::create("panorama_1.png"_spr);
+		CCSprite* bg2 = CCSprite::create("panorama_2.png"_spr);
+		CCSprite* bg3 = CCSprite::create("panorama_3.png"_spr);
+
+		float scaleFactor = winSize.height / bg0->getContentHeight();
+
+		bg0->setScale(scaleFactor);
+		bg1->setScale(scaleFactor);
+		bg2->setScale(scaleFactor);
+		bg3->setScale(scaleFactor);
+
+		bgContainer->setContentSize(bg0->getScaledContentSize());
+		bgContainer->setContentWidth(bg0->getScaledContentWidth() * 4);
+
+		bgContainer->addChild(bg0);
+		bgContainer->addChild(bg1);
+		bgContainer->addChild(bg2);
+		bgContainer->addChild(bg3);
+
+		RowLayout* layout = RowLayout::create();
+		layout->setGap(0);
+		layout->setAutoScale(false);
+
+		bgContainer->setLayout(layout);
+		bgContainer->updateLayout();
+		bgContainer->setAnchorPoint({0.5f, 0.5f});
+		bgContainer->setPosition(winSize/2);
+
+		this->addChild(bgContainer);
+		#else
 		Panorama* panorama = Panorama::create();
 		panorama->setID("minecraft-panorama"_spr);
-
 		this->addChild(panorama);
 		#endif
 
