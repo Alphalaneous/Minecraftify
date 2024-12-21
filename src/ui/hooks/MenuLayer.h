@@ -79,6 +79,8 @@ class $modify(MyMenuLayer, MenuLayer) {
 				prefix = "trailsandtales";
 			} else if (panoramaVersion == "The Wild Update") {
 				prefix = "thewild";
+			} else if (panoramaVersion == "Caves & Cliffs: Part II") {
+				prefix = "cavesandcliffs2";
 			} else {
 				prefix = "trickytrials";
 			}
