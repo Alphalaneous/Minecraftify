@@ -58,8 +58,10 @@ bool Panorama::init(){
         prefix = "trickytrials";
     } else if (panoramaVersion == "The Garden Awakens") {
         prefix = "thegardenawakens";
+    } else if (panoramaVersion == "Trails & Tales") {
+        prefix = "trailsandtales";
     } else {
-        prefix = "default"; // Fallback to a default prefix if needed
+        prefix = "trickytrials"; // Fallback to a default prefix if needed
     }
 
     std::vector<std::string> faces{

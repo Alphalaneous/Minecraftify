@@ -24,6 +24,7 @@
             "assets/texts/*",
             "assets/panorama/thegardenawakens/*",
             "assets/panorama/trickytrials/*",
+            "assets/panorama/trailsandtales/*",
             "assets/shaders/cubemap/*",
             "assets/shaders/blur/*",
             "assets/logo.ico"
@@ -68,7 +69,7 @@
             "name": "Panorama",
             "type": "string",
             "default": "Tricky Trials",
-            "one-of": ["Tricky Trials", "The Garden Awakens"]
+            "one-of": ["Trails & Tales", "Tricky Trials", "The Garden Awakens"]
         }
     }
 }
