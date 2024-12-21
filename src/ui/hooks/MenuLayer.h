@@ -81,6 +81,8 @@ class $modify(MyMenuLayer, MenuLayer) {
 				prefix = "thewild";
 			} else if (panoramaVersion == "Caves & Cliffs: Part II") {
 				prefix = "cavesandcliffs2";
+			} else if (panoramaVersion == "Caves & Cliffs: Part I") {
+				prefix = "cavesandcliffs1";
 			} else {
 				prefix = "trickytrials";
 			}

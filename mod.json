@@ -27,6 +27,7 @@
             "assets/panorama/trailsandtales/*",
             "assets/panorama/thewild/*",
             "assets/panorama/cavesandcliffs2/*",
+            "assets/panorama/cavesandcliffs1/*",
             "assets/shaders/cubemap/*",
             "assets/shaders/blur/*",
             "assets/logo.ico"
@@ -71,7 +72,7 @@
             "name": "Panorama",
             "type": "string",
             "default": "Tricky Trials",
-            "one-of": ["Caves & Cliffs: Part II", "The Wild Update", "Trails & Tales", "Tricky Trials", "The Garden Awakens"]
+            "one-of": ["Caves & Cliffs: Part I", "Caves & Cliffs: Part II", "The Wild Update", "Trails & Tales", "Tricky Trials", "The Garden Awakens"]
         }
     }
 }
