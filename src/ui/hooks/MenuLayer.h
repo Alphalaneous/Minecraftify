@@ -79,10 +79,10 @@ class $modify(MyMenuLayer, MenuLayer) {
 			prefix = "default"; // Fallback to a default prefix if needed
 		}
 
-		CCSprite* bg0 = CCSprite::create(fmt::format("{}{}_panorama_0.png", "zalphalaneous.minecraft/", prefix));
-		CCSprite* bg1 = CCSprite::create(fmt::format("{}{}_panorama_1.png", "zalphalaneous.minecraft/", prefix));
-		CCSprite* bg2 = CCSprite::create(fmt::format("{}{}_panorama_2.png", "zalphalaneous.minecraft/", prefix));
-		CCSprite* bg3 = CCSprite::create(fmt::format("{}{}_panorama_3.png", "zalphalaneous.minecraft/", prefix));
+		CCSprite* bg0 = CCSprite::create(typeinfo_cast<std::string>(fmt::format("{}{}_panorama_0.png", "zalphalaneous.minecraft/", prefix)));
+		CCSprite* bg1 = CCSprite::create(typeinfo_cast<std::string>(fmt::format("{}{}_panorama_1.png", "zalphalaneous.minecraft/", prefix)));
+		CCSprite* bg2 = CCSprite::create(typeinfo_cast<std::string>(fmt::format("{}{}_panorama_2.png", "zalphalaneous.minecraft/", prefix)));
+		CCSprite* bg3 = CCSprite::create(typeinfo_cast<std::string>(fmt::format("{}{}_panorama_3.png", "zalphalaneous.minecraft/", prefix)));
 
 		float scaleFactor = winSize.height / bg0->getContentHeight();
 
