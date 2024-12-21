@@ -67,10 +67,22 @@ class $modify(MyMenuLayer, MenuLayer) {
 
 		#ifdef GEODE_IS_MACOS
 		CCNode* bgContainer = CCNode::create();
-		CCSprite* bg0 = CCSprite::create("panorama_0.png"_spr);
-		CCSprite* bg1 = CCSprite::create("panorama_1.png"_spr);
-		CCSprite* bg2 = CCSprite::create("panorama_2.png"_spr);
-		CCSprite* bg3 = CCSprite::create("panorama_3.png"_spr);
+
+		std::string panoramaVersion = Mod::get()->getSettingValue<std::string>("panorama");
+		std::string prefix;
+
+		if (panoramaVersion == "Tricky Trials") {
+			prefix = "trickytrials";
+		} else if (panoramaVersion == "The Garden Awakens") {
+			prefix = "thegardenawakens";
+		} else {
+			prefix = "default"; // Fallback to a default prefix if needed
+		}
+
+		CCSprite* bg0 = CCSprite::create(fmt::format("{}{}_panorama_0.png", "zalphalaneous.minecraft/", prefix));
+		CCSprite* bg1 = CCSprite::create(fmt::format("{}{}_panorama_1.png", "zalphalaneous.minecraft/", prefix));
+		CCSprite* bg2 = CCSprite::create(fmt::format("{}{}_panorama_2.png", "zalphalaneous.minecraft/", prefix));
+		CCSprite* bg3 = CCSprite::create(fmt::format("{}{}_panorama_3.png", "zalphalaneous.minecraft/", prefix));
 
 		float scaleFactor = winSize.height / bg0->getContentHeight();
 

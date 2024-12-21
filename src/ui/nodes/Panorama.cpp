@@ -1,6 +1,9 @@
+#include <Geode/Geode.hpp>
 #include "Panorama.h"
 #include "../../utils/GlobalVars.h"
 #include "../../utils/Utils.h"
+
+using namespace geode::prelude;
 
 Panorama* Panorama::create(){
     auto ret = new Panorama();
@@ -48,14 +51,24 @@ bool Panorama::init(){
     m_uniformTime = glGetUniformLocation(m_shader.program, "time");
     m_uniformMouse = glGetUniformLocation(m_shader.program, "mouse");
 
-    std::vector<std::string> faces
-    {
-        "panorama_1.png"_spr,
-        "panorama_3.png"_spr,
-        "panorama_4.png"_spr,
-        "panorama_5.png"_spr,
-        "panorama_0.png"_spr,
-        "panorama_2.png"_spr
+    std::string panoramaVersion = Mod::get()->getSettingValue<std::string>("panorama");
+    std::string prefix;
+
+    if (panoramaVersion == "Tricky Trials") {
+        prefix = "trickytrials";
+    } else if (panoramaVersion == "The Garden Awakens") {
+        prefix = "thegardenawakens";
+    } else {
+        prefix = "default"; // Fallback to a default prefix if needed
+    }
+
+    std::vector<std::string> faces{
+        (fmt::format("{}{}_panorama_1.png", "zalphalaneous.minecraft/", prefix)),
+        (fmt::format("{}{}_panorama_3.png", "zalphalaneous.minecraft/", prefix)),
+        (fmt::format("{}{}_panorama_4.png", "zalphalaneous.minecraft/", prefix)),
+        (fmt::format("{}{}_panorama_5.png", "zalphalaneous.minecraft/", prefix)),
+        (fmt::format("{}{}_panorama_0.png", "zalphalaneous.minecraft/", prefix)),
+        (fmt::format("{}{}_panorama_2.png", "zalphalaneous.minecraft/", prefix))
     };
 
     glGenTextures(1, &textureID);
