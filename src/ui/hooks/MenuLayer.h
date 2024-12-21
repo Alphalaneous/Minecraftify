@@ -75,11 +75,12 @@ class $modify(MyMenuLayer, MenuLayer) {
 				prefix = "trickytrials";
 			} else if (panoramaVersion == "The Garden Awakens") {
 				prefix = "thegardenawakens";
+			} else if (panoramaVersion == "Trails & Tales") {
+				prefix = "trailsandtales";
 			} else {
-				prefix = "default"; // Fallback to a default prefix if needed
+				prefix = "trickytrials";
 			}
 
-			// Fix: Use .c_str() to convert std::string to const char*
 			CCSprite* bg0 = CCSprite::create(fmt::format("{}{}_panorama_0.png", "zalphalaneous.minecraft/", prefix).c_str());
 			CCSprite* bg1 = CCSprite::create(fmt::format("{}{}_panorama_1.png", "zalphalaneous.minecraft/", prefix).c_str());
 			CCSprite* bg2 = CCSprite::create(fmt::format("{}{}_panorama_2.png", "zalphalaneous.minecraft/", prefix).c_str());
