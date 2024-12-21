@@ -60,6 +60,8 @@ bool Panorama::init(){
         prefix = "thegardenawakens";
     } else if (panoramaVersion == "Trails & Tales") {
         prefix = "trailsandtales";
+    } else if (panoramaVersion == "The Wild Update") {
+		prefix = "thewild";
     } else {
         prefix = "trickytrials";
     }
