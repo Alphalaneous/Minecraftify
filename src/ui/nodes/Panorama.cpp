@@ -48,14 +48,27 @@ bool Panorama::init(){
     m_uniformTime = glGetUniformLocation(m_shader.program, "time");
     m_uniformMouse = glGetUniformLocation(m_shader.program, "mouse");
 
+    std::string panorama0 = Mod::get()->getSavedValue<std::string>("panorama-0", "panorama_0.png"_spr);
+    std::string panorama1 = Mod::get()->getSavedValue<std::string>("panorama-1", "panorama_1.png"_spr);
+    std::string panorama2 = Mod::get()->getSavedValue<std::string>("panorama-2", "panorama_2.png"_spr);
+    std::string panorama3 = Mod::get()->getSavedValue<std::string>("panorama-3", "panorama_3.png"_spr);
+    std::string panorama4 = Mod::get()->getSavedValue<std::string>("panorama-4", "panorama_4.png"_spr);
+    std::string panorama5 = Mod::get()->getSavedValue<std::string>("panorama-5", "panorama_5.png"_spr);
+
+    bool changed = Mod::get()->getSavedValue<bool>("changed", false);
+    if (changed) {
+        Utils::clearImageCache();
+        Mod::get()->setSavedValue<bool>("changed", false);
+    }
+
     std::vector<std::string> faces
     {
-        "panorama_1.png"_spr,
-        "panorama_3.png"_spr,
-        "panorama_4.png"_spr,
-        "panorama_5.png"_spr,
-        "panorama_0.png"_spr,
-        "panorama_2.png"_spr
+        panorama1,
+        panorama3,
+        panorama4,
+        panorama5,
+        panorama0,
+        panorama2
     };
 
     glGenTextures(1, &textureID);

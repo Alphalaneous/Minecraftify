@@ -34,21 +34,28 @@ public:
 
     inline static std::vector<ImageData> imageCache;
 
+    static void clearImageCache() {
+        for(ImageData i : imageCache){
+            i.texture->release();
+            i.img->release();
+        }
+        imageCache.clear();
+    }
+
     static void generateTexture(std::string filePath, GLenum target){
 
         ImageData imgData;
 
         bool found = false;
 
-        for(ImageData i : imageCache){
+        for (ImageData i : imageCache){
             if(i.filePath == filePath){
                 imgData = i;
                 found = true;
-                break;
             }
         }
 
-        if(!found){
+        if (!found){
             CCImage* img = new CCImage();
             img->initWithImageFile(filePath.c_str());
             img->retain();

@@ -5,7 +5,7 @@
         "mac": "2.2074",
         "android": "2.2074"
     },
-    "version": "v0.9.14",
+    "version": "v0.9.15",
     "id": "zalphalaneous.minecraft",
     "name": "Minecraftify!",
     "developer": "Alphalaneous",
@@ -27,6 +27,12 @@
             "assets/shaders/blur/*",
             "assets/logo.ico"
         ]
+    },
+    "settings": {
+        "reset-panorama": {
+            "type": "custom:button",
+            "name": "Reset Panorama"
+        }
     },
     "dependencies": [
         {
