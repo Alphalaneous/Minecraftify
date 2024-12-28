@@ -68,6 +68,8 @@ class $modify(MyLoadingLayer, LoadingLayer){
 			return false;
 		}
 
+		if (!Utils::checkCompatibility()) return true;
+
 		auto searchPath = dirs::getModRuntimeDir() / Mod::get()->getID() / "resources";
 		CCFileUtils::get()->addSearchPath(searchPath.string().c_str());
 

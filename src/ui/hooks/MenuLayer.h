@@ -18,6 +18,9 @@ class $modify(MenuLayer){
 		if (!MenuLayer::init()) {
 			return false;
 		}
+
+		if (!Utils::incompatModlist.empty()) return true;
+
 		if (CCNode* bottomMenu = this->getChildByIDRecursive("bottom-menu")){
 			Utils::getNodeSafe(bottomMenu, "achievements-button")->setVisible(false);
 			Utils::getNodeSafe(bottomMenu, "settings-button")->setVisible(false);
@@ -46,6 +49,8 @@ class $modify(MenuLayer){
 	}
 };
 
+bool shownAlert = false;
+
 class $modify(MyMenuLayer, MenuLayer) {
 
 	struct Fields {
@@ -59,6 +64,23 @@ class $modify(MyMenuLayer, MenuLayer) {
 	bool init() {
 		if (!MenuLayer::init()) {
 			return false;
+		}
+
+		if (!Utils::incompatModlist.empty()) {
+
+			if (!shownAlert) {
+				std::string incompatModsString = "Disable the following mods to use <cg>Minecraftify</c>: \n";
+				for (Mod* mod : Utils::incompatModlist) {
+					incompatModsString += "<cr>" + mod->getName() + "</c>\n";
+				}
+
+				queueInMainThread([=] {
+					geode::createQuickPopup("Incompatible Mods!", incompatModsString, "Okay", nullptr, nullptr, true);
+				});
+				
+				shownAlert = true;
+			}
+			return true;
 		}
 
 		auto winSize = CCDirector::sharedDirector()->getWinSize();

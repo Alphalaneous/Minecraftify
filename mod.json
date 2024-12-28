@@ -5,7 +5,7 @@
         "mac": "2.2074",
         "android": "2.2074"
     },
-    "version": "v0.9.15",
+    "version": "v0.10.0",
     "id": "zalphalaneous.minecraft",
     "name": "Minecraftify!",
     "developer": "Alphalaneous",
@@ -39,33 +39,6 @@
             "id": "geode.node-ids",
             "version": ">=v1.12.0-alpha.2",
             "importance": "required"
-        }
-    ],
-    "incompatibilities": [
-        {
-            "id": "ninxout.redash",
-            "version": "*",
-            "importance": "breaking"
-        },
-        {
-            "id": "muhammadgames.bettermenu",
-            "version": "*",
-            "importance": "breaking"
-        },
-        {
-            "id": "sanes.daily-transfer",
-            "version": "*",
-            "importance": "breaking"
-        },
-        {
-            "id": "undefined0.icon_ninja",
-            "version": "*",
-            "importance": "breaking"
-        },
-        {
-            "id": "timestepyt.deltarune_textboxes",
-            "version": "*",
-            "importance": "breaking"
         }
     ]
 }

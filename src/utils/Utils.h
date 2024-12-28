@@ -33,6 +33,7 @@ class Utils {
 public:
 
     inline static std::vector<ImageData> imageCache;
+    inline static std::vector<Mod*> incompatModlist;
 
     static void clearImageCache() {
         for(ImageData i : imageCache){
@@ -40,6 +41,34 @@ public:
             i.img->release();
         }
         imageCache.clear();
+    }
+
+    static bool checkCompatibility() {
+        
+        static std::vector<std::string> incompatModIDs = {
+            "ninxout.redash",
+            "muhammadgames.bettermenu",
+            "sanes.daily-transfer",
+            "undefined0.icon_ninja",
+            "timestepyt.deltarune_textboxes"
+        };
+
+        for (std::string id : incompatModIDs) {
+            Mod* mod = Loader::get()->getInstalledMod(id);
+            if (mod) {
+                incompatModlist.push_back(mod);
+            }
+        }
+
+        if (!incompatModlist.empty()) {
+            for (Hook* hook : Mod::get()->getHooks()) {
+                if (hook->getDisplayName() != "MenuLayer::init") {
+                    (void) hook->disable();
+                }
+            }
+        }
+
+        return incompatModlist.empty();
     }
 
     static void generateTexture(std::string filePath, GLenum target){
